@@ -1,24 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="theme-color"
-    content="#0f766e"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
 
   <title>As contas claras</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -39,7 +28,7 @@
 
     header h1 {
       margin: 0;
-      font-size: 26px;
+      font-size: 27px;
     }
 
     header p {
@@ -48,17 +37,28 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 750px;
       margin: auto;
       padding: 16px;
     }
 
+    .panel,
     .mes {
       background: white;
-      padding: 14px;
       border-radius: 14px;
-      margin-bottom: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
     }
 
     input,
@@ -72,13 +72,7 @@
       font-size: 16px;
     }
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-    }
-
-    .resumen {
+    .resumen-general {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
@@ -87,16 +81,16 @@
 
     .tarjeta {
       background: white;
+      padding: 16px;
       border-radius: 14px;
-      padding: 15px;
       text-align: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .tarjeta strong {
       display: block;
-      font-size: 21px;
-      margin-top: 6px;
+      margin-top: 7px;
+      font-size: 22px;
     }
 
     .ingresos strong {
@@ -112,25 +106,19 @@
     }
 
     .saldo strong {
-      color: #0f766e;
-      font-size: 27px;
+      font-size: 28px;
     }
 
-    .saldo-negativo strong {
-      color: #dc2626;
+    .positivo {
+      color: #15803d !important;
     }
 
-    .panel {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    .negativo {
+      color: #dc2626 !important;
     }
 
-    .panel h2 {
-      margin-top: 0;
-      margin-bottom: 18px;
+    .neutro {
+      color: #6b7280 !important;
     }
 
     .btn {
@@ -146,51 +134,95 @@
       transform: scale(0.98);
     }
 
-    .positivo {
-      color: #15803d;
-    }
-
-    .negativo {
-      color: #dc2626;
-    }
-
-    .neutro {
-      color: #6b7280;
-    }
-
     .oculto {
       display: none;
     }
 
-    .fila-resumen {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+    /* TABLA RESUMEN */
 
-      padding: 11px 0;
-
-      border-bottom:
-        1px solid #eeeeee;
+    .tabla-resumen {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
     }
 
-    .fila-resumen:last-child {
+    .tabla-resumen th,
+    .tabla-resumen td {
+      padding: 11px 5px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tabla-resumen th {
+      font-size: 13px;
+      color: #6b7280;
+      text-transform: uppercase;
+    }
+
+    .tabla-resumen th:first-child,
+    .tabla-resumen td:first-child {
+      text-align: left;
+    }
+
+    .tabla-resumen th:not(:first-child),
+    .tabla-resumen td:not(:first-child) {
+      text-align: right;
+    }
+
+    .fila-total {
+      font-weight: bold;
+      background: #f9fafb;
+    }
+
+    .fila-total td {
+      border-top: 2px solid #d1d5db;
+    }
+
+    /* SALDO FINAL */
+
+    .saldo-final {
+      margin-top: 18px;
+      padding: 17px;
+      border-radius: 12px;
+      background: #f9fafb;
+      text-align: center;
+    }
+
+    .saldo-final .titulo {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .saldo-final .cantidad {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    /* CATEGORÍAS */
+
+    .fila-categoria {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid #eeeeee;
+      gap: 15px;
+    }
+
+    .fila-categoria:last-child {
       border-bottom: none;
     }
 
-    .fila-resumen strong {
-      flex: 1;
+    .total-categorias {
+      font-weight: bold;
+      border-top: 2px solid #d1d5db;
+      margin-top: 4px;
+      padding-top: 14px;
     }
 
-    .importe-resumen {
-      text-align: right;
-      white-space: nowrap;
-    }
+    /* MOVIMIENTOS */
 
     .movimiento {
-      border-bottom:
-        1px solid #e5e7eb;
-
+      border-bottom: 1px solid #e5e7eb;
       padding: 13px 0;
     }
 
@@ -201,7 +233,7 @@
     .mov-top {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       font-weight: bold;
     }
 
@@ -217,22 +249,12 @@
 
     .borrar {
       width: auto;
-
-      padding:
-        6px 11px;
-
+      padding: 6px 11px;
       margin-top: 8px;
-
       font-size: 13px;
-
-      background:
-        #fee2e2;
-
-      color:
-        #b91c1c;
-
+      background: #fee2e2;
+      color: #b91c1c;
       border: none;
-
       cursor: pointer;
     }
 
@@ -249,258 +271,118 @@
       padding: 20px;
     }
 
+    @media (max-width: 480px) {
+      .tabla-resumen th,
+      .tabla-resumen td {
+        font-size: 13px;
+        padding: 10px 3px;
+      }
+    }
   </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
-  <h1>
-    💰 As contas claras
-  </h1>
-
-  <p>
-    Economía familiar
-  </p>
-
+  <h1>💰 As contas claras</h1>
+  <p>Economía familiar</p>
 </header>
 
-
-
 <div class="container">
-
 
   <!-- MES -->
 
   <div class="mes">
-
-    <label for="mes">
-      Mes
-    </label>
-
-    <input
-      type="month"
-      id="mes"
-    >
-
+    <label for="mes">Mes</label>
+    <input type="month" id="mes">
   </div>
-
-
 
   <!-- RESUMEN GENERAL -->
 
-  <section class="resumen">
+  <section class="resumen-general">
 
     <div class="tarjeta ingresos">
-
       Ingresos
-
-      <strong id="totalIngresos">
-        0,00 €
-      </strong>
-
+      <strong id="totalIngresos">0,00 €</strong>
     </div>
-
 
     <div class="tarjeta gastos">
-
       Gastos
-
-      <strong id="totalGastos">
-        0,00 €
-      </strong>
-
+      <strong id="totalGastos">0,00 €</strong>
     </div>
 
-
-    <div
-      class="tarjeta saldo"
-      id="tarjetaSaldo"
-    >
-
+    <div class="tarjeta saldo">
       Saldo del mes
-
-      <strong id="saldo">
-        0,00 €
-      </strong>
-
+      <strong id="saldoGeneral">0,00 €</strong>
     </div>
 
   </section>
-
-
 
   <!-- NUEVO MOVIMIENTO -->
 
   <section class="panel">
 
-    <h2>
-      ➕ Nuevo movimiento
-    </h2>
+    <h2>➕ Nuevo movimiento</h2>
 
+    <label>Fecha</label>
+    <input type="date" id="fecha">
 
-    <label>
-      Fecha
-    </label>
-
-    <input
-      type="date"
-      id="fecha"
-    >
-
-
-    <label>
-      Tipo
-    </label>
-
+    <label>Tipo</label>
     <select id="tipo">
-
-      <option value="Gasto">
-        Gasto
-      </option>
-
-      <option value="Ingreso">
-        Ingreso
-      </option>
-
+      <option value="Gasto">Gasto</option>
+      <option value="Ingreso">Ingreso</option>
     </select>
 
-
-    <label>
-      Persona
-    </label>
-
+    <label>Persona</label>
     <select id="persona">
-
-      <option value="Familia">
-        Familia
-      </option>
-
-      <option value="Paco">
-        Paco
-      </option>
-
-      <option value="Mari">
-        Mari
-      </option>
-
-      <option value="Nere">
-        Nere
-      </option>
-
+      <option value="Familia">Familia</option>
+      <option value="Paco">Paco</option>
+      <option value="Mari">Mari</option>
+      <option value="Nere">Nere</option>
     </select>
 
-
-
-    <!-- CATEGORÍAS DE GASTO -->
+    <!-- CATEGORÍAS -->
 
     <div id="bloqueCategoria">
 
-      <label>
-        Categoría
-      </label>
+      <label>Categoría</label>
 
       <select id="categoria">
-
-        <option value="Supermercado">
-          Supermercado
-        </option>
-
-        <option value="Hipoteca">
-          Hipoteca
-        </option>
-
-        <option value="Luz">
-          Luz
-        </option>
-
-        <option value="Telefono">
-          Telefono
-        </option>
-
-        <option value="App tv">
-          App tv
-        </option>
-
-        <option value="Ropa/calzado">
-          Ropa/calzado
-        </option>
-
-        <option value="Fiesta">
-          Fiesta
-        </option>
-
-        <option value="Coches/Moto">
-          Coches/Moto
-        </option>
-
-        <option value="Salud">
-          Salud
-        </option>
-
-        <option value="Viajes">
-          Viajes
-        </option>
-
-        <option value="Tabaco">
-          Tabaco
-        </option>
-
-        <option value="Seguros">
-          Seguros
-        </option>
-
-        <option value="Plan de inversión">
-          Plan de inversión
-        </option>
-
-        <option value="Otros">
-          Otros
-        </option>
-
+        <option value="Supermercado">Supermercado</option>
+        <option value="Hipoteca">Hipoteca</option>
+        <option value="Luz">Luz</option>
+        <option value="Telefono">Teléfono</option>
+        <option value="App tv">App TV</option>
+        <option value="Ropa/calzado">Ropa/calzado</option>
+        <option value="Fiesta">Fiesta</option>
+        <option value="Coches/Moto">Coches/Moto</option>
+        <option value="Salud">Salud</option>
+        <option value="Viajes">Viajes</option>
+        <option value="Tabaco">Tabaco</option>
+        <option value="Seguros">Seguros</option>
+        <option value="Plan de inversión">Plan de inversión</option>
+        <option value="Otros">Otros</option>
       </select>
 
     </div>
 
+    <!-- FUENTE INGRESO -->
 
+    <div id="bloqueFuente" class="oculto">
 
-    <!-- FUENTE DE INGRESO -->
-
-    <div
-      id="bloqueFuente"
-      class="oculto"
-    >
-
-      <label>
-        Fuente de ingreso
-      </label>
-
-      <select id="fuente">
-      </select>
+      <label>Fuente de ingreso</label>
+      <select id="fuente"></select>
 
     </div>
 
-
-
-    <label>
-      Concepto
-    </label>
-
+    <label>Concepto</label>
     <input
       type="text"
       id="concepto"
-      placeholder="Ej. Mercadona, nómina julio, hipoteca..."
+      placeholder="Ej. Mercadona, hipoteca, nómina julio..."
     >
 
-
-    <label>
-      Cantidad (€)
-    </label>
-
+    <label>Cantidad (€)</label>
     <input
       type="number"
       id="cantidad"
@@ -510,102 +392,107 @@
       placeholder="0,00"
     >
 
-
-    <button
-      class="btn"
-      onclick="guardarMovimiento()"
-    >
-
+    <button class="btn" onclick="guardarMovimiento()">
       Guardar movimiento
-
     </button>
 
   </section>
 
-
-
-  <!-- RESUMEN POR PERSONA -->
+  <!-- RESUMEN PERSONAS -->
 
   <section class="panel">
 
-    <h2>
-      👨‍👩‍👧 Resumen por persona
-    </h2>
+    <h2>👨‍👩‍👧 Resumen por persona</h2>
 
-    <div id="resumenPersonas">
+    <table class="tabla-resumen">
+
+      <thead>
+        <tr>
+          <th>Persona</th>
+          <th>Ingresos</th>
+          <th>Gastos</th>
+        </tr>
+      </thead>
+
+      <tbody id="tablaPersonas"></tbody>
+
+      <tfoot>
+        <tr class="fila-total">
+          <td>TOTAL</td>
+          <td id="totalPersonasIngresos">0,00 €</td>
+          <td id="totalPersonasGastos">0,00 €</td>
+        </tr>
+      </tfoot>
+
+    </table>
+
+    <div class="saldo-final">
+
+      <span class="titulo">
+        Saldo fin de mes
+      </span>
+
+      <span
+        class="cantidad neutro"
+        id="saldoFinMes"
+      >
+        0,00 €
+      </span>
+
     </div>
 
   </section>
 
-
-
-  <!-- RESUMEN POR CATEGORÍA -->
+  <!-- CATEGORÍAS -->
 
   <section class="panel">
 
-    <h2>
-      📊 Gastos por categoría
-    </h2>
+    <h2>📊 Gastos por categoría</h2>
 
-    <div id="resumenCategorias">
+    <div id="resumenCategorias"></div>
+
+    <div class="fila-categoria total-categorias">
+
+      <strong>Total gastos</strong>
+
+      <strong
+        id="totalCategorias"
+        class="negativo"
+      >
+        0,00 €
+      </strong>
+
     </div>
 
   </section>
-
-
 
   <!-- MOVIMIENTOS -->
 
   <section class="panel">
 
-    <h2>
-      📋 Movimientos
-    </h2>
+    <h2>📋 Movimientos</h2>
 
-    <div id="listaMovimientos">
-    </div>
+    <div id="listaMovimientos"></div>
 
   </section>
 
-
 </div>
 
-
-
 <footer>
-
   As contas claras · Datos guardados en este dispositivo
-
 </footer>
-
 
 
 <script>
 
-
-/* ==========================================
-   PERSONAS
-========================================== */
-
-
 const personas = [
-
   "Familia",
   "Paco",
   "Mari",
   "Nere"
-
 ];
 
-
-
-/* ==========================================
-   CATEGORÍAS DE GASTO
-========================================== */
-
-
 const categorias = [
-
   "Supermercado",
   "Hipoteca",
   "Luz",
@@ -620,15 +507,7 @@ const categorias = [
   "Seguros",
   "Plan de inversión",
   "Otros"
-
 ];
-
-
-
-/* ==========================================
-   FUENTES DE INGRESO
-========================================== */
-
 
 const fuentesIngreso = {
 
@@ -644,597 +523,249 @@ const fuentesIngreso = {
 
 };
 
-
-
-/* ==========================================
-   DATOS GUARDADOS
-========================================== */
-
-
 let movimientos =
-
   JSON.parse(
-
-    localStorage.getItem(
-      "asContasClaras"
-    )
-
+    localStorage.getItem("asContasClaras")
   ) || [];
 
 
-
-/* ==========================================
-   FORMATO EURO
-========================================== */
-
-
 const formatoEuro =
-
   new Intl.NumberFormat(
-
     "es-ES",
-
     {
-
-      style:
-        "currency",
-
-      currency:
-        "EUR"
-
+      style: "currency",
+      currency: "EUR"
     }
-
   );
 
 
+function euro(valor) {
 
-/* ==========================================
-   FORMATEAR VALORES CERO
-========================================== */
-
-
-function importeNormal(
-  cantidad
-) {
-
-  if (
-    Math.abs(cantidad) <
-    0.005
-  ) {
-
+  if (Math.abs(valor) < 0.005) {
     return formatoEuro.format(0);
-
   }
 
-
-  return formatoEuro.format(
-    cantidad
-  );
-
+  return formatoEuro.format(valor);
 }
 
 
+function euroPositivo(valor) {
 
-function importeIngreso(
-  cantidad
-) {
-
-  if (
-    Math.abs(cantidad) <
-    0.005
-  ) {
-
+  if (Math.abs(valor) < 0.005) {
     return formatoEuro.format(0);
-
   }
 
-
-  return "+" +
-    formatoEuro.format(
-      cantidad
-    );
-
+  return "+" + formatoEuro.format(valor);
 }
 
 
+function euroNegativo(valor) {
 
-function importeGasto(
-  cantidad
-) {
-
-  if (
-    Math.abs(cantidad) <
-    0.005
-  ) {
-
+  if (Math.abs(valor) < 0.005) {
     return formatoEuro.format(0);
-
   }
 
-
-  return "-" +
-    formatoEuro.format(
-      cantidad
-    );
-
+  return "-" + formatoEuro.format(Math.abs(valor));
 }
-
-
-
-/* ==========================================
-   FECHAS
-========================================== */
 
 
 function fechaHoy() {
 
-  const hoy =
-    new Date();
+  const hoy = new Date();
 
-
-  const year =
+  const año =
     hoy.getFullYear();
 
-
-  const month =
+  const mes =
     String(
       hoy.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
+    ).padStart(2, "0");
 
-
-  const day =
+  const dia =
     String(
       hoy.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
+    ).padStart(2, "0");
 
-
-  return (
-    year +
-    "-" +
-    month +
-    "-" +
-    day
-  );
-
+  return `${año}-${mes}-${dia}`;
 }
-
 
 
 function mesActual() {
-
-  return fechaHoy()
-    .slice(
-      0,
-      7
-    );
-
+  return fechaHoy().slice(0, 7);
 }
 
 
-
-document
-  .getElementById(
-    "fecha"
-  )
-  .value =
+document.getElementById("fecha").value =
   fechaHoy();
 
-
-
-document
-  .getElementById(
-    "mes"
-  )
-  .value =
+document.getElementById("mes").value =
   mesActual();
 
 
-
-/* ==========================================
-   EVENTOS
-========================================== */
-
-
 document
-  .getElementById(
-    "tipo"
-  )
+  .getElementById("tipo")
   .addEventListener(
-
     "change",
-
     actualizarFormulario
-
   );
 
 
-
 document
-  .getElementById(
-    "persona"
-  )
+  .getElementById("persona")
   .addEventListener(
-
     "change",
-
     actualizarFormulario
-
   );
 
 
-
 document
-  .getElementById(
-    "mes"
-  )
+  .getElementById("mes")
   .addEventListener(
-
     "change",
-
     actualizarPantalla
-
   );
-
-
-
-/* ==========================================
-   FORMULARIO INGRESO / GASTO
-========================================== */
 
 
 function actualizarFormulario() {
 
-
   const tipo =
-
-    document
-      .getElementById(
-        "tipo"
-      )
-      .value;
-
-
+    document.getElementById("tipo").value;
 
   const personaSelect =
-
-    document
-      .getElementById(
-        "persona"
-      );
-
-
+    document.getElementById("persona");
 
   const bloqueCategoria =
-
-    document
-      .getElementById(
-        "bloqueCategoria"
-      );
-
-
+    document.getElementById("bloqueCategoria");
 
   const bloqueFuente =
-
-    document
-      .getElementById(
-        "bloqueFuente"
-      );
-
-
+    document.getElementById("bloqueFuente");
 
   const fuente =
-
-    document
-      .getElementById(
-        "fuente"
-      );
-
-
+    document.getElementById("fuente");
 
   const opcionFamilia =
-
-    personaSelect
-      .querySelector(
-        'option[value="Familia"]'
-      );
-
-
+    personaSelect.querySelector(
+      'option[value="Familia"]'
+    );
 
   const opcionNere =
-
-    personaSelect
-      .querySelector(
-        'option[value="Nere"]'
-      );
+    personaSelect.querySelector(
+      'option[value="Nere"]'
+    );
 
 
+  if (tipo === "Ingreso") {
 
-  /* INGRESOS */
+    bloqueCategoria.classList.add("oculto");
 
-  if (
-    tipo === "Ingreso"
-  ) {
+    bloqueFuente.classList.remove("oculto");
 
-
-    bloqueCategoria
-      .classList
-      .add(
-        "oculto"
-      );
-
-
-    bloqueFuente
-      .classList
-      .remove(
-        "oculto"
-      );
-
-
-    opcionFamilia.disabled =
-      true;
-
-
-    opcionNere.disabled =
-      true;
-
+    opcionFamilia.disabled = true;
+    opcionNere.disabled = true;
 
 
     if (
-
-      personaSelect.value ===
-        "Familia"
-
-      ||
-
-      personaSelect.value ===
-        "Nere"
-
+      personaSelect.value === "Familia" ||
+      personaSelect.value === "Nere"
     ) {
 
-      personaSelect.value =
-        "Paco";
+      personaSelect.value = "Paco";
 
     }
-
 
 
     const persona =
       personaSelect.value;
 
-
-
-    fuente.innerHTML =
-      "";
-
-
+    fuente.innerHTML = "";
 
     const fuentes =
-
-      fuentesIngreso[
-        persona
-      ] || [];
+      fuentesIngreso[persona] || [];
 
 
+    fuentes.forEach(nombre => {
 
-    fuentes.forEach(
+      const opcion =
+        document.createElement("option");
 
-      nombre => {
+      opcion.value = nombre;
+      opcion.textContent = nombre;
 
+      fuente.appendChild(opcion);
 
-        const opcion =
-
-          document
-            .createElement(
-              "option"
-            );
-
-
-        opcion.value =
-          nombre;
-
-
-        opcion.textContent =
-          nombre;
-
-
-        fuente
-          .appendChild(
-            opcion
-          );
-
-      }
-
-    );
+    });
 
   }
 
-
-
-  /* GASTOS */
-
   else {
 
+    bloqueCategoria.classList.remove("oculto");
 
-    bloqueCategoria
-      .classList
-      .remove(
-        "oculto"
-      );
+    bloqueFuente.classList.add("oculto");
 
-
-    bloqueFuente
-      .classList
-      .add(
-        "oculto"
-      );
-
-
-    opcionFamilia.disabled =
-      false;
-
-
-    opcionNere.disabled =
-      false;
+    opcionFamilia.disabled = false;
+    opcionNere.disabled = false;
 
   }
 
 }
 
 
-
-/* ==========================================
-   GUARDAR MOVIMIENTO
-========================================== */
-
-
 function guardarMovimiento() {
 
-
   const fecha =
-
-    document
-      .getElementById(
-        "fecha"
-      )
-      .value;
-
-
+    document.getElementById("fecha").value;
 
   const tipo =
-
-    document
-      .getElementById(
-        "tipo"
-      )
-      .value;
-
-
+    document.getElementById("tipo").value;
 
   const persona =
-
-    document
-      .getElementById(
-        "persona"
-      )
-      .value;
-
-
+    document.getElementById("persona").value;
 
   const concepto =
-
     document
-      .getElementById(
-        "concepto"
-      )
+      .getElementById("concepto")
       .value
       .trim();
 
-
-
   const cantidad =
-
     Number(
-
-      document
-        .getElementById(
-          "cantidad"
-        )
-        .value
-
+      document.getElementById("cantidad").value
     );
-
-
 
   const categoria =
-
     tipo === "Gasto"
-
-      ?
-
-      document
-        .getElementById(
-          "categoria"
-        )
-        .value
-
-      :
-
-      "";
-
-
+      ? document.getElementById("categoria").value
+      : "";
 
   const fuente =
-
     tipo === "Ingreso"
-
-      ?
-
-      document
-        .getElementById(
-          "fuente"
-        )
-        .value
-
-      :
-
-      "";
+      ? document.getElementById("fuente").value
+      : "";
 
 
+  if (!fecha) {
 
-  if (
-    !fecha
-  ) {
-
-    alert(
-      "Selecciona una fecha."
-    );
-
+    alert("Selecciona una fecha.");
     return;
 
   }
 
 
+  if (!cantidad || cantidad <= 0) {
 
-  if (
-
-    !cantidad
-
-    ||
-
-    cantidad <= 0
-
-  ) {
-
-    alert(
-      "Introduce una cantidad válida."
-    );
-
+    alert("Introduce una cantidad válida.");
     return;
 
   }
 
 
-
   if (
-
-    tipo === "Ingreso"
-
-    &&
-
+    tipo === "Ingreso" &&
     (
-      persona === "Familia"
-
-      ||
-
+      persona === "Familia" ||
       persona === "Nere"
     )
-
   ) {
 
     alert(
@@ -1246,332 +777,148 @@ function guardarMovimiento() {
   }
 
 
-
   const movimiento = {
 
-
     id:
-
-      Date
-        .now()
-        .toString()
-
-      +
-
-      Math
-        .random()
+      Date.now().toString() +
+      Math.random()
         .toString(16)
         .slice(2),
 
-
     fecha,
-
     tipo,
-
     persona,
-
     concepto,
-
     cantidad,
-
     categoria,
-
     fuente
 
   };
 
 
-
-  movimientos
-    .push(
-      movimiento
-    );
-
-
+  movimientos.push(movimiento);
 
   guardarDatos();
 
 
+  document.getElementById("concepto").value = "";
+  document.getElementById("cantidad").value = "";
 
-  document
-    .getElementById(
-      "concepto"
-    )
-    .value =
-    "";
-
-
-
-  document
-    .getElementById(
-      "cantidad"
-    )
-    .value =
-    "";
-
-
-
-  document
-    .getElementById(
-      "mes"
-    )
-    .value =
-
-    fecha
-      .slice(
-        0,
-        7
-      );
-
-
+  document.getElementById("mes").value =
+    fecha.slice(0, 7);
 
   actualizarPantalla();
 
 }
-
-
-
-/* ==========================================
-   GUARDAR EN EL DISPOSITIVO
-========================================== */
 
 
 function guardarDatos() {
 
-
   localStorage.setItem(
-
     "asContasClaras",
-
-    JSON.stringify(
-      movimientos
-    )
-
+    JSON.stringify(movimientos)
   );
 
 }
 
 
-
-/* ==========================================
-   BORRAR MOVIMIENTO
-========================================== */
-
-
-function borrarMovimiento(
-  id
-) {
-
+function borrarMovimiento(id) {
 
   const confirmar =
-
     confirm(
       "¿Quieres borrar este movimiento?"
     );
 
-
-
-  if (
-    !confirmar
-  ) {
-
-    return;
-
-  }
-
+  if (!confirmar) return;
 
 
   movimientos =
-
     movimientos.filter(
-
       movimiento =>
-
         movimiento.id !== id
-
     );
 
 
-
   guardarDatos();
-
 
   actualizarPantalla();
 
 }
 
 
-
-/* ==========================================
-   MOVIMIENTOS DEL MES
-========================================== */
-
-
 function movimientosMes() {
 
-
   const mes =
-
-    document
-      .getElementById(
-        "mes"
-      )
-      .value;
-
-
+    document.getElementById("mes").value;
 
   return movimientos.filter(
-
     movimiento =>
-
-      movimiento
-        .fecha
-        .startsWith(
-          mes
-        )
-
+      movimiento.fecha.startsWith(mes)
   );
 
 }
 
 
-
-/* ==========================================
-   ACTUALIZAR TODA LA PANTALLA
-========================================== */
-
-
 function actualizarPantalla() {
-
 
   const datos =
     movimientosMes();
 
+  let ingresos = 0;
+  let gastos = 0;
 
 
-  let ingresos =
-    0;
+  datos.forEach(movimiento => {
 
+    if (movimiento.tipo === "Ingreso") {
 
-  let gastos =
-    0;
-
-
-
-  datos.forEach(
-
-    movimiento => {
-
-
-      if (
-
-        movimiento.tipo ===
-        "Ingreso"
-
-      ) {
-
-        ingresos +=
-          movimiento.cantidad;
-
-      }
-
-
-      else {
-
-        gastos +=
-          movimiento.cantidad;
-
-      }
+      ingresos +=
+        movimiento.cantidad;
 
     }
 
-  );
+    else {
 
+      gastos +=
+        movimiento.cantidad;
+
+    }
+
+  });
 
 
   const saldo =
-    ingresos -
-    gastos;
+    ingresos - gastos;
 
 
-
-  document
-    .getElementById(
-      "totalIngresos"
-    )
-    .textContent =
-
-    importeNormal(
-      ingresos
-    );
+  document.getElementById(
+    "totalIngresos"
+  ).textContent =
+    euro(ingresos);
 
 
-
-  document
-    .getElementById(
-      "totalGastos"
-    )
-    .textContent =
-
-    importeNormal(
-      gastos
-    );
+  document.getElementById(
+    "totalGastos"
+  ).textContent =
+    euro(gastos);
 
 
-
-  document
-    .getElementById(
-      "saldo"
-    )
-    .textContent =
-
-    importeNormal(
-      saldo
-    );
-
-
-
-  const tarjetaSaldo =
-
-    document
-      .getElementById(
-        "tarjetaSaldo"
-      );
-
-
-
-  if (
-    saldo < 0
-  ) {
-
-    tarjetaSaldo
-      .classList
-      .add(
-        "saldo-negativo"
-      );
-
-  }
-
-
-  else {
-
-    tarjetaSaldo
-      .classList
-      .remove(
-        "saldo-negativo"
-      );
-
-  }
-
+  mostrarSaldo(
+    "saldoGeneral",
+    saldo
+  );
 
 
   mostrarPersonas(
-    datos
+    datos,
+    ingresos,
+    gastos
   );
 
 
   mostrarCategorias(
-    datos
+    datos,
+    gastos
   );
 
 
@@ -1582,583 +929,373 @@ function actualizarPantalla() {
 }
 
 
+function mostrarSaldo(
+  elementoId,
+  saldo
+) {
 
-/* ==========================================
-   RESUMEN POR PERSONA
-========================================== */
+  const elemento =
+    document.getElementById(
+      elementoId
+    );
+
+
+  elemento.classList.remove(
+    "positivo",
+    "negativo",
+    "neutro"
+  );
+
+
+  if (saldo > 0) {
+
+    elemento.textContent =
+      euroPositivo(saldo);
+
+    elemento.classList.add(
+      "positivo"
+    );
+
+  }
+
+  else if (saldo < 0) {
+
+    elemento.textContent =
+      euroNegativo(saldo);
+
+    elemento.classList.add(
+      "negativo"
+    );
+
+  }
+
+  else {
+
+    elemento.textContent =
+      euro(0);
+
+    elemento.classList.add(
+      "neutro"
+    );
+
+  }
+
+}
 
 
 function mostrarPersonas(
-  datos
+  datos,
+  totalIngresos,
+  totalGastos
 ) {
 
+  const tabla =
+    document.getElementById(
+      "tablaPersonas"
+    );
 
-  const contenedor =
+  tabla.innerHTML = "";
 
-    document
-      .getElementById(
-        "resumenPersonas"
-      );
 
+  personas.forEach(persona => {
 
+    const ingresos =
+      datos
 
-  contenedor.innerHTML =
-    "";
+        .filter(
+          movimiento =>
+            movimiento.persona === persona &&
+            movimiento.tipo === "Ingreso"
+        )
 
-
-
-  personas.forEach(
-
-    persona => {
-
-
-      const ingresos =
-
-        datos
-
-          .filter(
-
-            movimiento =>
-
-              movimiento.persona ===
-                persona
-
-              &&
-
-              movimiento.tipo ===
-                "Ingreso"
-
-          )
-
-          .reduce(
-
-            (
-              total,
-              movimiento
-            ) =>
-
-              total +
-              movimiento.cantidad,
-
-            0
-
-          );
-
-
-
-      const gastos =
-
-        datos
-
-          .filter(
-
-            movimiento =>
-
-              movimiento.persona ===
-                persona
-
-              &&
-
-              movimiento.tipo ===
-                "Gasto"
-
-          )
-
-          .reduce(
-
-            (
-              total,
-              movimiento
-            ) =>
-
-              total +
-              movimiento.cantidad,
-
-            0
-
-          );
-
-
-
-      const div =
-
-        document
-          .createElement(
-            "div"
-          );
-
-
-
-      div.className =
-        "fila-resumen";
-
-
-
-      if (
-        persona === "Familia"
-      ) {
-
-
-        div.innerHTML = `
-
-          <strong>
-            🏠 Familia
-          </strong>
-
-          <span
-            class="
-              importe-resumen
-              ${
-                gastos > 0
-                  ? "negativo"
-                  : "neutro"
-              }
-            "
-          >
-
-            ${importeGasto(
-              gastos
-            )}
-
-          </span>
-
-        `;
-
-      }
-
-
-      else {
-
-
-        const claseIngreso =
-
-          ingresos > 0
-            ? "positivo"
-            : "neutro";
-
-
-        const claseGasto =
-
-          gastos > 0
-            ? "negativo"
-            : "neutro";
-
-
-
-        div.innerHTML = `
-
-          <strong>
-            ${persona}
-          </strong>
-
-          <span
-            class="
-              importe-resumen
-            "
-          >
-
-            <span
-              class="${claseIngreso}"
-            >
-
-              ${importeIngreso(
-                ingresos
-              )}
-
-            </span>
-
-            ·
-
-            <span
-              class="${claseGasto}"
-            >
-
-              ${importeGasto(
-                gastos
-              )}
-
-            </span>
-
-          </span>
-
-        `;
-
-      }
-
-
-
-      contenedor
-        .appendChild(
-          div
+        .reduce(
+          (total, movimiento) =>
+            total + movimiento.cantidad,
+          0
         );
 
-    }
 
+    const gastos =
+      datos
+
+        .filter(
+          movimiento =>
+            movimiento.persona === persona &&
+            movimiento.tipo === "Gasto"
+        )
+
+        .reduce(
+          (total, movimiento) =>
+            total + movimiento.cantidad,
+          0
+        );
+
+
+    const fila =
+      document.createElement("tr");
+
+
+    const nombre =
+      persona === "Familia"
+        ? "🏠 Familia"
+        : persona;
+
+
+    fila.innerHTML = `
+
+      <td>
+        <strong>${nombre}</strong>
+      </td>
+
+      <td class="${ingresos > 0 ? "positivo" : "neutro"}">
+        ${
+          ingresos > 0
+            ? euroPositivo(ingresos)
+            : euro(0)
+        }
+      </td>
+
+      <td class="${gastos > 0 ? "negativo" : "neutro"}">
+        ${
+          gastos > 0
+            ? euroNegativo(gastos)
+            : euro(0)
+        }
+      </td>
+
+    `;
+
+
+    tabla.appendChild(fila);
+
+  });
+
+
+  document.getElementById(
+    "totalPersonasIngresos"
+  ).textContent =
+    euro(totalIngresos);
+
+
+  document.getElementById(
+    "totalPersonasGastos"
+  ).textContent =
+    euro(totalGastos);
+
+
+  mostrarSaldo(
+    "saldoFinMes",
+    totalIngresos - totalGastos
   );
 
 }
-
-
-
-/* ==========================================
-   RESUMEN POR CATEGORÍA
-========================================== */
 
 
 function mostrarCategorias(
-  datos
+  datos,
+  totalGastos
 ) {
 
-
   const contenedor =
+    document.getElementById(
+      "resumenCategorias"
+    );
 
-    document
-      .getElementById(
-        "resumenCategorias"
-      );
-
-
-
-  contenedor.innerHTML =
-    "";
+  contenedor.innerHTML = "";
 
 
+  categorias.forEach(categoria => {
 
-  categorias.forEach(
+    const total =
+      datos
 
-    categoria => {
+        .filter(
+          movimiento =>
+            movimiento.tipo === "Gasto" &&
+            movimiento.categoria === categoria
+        )
 
-
-      const total =
-
-        datos
-
-          .filter(
-
-            movimiento =>
-
-              movimiento.tipo ===
-                "Gasto"
-
-              &&
-
-              movimiento.categoria ===
-                categoria
-
-          )
-
-          .reduce(
-
-            (
-              suma,
-              movimiento
-            ) =>
-
-              suma +
-              movimiento.cantidad,
-
-            0
-
-          );
-
-
-
-      const div =
-
-        document
-          .createElement(
-            "div"
-          );
-
-
-
-      div.className =
-        "fila-resumen";
-
-
-
-      const clase =
-
-        total > 0
-          ? "negativo"
-          : "neutro";
-
-
-
-      div.innerHTML = `
-
-        <strong>
-          ${categoria}
-        </strong>
-
-        <span
-          class="
-            importe-resumen
-            ${clase}
-          "
-        >
-
-          ${importeGasto(
-            total
-          )}
-
-        </span>
-
-      `;
-
-
-
-      contenedor
-        .appendChild(
-          div
+        .reduce(
+          (suma, movimiento) =>
+            suma + movimiento.cantidad,
+          0
         );
 
-    }
 
-  );
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "fila-categoria";
+
+
+    div.innerHTML = `
+
+      <strong>
+        ${categoria}
+      </strong>
+
+      <span class="${total > 0 ? "negativo" : "neutro"}">
+
+        ${
+          total > 0
+            ? euroNegativo(total)
+            : euro(0)
+        }
+
+      </span>
+
+    `;
+
+
+    contenedor.appendChild(div);
+
+  });
+
+
+  document.getElementById(
+    "totalCategorias"
+  ).textContent =
+    totalGastos > 0
+      ? euroNegativo(totalGastos)
+      : euro(0);
 
 }
-
-
-
-/* ==========================================
-   HISTORIAL DE MOVIMIENTOS
-========================================== */
 
 
 function mostrarMovimientos(
   datos
 ) {
 
-
   const contenedor =
+    document.getElementById(
+      "listaMovimientos"
+    );
 
-    document
-      .getElementById(
-        "listaMovimientos"
-      );
-
-
-
-  contenedor.innerHTML =
-    "";
+  contenedor.innerHTML = "";
 
 
-
-  if (
-    datos.length === 0
-  ) {
-
+  if (datos.length === 0) {
 
     contenedor.innerHTML = `
 
       <div class="vacio">
-
-        No hay movimientos
-        este mes.
-
+        No hay movimientos este mes.
       </div>
 
     `;
-
 
     return;
 
   }
 
 
-
   const ordenados =
-
-    [...datos]
-      .sort(
-
-        (
-          a,
-          b
-        ) =>
-
-          b.fecha
-            .localeCompare(
-              a.fecha
-            )
-
-      );
-
+    [...datos].sort(
+      (a, b) =>
+        b.fecha.localeCompare(
+          a.fecha
+        )
+    );
 
 
   ordenados.forEach(
-
     movimiento => {
 
-
       const div =
-
-        document
-          .createElement(
-            "div"
-          );
-
-
+        document.createElement(
+          "div"
+        );
 
       div.className =
         "movimiento";
 
 
+      const ingreso =
+        movimiento.tipo === "Ingreso";
+
 
       const clase =
-
-        movimiento.tipo ===
-          "Ingreso"
-
-          ?
-          "positivo"
-
-          :
-          "negativo";
-
+        ingreso
+          ? "positivo"
+          : "negativo";
 
 
       const importe =
-
-        movimiento.tipo ===
-          "Ingreso"
-
-          ?
-
-          importeIngreso(
-            movimiento.cantidad
-          )
-
-          :
-
-          importeGasto(
-            movimiento.cantidad
-          );
-
+        ingreso
+          ? euroPositivo(
+              movimiento.cantidad
+            )
+          : euroNegativo(
+              movimiento.cantidad
+            );
 
 
       const detalle =
-
-        movimiento.tipo ===
-          "Ingreso"
-
-          ?
-
-          movimiento.fuente
-
-          :
-
-          movimiento.categoria;
+        ingreso
+          ? movimiento.fuente
+          : movimiento.categoria;
 
 
-
-      const personaTexto =
-
-        movimiento.persona ===
-          "Familia"
-
-          ?
-
-          "🏠 Familia"
-
-          :
-
-          movimiento.persona;
-
+      const persona =
+        movimiento.persona === "Familia"
+          ? "🏠 Familia"
+          : movimiento.persona;
 
 
       div.innerHTML = `
 
-
         <div class="mov-top">
-
 
           <span>
 
             ${
-              movimiento.concepto
-              ||
+              movimiento.concepto ||
               detalle
             }
 
           </span>
 
-
-          <span
-            class="${clase}"
-          >
-
+          <span class="${clase}">
             ${importe}
-
           </span>
 
-
         </div>
-
 
         <div class="detalle">
 
           ${movimiento.fecha}
-
           ·
-
-          ${personaTexto}
-
+          ${persona}
           ·
-
           ${detalle}
 
         </div>
 
-
         <button
-
           class="borrar"
-
-          onclick="
-            borrarMovimiento(
-              '${movimiento.id}'
-            )
-          "
-
+          onclick="borrarMovimiento('${movimiento.id}')"
         >
-
           Eliminar
-
         </button>
-
 
       `;
 
 
-
-      contenedor
-        .appendChild(
-          div
-        );
+      contenedor.appendChild(
+        div
+      );
 
     }
-
   );
 
 }
 
 
-
-/* ==========================================
-   INICIAR APP
-========================================== */
-
-
 actualizarFormulario();
-
 actualizarPantalla();
-
 
 </script>
 
-
 </body>
-
 </html>
