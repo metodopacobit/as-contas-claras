@@ -33,7 +33,7 @@
 
     header p {
       margin: 6px 0 0;
-      opacity: .9;
+      opacity: 0.9;
     }
 
     .container {
@@ -49,7 +49,9 @@
       margin-bottom: 14px;
     }
 
-    input, select, button {
+    input,
+    select,
+    button {
       width: 100%;
       padding: 13px;
       margin-top: 7px;
@@ -76,7 +78,7 @@
       border-radius: 14px;
       padding: 15px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .tarjeta strong {
@@ -107,7 +109,7 @@
       border-radius: 14px;
       padding: 18px;
       margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .panel h2 {
@@ -120,10 +122,11 @@
       border: none;
       font-weight: bold;
       margin-top: 18px;
+      cursor: pointer;
     }
 
     .btn:active {
-      transform: scale(.98);
+      transform: scale(0.98);
     }
 
     .movimiento {
@@ -164,6 +167,7 @@
       background: #fee2e2;
       color: #b91c1c;
       border: none;
+      cursor: pointer;
     }
 
     .oculto {
@@ -173,8 +177,13 @@
     .persona-resumen {
       display: flex;
       justify-content: space-between;
-      padding: 9px 0;
-      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+      border-bottom: 1px solid #eeeeee;
+      gap: 10px;
+    }
+
+    .persona-resumen:last-child {
+      border-bottom: none;
     }
 
     .vacio {
@@ -201,82 +210,192 @@
 
 <div class="container">
 
+  <!-- MES -->
+
   <div class="mes">
+
     <label for="mes">Mes</label>
-    <input type="month" id="mes">
+
+    <input
+      type="month"
+      id="mes"
+    >
+
   </div>
+
+  <!-- RESUMEN GENERAL -->
 
   <section class="resumen">
 
     <div class="tarjeta ingresos">
       Ingresos
-      <strong id="totalIngresos">0 €</strong>
+      <strong id="totalIngresos">
+        0 €
+      </strong>
     </div>
 
     <div class="tarjeta gastos">
       Gastos
-      <strong id="totalGastos">0 €</strong>
+      <strong id="totalGastos">
+        0 €
+      </strong>
     </div>
 
     <div class="tarjeta saldo">
       Saldo del mes
-      <strong id="saldo">0 €</strong>
+      <strong id="saldo">
+        0 €
+      </strong>
     </div>
 
   </section>
+
+  <!-- NUEVO MOVIMIENTO -->
 
   <section class="panel">
 
     <h2>➕ Nuevo movimiento</h2>
 
     <label>Fecha</label>
-    <input type="date" id="fecha">
+
+    <input
+      type="date"
+      id="fecha"
+    >
 
     <label>Tipo</label>
+
     <select id="tipo">
-      <option value="Gasto">Gasto</option>
-      <option value="Ingreso">Ingreso</option>
+
+      <option value="Gasto">
+        Gasto
+      </option>
+
+      <option value="Ingreso">
+        Ingreso
+      </option>
+
     </select>
 
     <label>Persona</label>
+
     <select id="persona">
-      <option value="Paco">Paco</option>
-      <option value="Mari">Mari</option>
-      <option value="Nere">Nere</option>
+
+      <option value="Familia">
+        Familia
+      </option>
+
+      <option value="Paco">
+        Paco
+      </option>
+
+      <option value="Mari">
+        Mari
+      </option>
+
+      <option value="Nere">
+        Nere
+      </option>
+
     </select>
 
+    <!-- CATEGORÍAS DE GASTO -->
+
     <div id="bloqueCategoria">
+
       <label>Categoría</label>
+
       <select id="categoria">
-        <option>Supermercado</option>
-        <option>Hipoteca</option>
-        <option>Luz</option>
-        <option>Telefono</option>
-        <option>App tv</option>
-        <option>Ropa/calzado</option>
-        <option>Fiesta</option>
-        <option>Coches/Moto</option>
-        <option>Salud</option>
-        <option>Viajes</option>
-        <option>Tabaco</option>
-        <option>Seguros</option>
-        <option>Otros</option>
+
+        <option>
+          Supermercado
+        </option>
+
+        <option>
+          Hipoteca
+        </option>
+
+        <option>
+          Luz
+        </option>
+
+        <option>
+          Telefono
+        </option>
+
+        <option>
+          App tv
+        </option>
+
+        <option>
+          Ropa/calzado
+        </option>
+
+        <option>
+          Fiesta
+        </option>
+
+        <option>
+          Coches/Moto
+        </option>
+
+        <option>
+          Salud
+        </option>
+
+        <option>
+          Viajes
+        </option>
+
+        <option>
+          Tabaco
+        </option>
+
+        <option>
+          Seguros
+        </option>
+
+        <option>
+          Plan de inversión
+        </option>
+
+        <option>
+          Otros
+        </option>
+
       </select>
+
     </div>
 
-    <div id="bloqueFuente" class="oculto">
-      <label>Fuente de ingreso</label>
+    <!-- FUENTE DE INGRESO -->
+
+    <div
+      id="bloqueFuente"
+      class="oculto"
+    >
+
+      <label>
+        Fuente de ingreso
+      </label>
+
       <select id="fuente"></select>
+
     </div>
 
-    <label>Concepto</label>
+    <label>
+      Concepto
+    </label>
+
     <input
       type="text"
       id="concepto"
-      placeholder="Ej. Mercadona, nómina julio..."
+      placeholder="Ej. Mercadona, nómina julio, hipoteca..."
     >
 
-    <label>Cantidad (€)</label>
+    <label>
+      Cantidad (€)
+    </label>
+
     <input
       type="number"
       id="cantidad"
@@ -286,23 +405,34 @@
       placeholder="0,00"
     >
 
-    <button class="btn" onclick="guardarMovimiento()">
+    <button
+      class="btn"
+      onclick="guardarMovimiento()"
+    >
       Guardar movimiento
     </button>
 
   </section>
 
+  <!-- RESUMEN POR PERSONA -->
+
   <section class="panel">
 
-    <h2>👨‍👩‍👧 Resumen por persona</h2>
+    <h2>
+      👨‍👩‍👧 Resumen
+    </h2>
 
     <div id="resumenPersonas"></div>
 
   </section>
 
+  <!-- HISTORIAL -->
+
   <section class="panel">
 
-    <h2>📋 Movimientos</h2>
+    <h2>
+      📋 Movimientos
+    </h2>
 
     <div id="listaMovimientos"></div>
 
@@ -314,55 +444,103 @@
   As contas claras · Datos guardados en este dispositivo
 </footer>
 
+
 <script>
 
-const personas = ["Paco", "Mari", "Nere"];
+const personas = [
+  "Familia",
+  "Paco",
+  "Mari",
+  "Nere"
+];
+
 
 const fuentesIngreso = {
-  Paco: ["Nómina", "Alquiler"],
-  Mari: ["Nómina", "Pensión"],
-  Nere: []
+
+  Paco: [
+    "Nómina",
+    "Alquiler"
+  ],
+
+  Mari: [
+    "Nómina",
+    "Pensión"
+  ]
+
 };
 
-let movimientos =
-  JSON.parse(localStorage.getItem("asContasClaras")) || [];
 
-const formatoEuro = new Intl.NumberFormat(
-  "es-ES",
-  {
-    style: "currency",
-    currency: "EUR"
-  }
-);
+let movimientos =
+  JSON.parse(
+    localStorage.getItem("asContasClaras")
+  ) || [];
+
+
+const formatoEuro =
+  new Intl.NumberFormat(
+    "es-ES",
+    {
+      style: "currency",
+      currency: "EUR"
+    }
+  );
+
 
 function fechaHoy() {
+
   const hoy = new Date();
 
-  const year = hoy.getFullYear();
-  const month = String(hoy.getMonth() + 1).padStart(2, "0");
-  const day = String(hoy.getDate()).padStart(2, "0");
+  const year =
+    hoy.getFullYear();
+
+  const month =
+    String(
+      hoy.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      hoy.getDate()
+    ).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 }
+
 
 function mesActual() {
   return fechaHoy().slice(0, 7);
 }
 
-document.getElementById("fecha").value = fechaHoy();
-document.getElementById("mes").value = mesActual();
+
+document.getElementById("fecha").value =
+  fechaHoy();
+
+document.getElementById("mes").value =
+  mesActual();
+
 
 document
   .getElementById("tipo")
-  .addEventListener("change", actualizarFormulario);
+  .addEventListener(
+    "change",
+    actualizarFormulario
+  );
+
 
 document
   .getElementById("persona")
-  .addEventListener("change", actualizarFormulario);
+  .addEventListener(
+    "change",
+    actualizarFormulario
+  );
+
 
 document
   .getElementById("mes")
-  .addEventListener("change", actualizarPantalla);
+  .addEventListener(
+    "change",
+    actualizarPantalla
+  );
 
 
 function actualizarFormulario() {
@@ -370,61 +548,99 @@ function actualizarFormulario() {
   const tipo =
     document.getElementById("tipo").value;
 
-  const persona =
-    document.getElementById("persona").value;
+  const personaSelect =
+    document.getElementById("persona");
 
   const bloqueCategoria =
-    document.getElementById("bloqueCategoria");
+    document.getElementById(
+      "bloqueCategoria"
+    );
 
   const bloqueFuente =
-    document.getElementById("bloqueFuente");
+    document.getElementById(
+      "bloqueFuente"
+    );
 
   const fuente =
     document.getElementById("fuente");
 
+  const opcionFamilia =
+    personaSelect.querySelector(
+      'option[value="Familia"]'
+    );
+
+  const opcionNere =
+    personaSelect.querySelector(
+      'option[value="Nere"]'
+    );
+
 
   if (tipo === "Ingreso") {
 
-    bloqueCategoria.classList.add("oculto");
-    bloqueFuente.classList.remove("oculto");
+    bloqueCategoria.classList.add(
+      "oculto"
+    );
+
+    bloqueFuente.classList.remove(
+      "oculto"
+    );
+
+    /*
+      Familia y Nere
+      no pueden tener ingresos
+    */
+
+    opcionFamilia.disabled = true;
+    opcionNere.disabled = true;
+
+    if (
+      personaSelect.value === "Familia" ||
+      personaSelect.value === "Nere"
+    ) {
+      personaSelect.value = "Paco";
+    }
+
+    const persona =
+      personaSelect.value;
 
     fuente.innerHTML = "";
 
     const fuentes =
       fuentesIngreso[persona] || [];
 
-    if (fuentes.length === 0) {
+    fuentes.forEach(nombre => {
 
       const opcion =
-        document.createElement("option");
+        document.createElement(
+          "option"
+        );
 
-      opcion.textContent =
-        "Esta persona no tiene ingresos";
-
-      opcion.value = "";
+      opcion.value = nombre;
+      opcion.textContent = nombre;
 
       fuente.appendChild(opcion);
 
-    } else {
+    });
 
-      fuentes.forEach(nombre => {
+  }
 
-        const opcion =
-          document.createElement("option");
+  else {
 
-        opcion.value = nombre;
-        opcion.textContent = nombre;
+    /*
+      En los gastos pueden aparecer
+      Familia, Paco, Mari y Nere
+    */
 
-        fuente.appendChild(opcion);
+    bloqueCategoria.classList.remove(
+      "oculto"
+    );
 
-      });
+    bloqueFuente.classList.add(
+      "oculto"
+    );
 
-    }
-
-  } else {
-
-    bloqueCategoria.classList.remove("oculto");
-    bloqueFuente.classList.add("oculto");
+    opcionFamilia.disabled = false;
+    opcionNere.disabled = false;
 
   }
 
@@ -434,43 +650,82 @@ function actualizarFormulario() {
 function guardarMovimiento() {
 
   const fecha =
-    document.getElementById("fecha").value;
+    document.getElementById(
+      "fecha"
+    ).value;
 
   const tipo =
-    document.getElementById("tipo").value;
+    document.getElementById(
+      "tipo"
+    ).value;
 
   const persona =
-    document.getElementById("persona").value;
+    document.getElementById(
+      "persona"
+    ).value;
 
   const concepto =
-    document.getElementById("concepto").value.trim();
+    document.getElementById(
+      "concepto"
+    ).value.trim();
 
   const cantidad =
-    Number(document.getElementById("cantidad").value);
+    Number(
+      document.getElementById(
+        "cantidad"
+      ).value
+    );
 
   const categoria =
     tipo === "Gasto"
-      ? document.getElementById("categoria").value
+      ? document.getElementById(
+          "categoria"
+        ).value
       : "";
 
   const fuente =
     tipo === "Ingreso"
-      ? document.getElementById("fuente").value
+      ? document.getElementById(
+          "fuente"
+        ).value
       : "";
 
 
   if (!fecha) {
-    alert("Selecciona una fecha.");
+
+    alert(
+      "Selecciona una fecha."
+    );
+
     return;
   }
 
-  if (!cantidad || cantidad <= 0) {
-    alert("Introduce una cantidad válida.");
+
+  if (
+    !cantidad ||
+    cantidad <= 0
+  ) {
+
+    alert(
+      "Introduce una cantidad válida."
+    );
+
     return;
   }
 
-  if (tipo === "Ingreso" && !fuente) {
-    alert("Esta persona no tiene una fuente de ingresos configurada.");
+
+  if (
+    tipo === "Ingreso" &&
+    (
+      persona === "Familia" ||
+      persona === "Nere"
+    )
+  ) {
+
+    alert(
+      "Los ingresos solo pueden asignarse a Paco o Mari."
+    );
+
     return;
   }
 
@@ -479,7 +734,9 @@ function guardarMovimiento() {
 
     id:
       Date.now().toString() +
-      Math.random().toString(16).slice(2),
+      Math.random()
+        .toString(16)
+        .slice(2),
 
     fecha,
     tipo,
@@ -492,15 +749,27 @@ function guardarMovimiento() {
   };
 
 
-  movimientos.push(movimiento);
+  movimientos.push(
+    movimiento
+  );
 
   guardarDatos();
 
-  document.getElementById("concepto").value = "";
-  document.getElementById("cantidad").value = "";
 
-  document.getElementById("mes").value =
+  document.getElementById(
+    "concepto"
+  ).value = "";
+
+  document.getElementById(
+    "cantidad"
+  ).value = "";
+
+
+  document.getElementById(
+    "mes"
+  ).value =
     fecha.slice(0, 7);
+
 
   actualizarPantalla();
 
@@ -510,8 +779,13 @@ function guardarMovimiento() {
 function guardarDatos() {
 
   localStorage.setItem(
+
     "asContasClaras",
-    JSON.stringify(movimientos)
+
+    JSON.stringify(
+      movimientos
+    )
+
   );
 
 }
@@ -520,14 +794,21 @@ function guardarDatos() {
 function borrarMovimiento(id) {
 
   const confirmar =
-    confirm("¿Quieres borrar este movimiento?");
+    confirm(
+      "¿Quieres borrar este movimiento?"
+    );
 
-  if (!confirmar) return;
+  if (!confirmar) {
+    return;
+  }
+
 
   movimientos =
     movimientos.filter(
-      movimiento => movimiento.id !== id
+      movimiento =>
+        movimiento.id !== id
     );
+
 
   guardarDatos();
 
@@ -539,11 +820,16 @@ function borrarMovimiento(id) {
 function movimientosMes() {
 
   const mes =
-    document.getElementById("mes").value;
+    document.getElementById(
+      "mes"
+    ).value;
+
 
   return movimientos.filter(
     movimiento =>
-      movimiento.fecha.startsWith(mes)
+      movimiento.fecha.startsWith(
+        mes
+      )
   );
 
 }
@@ -551,35 +837,62 @@ function movimientosMes() {
 
 function actualizarPantalla() {
 
-  const datos = movimientosMes();
+  const datos =
+    movimientosMes();
 
   let ingresos = 0;
   let gastos = 0;
 
 
-  datos.forEach(movimiento => {
+  datos.forEach(
+    movimiento => {
 
-    if (movimiento.tipo === "Ingreso") {
-      ingresos += movimiento.cantidad;
-    } else {
-      gastos += movimiento.cantidad;
+      if (
+        movimiento.tipo === "Ingreso"
+      ) {
+
+        ingresos +=
+          movimiento.cantidad;
+
+      }
+
+      else {
+
+        gastos +=
+          movimiento.cantidad;
+
+      }
+
     }
-
-  });
+  );
 
 
   const saldo =
     ingresos - gastos;
 
 
-  document.getElementById("totalIngresos").textContent =
-    formatoEuro.format(ingresos);
+  document.getElementById(
+    "totalIngresos"
+  ).textContent =
+    formatoEuro.format(
+      ingresos
+    );
 
-  document.getElementById("totalGastos").textContent =
-    formatoEuro.format(gastos);
 
-  document.getElementById("saldo").textContent =
-    formatoEuro.format(saldo);
+  document.getElementById(
+    "totalGastos"
+  ).textContent =
+    formatoEuro.format(
+      gastos
+    );
+
+
+  document.getElementById(
+    "saldo"
+  ).textContent =
+    formatoEuro.format(
+      saldo
+    );
 
 
   mostrarPersonas(datos);
@@ -592,66 +905,118 @@ function actualizarPantalla() {
 function mostrarPersonas(datos) {
 
   const contenedor =
-    document.getElementById("resumenPersonas");
+    document.getElementById(
+      "resumenPersonas"
+    );
 
   contenedor.innerHTML = "";
 
 
-  personas.forEach(persona => {
+  personas.forEach(
+    persona => {
 
-    const ingresos =
-      datos
-        .filter(
-          m =>
-            m.persona === persona &&
-            m.tipo === "Ingreso"
-        )
-        .reduce(
-          (total, m) =>
-            total + m.cantidad,
-          0
+      const ingresos =
+        datos
+
+          .filter(
+            m =>
+              m.persona === persona &&
+              m.tipo === "Ingreso"
+          )
+
+          .reduce(
+            (total, m) =>
+              total + m.cantidad,
+            0
+          );
+
+
+      const gastos =
+        datos
+
+          .filter(
+            m =>
+              m.persona === persona &&
+              m.tipo === "Gasto"
+          )
+
+          .reduce(
+            (total, m) =>
+              total + m.cantidad,
+            0
+          );
+
+
+      const div =
+        document.createElement(
+          "div"
         );
 
-
-    const gastos =
-      datos
-        .filter(
-          m =>
-            m.persona === persona &&
-            m.tipo === "Gasto"
-        )
-        .reduce(
-          (total, m) =>
-            total + m.cantidad,
-          0
-        );
+      div.className =
+        "persona-resumen";
 
 
-    const div =
-      document.createElement("div");
+      if (persona === "Familia") {
 
-    div.className =
-      "persona-resumen";
+        div.innerHTML = `
 
-    div.innerHTML = `
-      <strong>${persona}</strong>
+          <strong>
+            🏠 Familia
+          </strong>
 
-      <span>
-        <span class="positivo">
-          +${formatoEuro.format(ingresos)}
-        </span>
+          <span class="negativo">
 
-        ·
+            -${formatoEuro.format(
+              gastos
+            )}
 
-        <span class="negativo">
-          -${formatoEuro.format(gastos)}
-        </span>
-      </span>
-    `;
+          </span>
 
-    contenedor.appendChild(div);
+        `;
 
-  });
+      }
+
+      else {
+
+        div.innerHTML = `
+
+          <strong>
+            ${persona}
+          </strong>
+
+          <span>
+
+            <span class="positivo">
+
+              +${formatoEuro.format(
+                ingresos
+              )}
+
+            </span>
+
+            ·
+
+            <span class="negativo">
+
+              -${formatoEuro.format(
+                gastos
+              )}
+
+            </span>
+
+          </span>
+
+        `;
+
+      }
+
+
+      contenedor.appendChild(
+        div
+      );
+
+    }
+  );
 
 }
 
@@ -659,93 +1024,125 @@ function mostrarPersonas(datos) {
 function mostrarMovimientos(datos) {
 
   const contenedor =
-    document.getElementById("listaMovimientos");
+    document.getElementById(
+      "listaMovimientos"
+    );
 
   contenedor.innerHTML = "";
 
 
   if (datos.length === 0) {
 
-    contenedor.innerHTML =
-      `<div class="vacio">
+    contenedor.innerHTML = `
+
+      <div class="vacio">
         No hay movimientos este mes.
-      </div>`;
+      </div>
+
+    `;
 
     return;
-
   }
 
 
   const ordenados =
     [...datos].sort(
       (a, b) =>
-        b.fecha.localeCompare(a.fecha)
+        b.fecha.localeCompare(
+          a.fecha
+        )
     );
 
 
-  ordenados.forEach(movimiento => {
+  ordenados.forEach(
+    movimiento => {
 
-    const div =
-      document.createElement("div");
+      const div =
+        document.createElement(
+          "div"
+        );
 
-    div.className =
-      "movimiento";
-
-
-    const clase =
-      movimiento.tipo === "Ingreso"
-        ? "positivo"
-        : "negativo";
+      div.className =
+        "movimiento";
 
 
-    const signo =
-      movimiento.tipo === "Ingreso"
-        ? "+"
-        : "-";
+      const clase =
+        movimiento.tipo === "Ingreso"
+          ? "positivo"
+          : "negativo";
 
 
-    const detalle =
-      movimiento.tipo === "Ingreso"
-        ? movimiento.fuente
-        : movimiento.categoria;
+      const signo =
+        movimiento.tipo === "Ingreso"
+          ? "+"
+          : "-";
 
 
-    div.innerHTML = `
+      const detalle =
+        movimiento.tipo === "Ingreso"
+          ? movimiento.fuente
+          : movimiento.categoria;
 
-      <div class="mov-top">
 
-        <span>
-          ${movimiento.concepto || detalle}
-        </span>
+      const personaTexto =
+        movimiento.persona === "Familia"
+          ? "🏠 Familia"
+          : movimiento.persona;
 
-        <span class="${clase}">
-          ${signo}${formatoEuro.format(movimiento.cantidad)}
-        </span>
 
-      </div>
+      div.innerHTML = `
 
-      <div class="detalle">
+        <div class="mov-top">
 
-        ${movimiento.fecha}
-        ·
-        ${movimiento.persona}
-        ·
-        ${detalle}
+          <span>
+            ${
+              movimiento.concepto ||
+              detalle
+            }
+          </span>
 
-      </div>
+          <span class="${clase}">
 
-      <button
-        class="borrar"
-        onclick="borrarMovimiento('${movimiento.id}')"
-      >
-        Eliminar
-      </button>
+            ${signo}${formatoEuro.format(
+              movimiento.cantidad
+            )}
 
-    `;
+          </span>
 
-    contenedor.appendChild(div);
+        </div>
 
-  });
+
+        <div class="detalle">
+
+          ${movimiento.fecha}
+
+          ·
+
+          ${personaTexto}
+
+          ·
+
+          ${detalle}
+
+        </div>
+
+
+        <button
+          class="borrar"
+          onclick="borrarMovimiento('${movimiento.id}')"
+        >
+          Eliminar
+        </button>
+
+      `;
+
+
+      contenedor.appendChild(
+        div
+      );
+
+    }
+  );
 
 }
 
