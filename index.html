@@ -94,7 +94,7 @@
     }
 
     .btn-google {
-      background: #ffffff;
+      background: #fff;
       color: #1f2937;
       border: 1px solid #d1d5db;
       font-weight: bold;
@@ -232,12 +232,10 @@
       font-weight: bold;
     }
 
-    /* =========================
-       CATEGORÍAS DESPLEGABLES
-    ========================= */
+    /* CATEGORÍAS DESPLEGABLES */
 
     .categoria-desplegable {
-      border-bottom: 1px solid #eeeeee;
+      border-bottom: 1px solid #eee;
     }
 
     .categoria-desplegable summary {
@@ -265,10 +263,9 @@
     }
 
     .categoria-flecha {
-      display: inline-block;
       color: #6b7280;
       font-size: 12px;
-      transition: transform .2s ease;
+      transition: transform .2s;
     }
 
     .categoria-desplegable[open] .categoria-flecha {
@@ -289,10 +286,6 @@
       justify-content: space-between;
       gap: 12px;
       font-weight: bold;
-    }
-
-    .categoria-movimiento-top span:first-child {
-      flex: 1;
     }
 
     .categoria-movimiento-info {
@@ -316,11 +309,12 @@
 
     .total-categorias {
       border-top: 2px solid #d1d5db;
-      border-bottom: none;
       font-weight: bold;
       margin-top: 8px;
       padding-top: 16px;
     }
+
+    /* MOVIMIENTOS */
 
     .movimiento {
       border-bottom: 1px solid #e5e7eb;
@@ -344,14 +338,31 @@
       margin-top: 5px;
     }
 
+    .acciones-movimiento {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .editar {
+      width: auto;
+      background: #dbeafe;
+      color: #1d4ed8;
+      border: none;
+      padding: 7px 13px;
+      margin: 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     .borrar {
       width: auto;
       background: #fee2e2;
       color: #b91c1c;
       border: none;
-      padding: 6px 11px;
-      font-size: 13px;
-      margin-top: 8px;
+      padding: 7px 13px;
+      margin: 0;
+      font-size: 14px;
     }
 
     .vacio {
@@ -365,13 +376,57 @@
       padding: 30px 18px;
     }
 
-    .login h2 {
-      margin-bottom: 8px;
-    }
-
     .login p {
       color: #6b7280;
       line-height: 1.5;
+    }
+
+    /* VENTANA EDITAR */
+
+    .modal-fondo {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal {
+      background: white;
+      width: 100%;
+      max-width: 550px;
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .modal h2 {
+      margin-top: 0;
+    }
+
+    .botones-modal {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .guardar-edicion {
+      background: #0f766e;
+      color: white;
+      border: none;
+      font-weight: bold;
+    }
+
+    .cancelar-edicion {
+      background: #e5e7eb;
+      color: #374151;
+      border: none;
+      font-weight: bold;
     }
 
     footer {
@@ -401,12 +456,8 @@
 
 <div class="container">
 
-  <!-- LOGIN -->
+  <section id="pantallaLogin" class="panel login">
 
-  <section
-    id="pantallaLogin"
-    class="panel login"
-  >
     <h2>🔐 Acceso familiar</h2>
 
     <p>
@@ -414,100 +465,63 @@
       Los movimientos se compartirán entre ambos móviles.
     </p>
 
-    <button
-      id="botonLogin"
-      class="btn-google"
-    >
+    <button id="botonLogin" class="btn-google">
       Entrar con Google
     </button>
+
   </section>
 
 
-  <!-- APP -->
-
-  <div
-    id="aplicacion"
-    class="oculto"
-  >
+  <div id="aplicacion" class="oculto">
 
     <section class="panel usuario">
 
       <div>
-        <strong id="nombreUsuario">
-          Usuario
-        </strong>
-
+        <strong id="nombreUsuario">Usuario</strong>
         <span id="emailUsuario"></span>
 
-        <div
-          id="estadoConexion"
-          class="estado"
-        >
+        <div id="estadoConexion" class="estado">
           ☁️ Sincronizando...
         </div>
       </div>
 
-      <button
-        id="botonSalir"
-        class="btn-salir"
-      >
+      <button id="botonSalir" class="btn-salir">
         Salir
       </button>
 
     </section>
 
 
-    <!-- MES -->
-
     <div class="mes">
 
-      <label for="mes">
-        Mes
-      </label>
+      <label for="mes">Mes</label>
 
-      <input
-        type="month"
-        id="mes"
-      >
+      <input type="month" id="mes">
 
     </div>
 
 
-    <!-- RESUMEN GENERAL -->
-
     <section class="resumen-general">
 
       <div class="tarjeta ingresos">
-
         Ingresos
-
         <strong id="totalIngresos">
           0,00 €
         </strong>
-
       </div>
 
       <div class="tarjeta gastos">
-
         Gastos
-
         <strong id="totalGastos">
           0,00 €
         </strong>
-
       </div>
 
       <div class="tarjeta saldo">
-
         Saldo del mes
-
-        <strong
-          id="saldoGeneral"
-          class="neutro"
-        >
+        <strong id="saldoGeneral" class="neutro">
           0,00 €
         </strong>
-
       </div>
 
     </section>
@@ -517,146 +531,64 @@
 
     <section class="panel">
 
-      <h2>
-        ➕ Nuevo movimiento
-      </h2>
+      <h2>➕ Nuevo movimiento</h2>
 
       <label>Fecha</label>
-
-      <input
-        type="date"
-        id="fecha"
-      >
-
+      <input type="date" id="fecha">
 
       <label>Tipo</label>
 
       <select id="tipo">
-
-        <option value="Gasto">
-          Gasto
-        </option>
-
-        <option value="Ingreso">
-          Ingreso
-        </option>
-
+        <option value="Gasto">Gasto</option>
+        <option value="Ingreso">Ingreso</option>
       </select>
-
 
       <label>Persona</label>
 
       <select id="persona">
-
-        <option value="Familia">
-          Familia
-        </option>
-
-        <option value="Paco">
-          Paco
-        </option>
-
-        <option value="Mari">
-          Mari
-        </option>
-
-        <option value="Nere">
-          Nere
-        </option>
-
+        <option value="Familia">Familia</option>
+        <option value="Paco">Paco</option>
+        <option value="Mari">Mari</option>
+        <option value="Nere">Nere</option>
       </select>
-
 
       <div id="bloqueCategoria">
 
-        <label>
-          Categoría
-        </label>
+        <label>Categoría</label>
 
         <select id="categoria">
 
-          <option value="Supermercado">
-            Supermercado
-          </option>
-
-          <option value="Hipoteca">
-            Hipoteca
-          </option>
-
-          <option value="Luz">
-            Luz
-          </option>
-
-          <option value="Telefono">
-            Teléfono
-          </option>
-
-          <option value="App tv">
-            App TV
-          </option>
-
-          <option value="Ropa/calzado">
-            Ropa/calzado
-          </option>
-
-          <option value="Fiesta">
-            Fiesta
-          </option>
-
-          <option value="Coches/Moto">
-            Coches/Moto
-          </option>
-
-          <option value="Salud">
-            Salud
-          </option>
-
-          <option value="Viajes">
-            Viajes
-          </option>
-
-          <option value="Tabaco">
-            Tabaco
-          </option>
-
-          <option value="Seguros">
-            Seguros
-          </option>
-
-          <option value="Plan de inversión">
-            Plan de inversión
-          </option>
-
-          <option value="Obra">
-            Obra
-          </option>
-
-          <option value="Otros">
-            Otros
-          </option>
+          <option value="Supermercado">Supermercado</option>
+          <option value="Hipoteca">Hipoteca</option>
+          <option value="Luz">Luz</option>
+          <option value="Telefono">Teléfono</option>
+          <option value="App tv">App TV</option>
+          <option value="Ropa/calzado">Ropa/calzado</option>
+          <option value="Fiesta">Fiesta</option>
+          <option value="Coches/Moto">Coches/Moto</option>
+          <option value="Salud">Salud</option>
+          <option value="Viajes">Viajes</option>
+          <option value="Tabaco">Tabaco</option>
+          <option value="Seguros">Seguros</option>
+          <option value="Plan de inversión">Plan de inversión</option>
+          <option value="Obra">Obra</option>
+          <option value="Otros">Otros</option>
 
         </select>
 
       </div>
 
 
-      <div
-        id="bloqueFuente"
-        class="oculto"
-      >
+      <div id="bloqueFuente" class="oculto">
 
-        <label>
-          Fuente de ingreso
-        </label>
+        <label>Fuente de ingreso</label>
 
         <select id="fuente"></select>
 
       </div>
 
 
-      <label>
-        Concepto
-      </label>
+      <label>Concepto</label>
 
       <input
         type="text"
@@ -665,9 +597,7 @@
       >
 
 
-      <label>
-        Cantidad (€)
-      </label>
+      <label>Cantidad (€)</label>
 
       <input
         type="number"
@@ -679,40 +609,32 @@
       >
 
 
-      <button
-        id="botonGuardar"
-        class="btn"
-      >
+      <button id="botonGuardar" class="btn">
         Guardar movimiento
       </button>
 
     </section>
 
 
-    <!-- PERSONAS -->
+    <!-- RESUMEN PERSONAS -->
 
     <section class="panel">
 
-      <h2>
-        👨‍👩‍👧 Resumen por persona
-      </h2>
+      <h2>👨‍👩‍👧 Resumen por persona</h2>
 
       <table class="tabla-resumen">
 
         <thead>
-
           <tr>
             <th>Persona</th>
             <th>Ingresos</th>
             <th>Gastos</th>
           </tr>
-
         </thead>
 
         <tbody id="tablaPersonas"></tbody>
 
         <tfoot>
-
           <tr class="fila-total">
 
             <td>TOTAL</td>
@@ -726,7 +648,6 @@
             </td>
 
           </tr>
-
         </tfoot>
 
       </table>
@@ -738,10 +659,7 @@
           Saldo fin de mes
         </span>
 
-        <span
-          id="saldoFinMes"
-          class="cantidad neutro"
-        >
+        <span id="saldoFinMes" class="cantidad neutro">
           0,00 €
         </span>
 
@@ -754,27 +672,15 @@
 
     <section class="panel">
 
-      <h2>
-        📊 Gastos por categoría
-      </h2>
+      <h2>📊 Gastos por categoría</h2>
 
       <div id="resumenCategorias"></div>
 
-      <div
-        class="
-          fila-categoria
-          total-categorias
-        "
-      >
+      <div class="fila-categoria total-categorias">
 
-        <strong>
-          Total gastos
-        </strong>
+        <strong>Total gastos</strong>
 
-        <strong
-          id="totalCategorias"
-          class="neutro"
-        >
+        <strong id="totalCategorias" class="neutro">
           0,00 €
         </strong>
 
@@ -787,13 +693,142 @@
 
     <section class="panel">
 
-      <h2>
-        📋 Movimientos
-      </h2>
+      <h2>📋 Movimientos</h2>
 
       <div id="listaMovimientos"></div>
 
     </section>
+
+  </div>
+
+</div>
+
+
+<!-- MODAL EDITAR -->
+
+<div id="modalEditar" class="modal-fondo oculto">
+
+  <div class="modal">
+
+    <h2>✏️ Editar movimiento</h2>
+
+    <input type="hidden" id="editarId">
+
+    <input type="hidden" id="editarTipo">
+
+
+    <label>Fecha</label>
+
+    <input
+      type="date"
+      id="editarFecha"
+    >
+
+
+    <label>Persona</label>
+
+    <select id="editarPersona">
+
+      <option value="Familia">
+        Familia
+      </option>
+
+      <option value="Paco">
+        Paco
+      </option>
+
+      <option value="Mari">
+        Mari
+      </option>
+
+      <option value="Nere">
+        Nere
+      </option>
+
+    </select>
+
+
+    <div id="editarBloqueCategoria">
+
+      <label>Categoría</label>
+
+      <select id="editarCategoria">
+
+        <option value="Supermercado">Supermercado</option>
+        <option value="Hipoteca">Hipoteca</option>
+        <option value="Luz">Luz</option>
+        <option value="Telefono">Teléfono</option>
+        <option value="App tv">App TV</option>
+        <option value="Ropa/calzado">Ropa/calzado</option>
+        <option value="Fiesta">Fiesta</option>
+        <option value="Coches/Moto">Coches/Moto</option>
+        <option value="Salud">Salud</option>
+        <option value="Viajes">Viajes</option>
+        <option value="Tabaco">Tabaco</option>
+        <option value="Seguros">Seguros</option>
+
+        <option value="Plan de inversión">
+          Plan de inversión
+        </option>
+
+        <option value="Obra">Obra</option>
+        <option value="Otros">Otros</option>
+
+      </select>
+
+    </div>
+
+
+    <div
+      id="editarBloqueFuente"
+      class="oculto"
+    >
+
+      <label>
+        Fuente de ingreso
+      </label>
+
+      <select id="editarFuente"></select>
+
+    </div>
+
+
+    <label>Concepto</label>
+
+    <input
+      type="text"
+      id="editarConcepto"
+    >
+
+
+    <label>Cantidad (€)</label>
+
+    <input
+      type="number"
+      id="editarCantidad"
+      min="0"
+      step="0.01"
+      inputmode="decimal"
+    >
+
+
+    <div class="botones-modal">
+
+      <button
+        id="botonGuardarEdicion"
+        class="guardar-edicion"
+      >
+        Guardar cambios
+      </button>
+
+      <button
+        id="botonCancelarEdicion"
+        class="cancelar-edicion"
+      >
+        Cancelar
+      </button>
+
+    </div>
 
   </div>
 
@@ -807,9 +842,7 @@
 
 <script type="module">
 
-/* =========================
-   FIREBASE
-========================= */
+/* FIREBASE */
 
 import {
   initializeApp
@@ -830,6 +863,7 @@ import {
   collection,
   addDoc,
   deleteDoc,
+  updateDoc,
   doc,
   onSnapshot,
   serverTimestamp
@@ -875,22 +909,13 @@ const provider =
   new GoogleAuthProvider();
 
 
-/* =========================
-   USUARIOS PERMITIDOS
-========================= */
-
 const emailsPermitidos = [
 
   "rjaresarias@gmail.com",
-
   "merylaranjo@gmail.com"
 
 ];
 
-
-/* =========================
-   DATOS
-========================= */
 
 const personas = [
 
@@ -943,9 +968,7 @@ let movimientos = [];
 let dejarDeEscuchar = null;
 
 
-/* =========================
-   FORMATO €
-========================= */
+/* EURO */
 
 const formatoEuro =
   new Intl.NumberFormat(
@@ -959,12 +982,8 @@ const formatoEuro =
 
 function euro(valor) {
 
-  if (
-    Math.abs(valor) < 0.005
-  ) {
-
+  if (Math.abs(valor) < 0.005) {
     return formatoEuro.format(0);
-
   }
 
   return formatoEuro.format(valor);
@@ -973,27 +992,18 @@ function euro(valor) {
 
 function euroPositivo(valor) {
 
-  if (
-    Math.abs(valor) < 0.005
-  ) {
-
+  if (Math.abs(valor) < 0.005) {
     return formatoEuro.format(0);
-
   }
 
-  return "+" +
-    formatoEuro.format(valor);
+  return "+" + formatoEuro.format(valor);
 }
 
 
 function euroNegativo(valor) {
 
-  if (
-    Math.abs(valor) < 0.005
-  ) {
-
+  if (Math.abs(valor) < 0.005) {
     return formatoEuro.format(0);
-
   }
 
   return "-" +
@@ -1003,9 +1013,7 @@ function euroNegativo(valor) {
 }
 
 
-/* =========================
-   FECHAS
-========================= */
+/* FECHA */
 
 function fechaHoy() {
 
@@ -1031,9 +1039,7 @@ function fechaHoy() {
 
 function mesActual() {
 
-  return fechaHoy()
-    .slice(0, 7);
-
+  return fechaHoy().slice(0, 7);
 }
 
 
@@ -1049,9 +1055,7 @@ document
   mesActual();
 
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 document
   .getElementById("botonLogin")
@@ -1073,8 +1077,7 @@ document
         console.error(error);
 
         alert(
-          "No se pudo iniciar sesión con Google. " +
-          error.message
+          "No se pudo iniciar sesión con Google."
         );
 
       }
@@ -1097,7 +1100,7 @@ document
 
 onAuthStateChanged(
   auth,
-  async usuario => {
+  usuario => {
 
     const login =
       document.getElementById(
@@ -1113,57 +1116,39 @@ onAuthStateChanged(
     if (!usuario) {
 
       if (dejarDeEscuchar) {
-
         dejarDeEscuchar();
-
-        dejarDeEscuchar =
-          null;
-
       }
 
-      movimientos = [];
+      login.classList.remove("oculto");
 
-      login.classList.remove(
-        "oculto"
-      );
-
-      aplicacion.classList.add(
-        "oculto"
-      );
+      aplicacion.classList.add("oculto");
 
       return;
     }
 
 
     const email =
-      (
-        usuario.email || ""
-      ).toLowerCase();
+      (usuario.email || "")
+        .toLowerCase();
 
 
     if (
-      !emailsPermitidos.includes(
-        email
-      )
+      !emailsPermitidos.includes(email)
     ) {
 
       alert(
         "Esta cuenta no está autorizada."
       );
 
-      await signOut(auth);
+      signOut(auth);
 
       return;
     }
 
 
-    login.classList.add(
-      "oculto"
-    );
+    login.classList.add("oculto");
 
-    aplicacion.classList.remove(
-      "oculto"
-    );
+    aplicacion.classList.remove("oculto");
 
 
     document
@@ -1183,156 +1168,22 @@ onAuthStateChanged(
       email;
 
 
-    await importarDatosAntiguos();
-
-
     escucharMovimientos();
 
   }
 );
 
 
-/* =========================
-   MIGRAR LOCALSTORAGE
-========================= */
-
-async function importarDatosAntiguos() {
-
-  const yaMigrado =
-    localStorage.getItem(
-      "asContasClarasMigradoFirebase"
-    );
-
-
-  if (
-    yaMigrado === "si"
-  ) {
-
-    return;
-
-  }
-
-
-  const antiguos =
-    JSON.parse(
-      localStorage.getItem(
-        "asContasClaras"
-      ) || "[]"
-    );
-
-
-  if (
-    !Array.isArray(antiguos) ||
-    antiguos.length === 0
-  ) {
-
-    localStorage.setItem(
-      "asContasClarasMigradoFirebase",
-      "si"
-    );
-
-    return;
-
-  }
-
-
-  try {
-
-    for (
-      const movimiento
-      of antiguos
-    ) {
-
-      await addDoc(
-
-        collection(
-          db,
-          "movimientos"
-        ),
-
-        {
-
-          fecha:
-            movimiento.fecha || "",
-
-          tipo:
-            movimiento.tipo || "Gasto",
-
-          persona:
-            movimiento.persona || "Familia",
-
-          concepto:
-            movimiento.concepto || "",
-
-          cantidad:
-            Number(
-              movimiento.cantidad
-            ) || 0,
-
-          categoria:
-            movimiento.categoria || "",
-
-          fuente:
-            movimiento.fuente || "",
-
-          creadoPor:
-            auth.currentUser.email,
-
-          creadoEn:
-            serverTimestamp(),
-
-          importado:
-            true
-
-        }
-
-      );
-
-    }
-
-
-    localStorage.setItem(
-      "asContasClarasMigradoFirebase",
-      "si"
-    );
-
-  }
-
-  catch(error) {
-
-    console.error(
-      "Error migrando datos:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   TIEMPO REAL
-========================= */
+/* TIEMPO REAL */
 
 function escucharMovimientos() {
 
   if (dejarDeEscuchar) {
-
     dejarDeEscuchar();
-
   }
 
 
-  document
-    .getElementById(
-      "estadoConexion"
-    )
-    .textContent =
-    "☁️ Sincronizando...";
-
-
   dejarDeEscuchar =
-
     onSnapshot(
 
       collection(
@@ -1343,18 +1194,13 @@ function escucharMovimientos() {
       snapshot => {
 
         movimientos =
-
           snapshot.docs.map(
-
             documento => ({
-
               firestoreId:
                 documento.id,
 
               ...documento.data()
-
             })
-
           );
 
 
@@ -1388,9 +1234,7 @@ function escucharMovimientos() {
 }
 
 
-/* =========================
-   FORMULARIO
-========================= */
+/* FORMULARIO NUEVO */
 
 document
   .getElementById("tipo")
@@ -1424,127 +1268,83 @@ function actualizarFormulario() {
       .value;
 
 
-  const personaSelect =
+  const persona =
     document
       .getElementById("persona");
 
 
-  const bloqueCategoria =
-    document
-      .getElementById(
-        "bloqueCategoria"
-      );
-
-
-  const bloqueFuente =
-    document
-      .getElementById(
-        "bloqueFuente"
-      );
-
-
-  const fuente =
-    document
-      .getElementById(
-        "fuente"
-      );
-
-
   const familia =
-    personaSelect
-      .querySelector(
-        'option[value="Familia"]'
-      );
+    persona.querySelector(
+      '[value="Familia"]'
+    );
 
 
   const nere =
-    personaSelect
-      .querySelector(
-        'option[value="Nere"]'
+    persona.querySelector(
+      '[value="Nere"]'
+    );
+
+
+  if (tipo === "Ingreso") {
+
+    document
+      .getElementById(
+        "bloqueCategoria"
+      )
+      .classList.add(
+        "oculto"
       );
 
 
-  if (
-    tipo === "Ingreso"
-  ) {
-
-    bloqueCategoria
-      .classList
-      .add("oculto");
-
-
-    bloqueFuente
-      .classList
-      .remove("oculto");
+    document
+      .getElementById(
+        "bloqueFuente"
+      )
+      .classList.remove(
+        "oculto"
+      );
 
 
-    familia.disabled =
-      true;
-
-    nere.disabled =
-      true;
+    familia.disabled = true;
+    nere.disabled = true;
 
 
     if (
-      personaSelect.value ===
-        "Familia"
-
-      ||
-
-      personaSelect.value ===
-        "Nere"
+      persona.value === "Familia" ||
+      persona.value === "Nere"
     ) {
 
-      personaSelect.value =
+      persona.value =
         "Paco";
 
     }
 
 
-    const persona =
-      personaSelect.value;
-
-
-    fuente.innerHTML =
-      "";
-
-
-    (
-      fuentesIngreso[
-        persona
-      ] || []
-    )
-    .forEach(nombre => {
-
-      const opcion =
-        document.createElement(
-          "option"
-        );
-
-      opcion.value =
-        nombre;
-
-      opcion.textContent =
-        nombre;
-
-      fuente.appendChild(
-        opcion
-      );
-
-    });
+    rellenarFuentes(
+      "fuente",
+      persona.value
+    );
 
   }
 
   else {
 
-    bloqueCategoria
-      .classList
-      .remove("oculto");
+    document
+      .getElementById(
+        "bloqueCategoria"
+      )
+      .classList.remove(
+        "oculto"
+      );
 
 
-    bloqueFuente
-      .classList
-      .add("oculto");
+    document
+      .getElementById(
+        "bloqueFuente"
+      )
+      .classList.add(
+        "oculto"
+      );
 
 
     familia.disabled =
@@ -1558,9 +1358,62 @@ function actualizarFormulario() {
 }
 
 
-/* =========================
-   GUARDAR
-========================= */
+function rellenarFuentes(
+  idSelect,
+  persona,
+  seleccionada = ""
+) {
+
+  const select =
+    document.getElementById(
+      idSelect
+    );
+
+
+  select.innerHTML = "";
+
+
+  (
+    fuentesIngreso[persona] ||
+    []
+  )
+  .forEach(
+    fuente => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        fuente;
+
+      option.textContent =
+        fuente;
+
+
+      if (
+        fuente === seleccionada
+      ) {
+
+        option.selected =
+          true;
+
+      }
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+/* GUARDAR NUEVO */
 
 document
   .getElementById(
@@ -1574,82 +1427,32 @@ document
 
 async function guardarMovimiento() {
 
-  if (
-    !auth.currentUser
-  ) {
-
-    return;
-
-  }
-
-
   const fecha =
-    document
-      .getElementById("fecha")
-      .value;
-
+    document.getElementById(
+      "fecha"
+    ).value;
 
   const tipo =
-    document
-      .getElementById("tipo")
-      .value;
-
+    document.getElementById(
+      "tipo"
+    ).value;
 
   const persona =
-    document
-      .getElementById("persona")
-      .value;
-
+    document.getElementById(
+      "persona"
+    ).value;
 
   const concepto =
-    document
-      .getElementById("concepto")
-      .value
-      .trim();
-
+    document.getElementById(
+      "concepto"
+    ).value.trim();
 
   const cantidad =
     Number(
-      document
-        .getElementById(
-          "cantidad"
-        )
-        .value
+      document.getElementById(
+        "cantidad"
+      ).value
     );
-
-
-  const categoria =
-
-    tipo === "Gasto"
-
-      ?
-
-      document
-        .getElementById(
-          "categoria"
-        )
-        .value
-
-      :
-
-      "";
-
-
-  const fuente =
-
-    tipo === "Ingreso"
-
-      ?
-
-      document
-        .getElementById(
-          "fuente"
-        )
-        .value
-
-      :
-
-      "";
 
 
   if (!fecha) {
@@ -1659,7 +1462,6 @@ async function guardarMovimiento() {
     );
 
     return;
-
   }
 
 
@@ -1673,25 +1475,30 @@ async function guardarMovimiento() {
     );
 
     return;
-
   }
 
 
+  const categoria =
+    tipo === "Gasto"
+      ?
+      document.getElementById(
+        "categoria"
+      ).value
+      :
+      "";
+
+
+  const fuente =
+    tipo === "Ingreso"
+      ?
+      document.getElementById(
+        "fuente"
+      ).value
+      :
+      "";
+
+
   try {
-
-    const boton =
-      document
-        .getElementById(
-          "botonGuardar"
-        );
-
-
-    boton.disabled =
-      true;
-
-    boton.textContent =
-      "Guardando...";
-
 
     await addDoc(
 
@@ -1703,17 +1510,11 @@ async function guardarMovimiento() {
       {
 
         fecha,
-
         tipo,
-
         persona,
-
         concepto,
-
         cantidad,
-
         categoria,
-
         fuente,
 
         creadoPor:
@@ -1727,35 +1528,14 @@ async function guardarMovimiento() {
     );
 
 
-    document
-      .getElementById(
-        "concepto"
-      )
-      .value =
-      "";
+    document.getElementById(
+      "concepto"
+    ).value = "";
 
 
-    document
-      .getElementById(
-        "cantidad"
-      )
-      .value =
-      "";
-
-
-    document
-      .getElementById(
-        "mes"
-      )
-      .value =
-      fecha.slice(0, 7);
-
-
-    boton.disabled =
-      false;
-
-    boton.textContent =
-      "Guardar movimiento";
+    document.getElementById(
+      "cantidad"
+    ).value = "";
 
   }
 
@@ -1764,22 +1544,8 @@ async function guardarMovimiento() {
     console.error(error);
 
     alert(
-      "No se pudo guardar el movimiento."
+      "No se pudo guardar."
     );
-
-
-    const boton =
-      document
-        .getElementById(
-          "botonGuardar"
-        );
-
-
-    boton.disabled =
-      false;
-
-    boton.textContent =
-      "Guardar movimiento";
 
   }
 
@@ -1787,13 +1553,451 @@ async function guardarMovimiento() {
 
 
 /* =========================
-   BORRAR
+   EDITAR
 ========================= */
 
-window.borrarMovimiento =
-  async function(
-    firestoreId
+window.editarMovimiento =
+  function(id) {
+
+    const movimiento =
+      movimientos.find(
+        m =>
+          m.firestoreId === id
+      );
+
+
+    if (!movimiento) {
+      return;
+    }
+
+
+    document.getElementById(
+      "editarId"
+    ).value =
+      id;
+
+
+    document.getElementById(
+      "editarTipo"
+    ).value =
+      movimiento.tipo;
+
+
+    document.getElementById(
+      "editarFecha"
+    ).value =
+      movimiento.fecha || "";
+
+
+    document.getElementById(
+      "editarPersona"
+    ).value =
+      movimiento.persona || "Familia";
+
+
+    document.getElementById(
+      "editarConcepto"
+    ).value =
+      movimiento.concepto || "";
+
+
+    document.getElementById(
+      "editarCantidad"
+    ).value =
+      movimiento.cantidad || "";
+
+
+    if (
+      movimiento.tipo ===
+      "Ingreso"
+    ) {
+
+      document
+        .getElementById(
+          "editarBloqueCategoria"
+        )
+        .classList.add(
+          "oculto"
+        );
+
+
+      document
+        .getElementById(
+          "editarBloqueFuente"
+        )
+        .classList.remove(
+          "oculto"
+        );
+
+
+      actualizarPersonasEdicionIngreso();
+
+
+      rellenarFuentes(
+
+        "editarFuente",
+
+        movimiento.persona,
+
+        movimiento.fuente
+
+      );
+
+    }
+
+    else {
+
+      document
+        .getElementById(
+          "editarBloqueCategoria"
+        )
+        .classList.remove(
+          "oculto"
+        );
+
+
+      document
+        .getElementById(
+          "editarBloqueFuente"
+        )
+        .classList.add(
+          "oculto"
+        );
+
+
+      actualizarPersonasEdicionGasto();
+
+
+      document.getElementById(
+        "editarCategoria"
+      ).value =
+        movimiento.categoria ||
+        "Otros";
+
+    }
+
+
+    document
+      .getElementById(
+        "modalEditar"
+      )
+      .classList.remove(
+        "oculto"
+      );
+
+  };
+
+
+function actualizarPersonasEdicionIngreso() {
+
+  const select =
+    document.getElementById(
+      "editarPersona"
+    );
+
+
+  select
+    .querySelector(
+      '[value="Familia"]'
+    )
+    .disabled =
+      true;
+
+
+  select
+    .querySelector(
+      '[value="Nere"]'
+    )
+    .disabled =
+      true;
+
+
+  if (
+    select.value === "Familia" ||
+    select.value === "Nere"
   ) {
+
+    select.value =
+      "Paco";
+
+  }
+
+}
+
+
+function actualizarPersonasEdicionGasto() {
+
+  const select =
+    document.getElementById(
+      "editarPersona"
+    );
+
+
+  select
+    .querySelector(
+      '[value="Familia"]'
+    )
+    .disabled =
+      false;
+
+
+  select
+    .querySelector(
+      '[value="Nere"]'
+    )
+    .disabled =
+      false;
+
+}
+
+
+document
+  .getElementById(
+    "editarPersona"
+  )
+  .addEventListener(
+    "change",
+    () => {
+
+      const tipo =
+        document.getElementById(
+          "editarTipo"
+        ).value;
+
+
+      if (
+        tipo === "Ingreso"
+      ) {
+
+        rellenarFuentes(
+
+          "editarFuente",
+
+          document.getElementById(
+            "editarPersona"
+          ).value
+
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "botonCancelarEdicion"
+  )
+  .addEventListener(
+    "click",
+    cerrarEditor
+  );
+
+
+function cerrarEditor() {
+
+  document
+    .getElementById(
+      "modalEditar"
+    )
+    .classList.add(
+      "oculto"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "botonGuardarEdicion"
+  )
+  .addEventListener(
+    "click",
+    guardarEdicion
+  );
+
+
+async function guardarEdicion() {
+
+  const id =
+    document.getElementById(
+      "editarId"
+    ).value;
+
+
+  const tipo =
+    document.getElementById(
+      "editarTipo"
+    ).value;
+
+
+  const fecha =
+    document.getElementById(
+      "editarFecha"
+    ).value;
+
+
+  const persona =
+    document.getElementById(
+      "editarPersona"
+    ).value;
+
+
+  const concepto =
+    document.getElementById(
+      "editarConcepto"
+    ).value.trim();
+
+
+  const cantidad =
+    Number(
+      document.getElementById(
+        "editarCantidad"
+      ).value
+    );
+
+
+  if (!fecha) {
+
+    alert(
+      "Selecciona una fecha."
+    );
+
+    return;
+  }
+
+
+  if (
+    !cantidad ||
+    cantidad <= 0
+  ) {
+
+    alert(
+      "Introduce una cantidad válida."
+    );
+
+    return;
+  }
+
+
+  const cambios = {
+
+    fecha,
+    persona,
+    concepto,
+    cantidad
+
+  };
+
+
+  if (
+    tipo === "Gasto"
+  ) {
+
+    cambios.categoria =
+      document.getElementById(
+        "editarCategoria"
+      ).value;
+
+    cambios.fuente =
+      "";
+
+  }
+
+  else {
+
+    cambios.categoria =
+      "";
+
+    cambios.fuente =
+      document.getElementById(
+        "editarFuente"
+      ).value;
+
+  }
+
+
+  try {
+
+    const boton =
+      document.getElementById(
+        "botonGuardarEdicion"
+      );
+
+
+    boton.disabled = true;
+
+    boton.textContent =
+      "Guardando...";
+
+
+    await updateDoc(
+
+      doc(
+        db,
+        "movimientos",
+        id
+      ),
+
+      cambios
+
+    );
+
+
+    /*
+      Si cambia de mes,
+      mostramos el nuevo mes.
+    */
+
+    document.getElementById(
+      "mes"
+    ).value =
+      fecha.slice(0, 7);
+
+
+    cerrarEditor();
+
+
+    boton.disabled =
+      false;
+
+    boton.textContent =
+      "Guardar cambios";
+
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+
+    alert(
+      "No se pudieron guardar los cambios."
+    );
+
+
+    const boton =
+      document.getElementById(
+        "botonGuardarEdicion"
+      );
+
+
+    boton.disabled =
+      false;
+
+    boton.textContent =
+      "Guardar cambios";
+
+  }
+
+}
+
+
+/* BORRAR */
+
+window.borrarMovimiento =
+  async function(id) {
 
     const confirmar =
       confirm(
@@ -1802,9 +2006,7 @@ window.borrarMovimiento =
 
 
     if (!confirmar) {
-
       return;
-
     }
 
 
@@ -1815,7 +2017,7 @@ window.borrarMovimiento =
         doc(
           db,
           "movimientos",
-          firestoreId
+          id
         )
 
       );
@@ -1827,7 +2029,7 @@ window.borrarMovimiento =
       console.error(error);
 
       alert(
-        "No se pudo borrar el movimiento."
+        "No se pudo borrar."
       );
 
     }
@@ -1835,20 +2037,17 @@ window.borrarMovimiento =
   };
 
 
-/* =========================
-   MES
-========================= */
+/* MES */
 
 function movimientosMes() {
 
   const mes =
-    document
-      .getElementById("mes")
-      .value;
+    document.getElementById(
+      "mes"
+    ).value;
 
 
   return movimientos.filter(
-
     movimiento =>
 
       typeof movimiento.fecha ===
@@ -1859,15 +2058,12 @@ function movimientosMes() {
       movimiento.fecha.startsWith(
         mes
       )
-
   );
 
 }
 
 
-/* =========================
-   PANTALLA
-========================= */
+/* ACTUALIZAR PANTALLA */
 
 function actualizarPantalla() {
 
@@ -1875,16 +2071,11 @@ function actualizarPantalla() {
     movimientosMes();
 
 
-  let ingresos =
-    0;
-
-
-  let gastos =
-    0;
+  let ingresos = 0;
+  let gastos = 0;
 
 
   datos.forEach(
-
     movimiento => {
 
       const cantidad =
@@ -1898,36 +2089,29 @@ function actualizarPantalla() {
         "Ingreso"
       ) {
 
-        ingresos +=
-          cantidad;
+        ingresos += cantidad;
 
       }
 
       else {
 
-        gastos +=
-          cantidad;
+        gastos += cantidad;
 
       }
 
     }
-
   );
 
 
-  document
-    .getElementById(
-      "totalIngresos"
-    )
-    .textContent =
+  document.getElementById(
+    "totalIngresos"
+  ).textContent =
     euro(ingresos);
 
 
-  document
-    .getElementById(
-      "totalGastos"
-    )
-    .textContent =
+  document.getElementById(
+    "totalGastos"
+  ).textContent =
     euro(gastos);
 
 
@@ -1957,32 +2141,25 @@ function actualizarPantalla() {
 }
 
 
-/* =========================
-   SALDO
-========================= */
-
 function mostrarSaldo(
   id,
   saldo
 ) {
 
   const elemento =
-    document
-      .getElementById(id);
+    document.getElementById(
+      id
+    );
 
 
   elemento.classList.remove(
-
     "positivo",
     "negativo",
     "neutro"
-
   );
 
 
-  if (
-    saldo > 0
-  ) {
+  if (saldo > 0) {
 
     elemento.textContent =
       euroPositivo(saldo);
@@ -1993,9 +2170,7 @@ function mostrarSaldo(
 
   }
 
-  else if (
-    saldo < 0
-  ) {
+  else if (saldo < 0) {
 
     elemento.textContent =
       euroNegativo(saldo);
@@ -2020,9 +2195,7 @@ function mostrarSaldo(
 }
 
 
-/* =========================
-   PERSONAS
-========================= */
+/* PERSONAS */
 
 function mostrarPersonas(
   datos,
@@ -2031,30 +2204,24 @@ function mostrarPersonas(
 ) {
 
   const tabla =
-    document
-      .getElementById(
-        "tablaPersonas"
-      );
+    document.getElementById(
+      "tablaPersonas"
+    );
 
 
-  tabla.innerHTML =
-    "";
+  tabla.innerHTML = "";
 
 
   personas.forEach(
     persona => {
 
       const ingresos =
-
         datos
-
           .filter(
             m =>
-              m.persona === persona
-              &&
+              m.persona === persona &&
               m.tipo === "Ingreso"
           )
-
           .reduce(
             (total, m) =>
               total +
@@ -2064,16 +2231,12 @@ function mostrarPersonas(
 
 
       const gastos =
-
         datos
-
           .filter(
             m =>
-              m.persona === persona
-              &&
+              m.persona === persona &&
               m.tipo === "Gasto"
           )
-
           .reduce(
             (total, m) =>
               total +
@@ -2083,10 +2246,9 @@ function mostrarPersonas(
 
 
       const fila =
-        document
-          .createElement(
-            "tr"
-          );
+        document.createElement(
+          "tr"
+        );
 
 
       const nombre =
@@ -2098,20 +2260,14 @@ function mostrarPersonas(
       fila.innerHTML = `
 
         <td>
-          <strong>
-            ${nombre}
-          </strong>
+          <strong>${nombre}</strong>
         </td>
 
-        <td
-          class="
-            ${
-              ingresos > 0
-                ? "positivo"
-                : "neutro"
-            }
-          "
-        >
+        <td class="${
+          ingresos > 0
+            ? "positivo"
+            : "neutro"
+        }">
 
           ${
             ingresos > 0
@@ -2121,15 +2277,11 @@ function mostrarPersonas(
 
         </td>
 
-        <td
-          class="
-            ${
-              gastos > 0
-                ? "negativo"
-                : "neutro"
-            }
-          "
-        >
+        <td class="${
+          gastos > 0
+            ? "negativo"
+            : "neutro"
+        }">
 
           ${
             gastos > 0
@@ -2150,37 +2302,28 @@ function mostrarPersonas(
   );
 
 
-  document
-    .getElementById(
-      "totalPersonasIngresos"
-    )
-    .textContent =
+  document.getElementById(
+    "totalPersonasIngresos"
+  ).textContent =
     euro(totalIngresos);
 
 
-  document
-    .getElementById(
-      "totalPersonasGastos"
-    )
-    .textContent =
+  document.getElementById(
+    "totalPersonasGastos"
+  ).textContent =
     euro(totalGastos);
 
 
   mostrarSaldo(
-
     "saldoFinMes",
-
     totalIngresos -
     totalGastos
-
   );
 
 }
 
 
-/* =========================
-   CATEGORÍAS DESPLEGABLES
-========================= */
+/* CATEGORÍAS */
 
 function mostrarCategorias(
   datos,
@@ -2188,32 +2331,26 @@ function mostrarCategorias(
 ) {
 
   const contenedor =
-    document
-      .getElementById(
-        "resumenCategorias"
-      );
+    document.getElementById(
+      "resumenCategorias"
+    );
 
 
-  contenedor.innerHTML =
-    "";
+  contenedor.innerHTML = "";
 
 
   categorias.forEach(
     categoria => {
 
       const movimientosCategoria =
-
         datos
-
           .filter(
             movimiento =>
-              movimiento.tipo === "Gasto"
-              &&
+              movimiento.tipo === "Gasto" &&
               movimiento.categoria === categoria
           )
-
           .sort(
-            (a, b) =>
+            (a,b) =>
               (b.fecha || "")
                 .localeCompare(
                   a.fecha || ""
@@ -2222,15 +2359,11 @@ function mostrarCategorias(
 
 
       const total =
-
         movimientosCategoria
-
           .reduce(
-            (suma, movimiento) =>
+            (suma,m) =>
               suma +
-              Number(
-                movimiento.cantidad || 0
-              ),
+              Number(m.cantidad || 0),
             0
           );
 
@@ -2261,22 +2394,16 @@ function mostrarCategorias(
               ▶
             </span>
 
-            <span>
-              ${categoria}
-            </span>
+            ${categoria}
 
           </span>
 
 
-          <span
-            class="
-              ${
-                total > 0
-                  ? "negativo"
-                  : "neutro"
-              }
-            "
-          >
+          <span class="${
+            total > 0
+              ? "negativo"
+              : "neutro"
+          }">
 
             ${
               total > 0
@@ -2296,13 +2423,13 @@ function mostrarCategorias(
       );
 
 
-      const zonaDetalles =
+      const zona =
         document.createElement(
           "div"
         );
 
 
-      zonaDetalles.className =
+      zona.className =
         "categoria-detalles";
 
 
@@ -2310,13 +2437,10 @@ function mostrarCategorias(
         movimientosCategoria.length === 0
       ) {
 
-        zonaDetalles.innerHTML = `
+        zona.innerHTML = `
 
           <div class="categoria-sin-movimientos">
-
-            No hay movimientos
-            en esta categoría este mes.
-
+            No hay movimientos este mes.
           </div>
 
         `;
@@ -2325,88 +2449,77 @@ function mostrarCategorias(
 
       else {
 
-        movimientosCategoria.forEach(
-          movimiento => {
+        movimientosCategoria
+          .forEach(
+            movimiento => {
 
-            const fila =
-              document.createElement(
-                "div"
+              const div =
+                document.createElement(
+                  "div"
+                );
+
+
+              div.className =
+                "categoria-movimiento";
+
+
+              const persona =
+                movimiento.persona ===
+                  "Familia"
+                  ?
+                  "🏠 Familia"
+                  :
+                  movimiento.persona;
+
+
+              div.innerHTML = `
+
+                <div class="categoria-movimiento-top">
+
+                  <span>
+                    ${
+                      movimiento.concepto ||
+                      categoria
+                    }
+                  </span>
+
+                  <span class="negativo">
+
+                    ${euroNegativo(
+                      Number(
+                        movimiento.cantidad || 0
+                      )
+                    )}
+
+                  </span>
+
+                </div>
+
+                <div class="categoria-movimiento-info">
+
+                  ${movimiento.fecha || ""}
+
+                  ·
+
+                  ${persona || ""}
+
+                </div>
+
+              `;
+
+
+              zona.appendChild(
+                div
               );
 
-
-            fila.className =
-              "categoria-movimiento";
-
-
-            const concepto =
-              movimiento.concepto
-              ||
-              categoria;
-
-
-            const persona =
-              movimiento.persona ===
-                "Familia"
-
-                ? "🏠 Familia"
-
-                : movimiento.persona;
-
-
-            fila.innerHTML = `
-
-              <div
-                class="
-                  categoria-movimiento-top
-                "
-              >
-
-                <span>
-                  ${concepto}
-                </span>
-
-                <span class="negativo">
-
-                  ${euroNegativo(
-                    Number(
-                      movimiento.cantidad || 0
-                    )
-                  )}
-
-                </span>
-
-              </div>
-
-
-              <div
-                class="
-                  categoria-movimiento-info
-                "
-              >
-
-                ${movimiento.fecha || ""}
-
-                ·
-
-                ${persona || ""}
-
-              </div>
-
-            `;
-
-
-            zonaDetalles.appendChild(
-              fila
-            );
-
-          }
-        );
+            }
+          );
 
       }
 
 
       details.appendChild(
-        zonaDetalles
+        zona
       );
 
 
@@ -2418,49 +2531,41 @@ function mostrarCategorias(
   );
 
 
-  const totalElemento =
-    document
-      .getElementById(
-        "totalCategorias"
-      );
+  const total =
+    document.getElementById(
+      "totalCategorias"
+    );
 
 
-  totalElemento.className =
+  total.className =
     totalGastos > 0
       ? "negativo"
       : "neutro";
 
 
-  totalElemento.textContent =
-
+  total.textContent =
     totalGastos > 0
-
-      ? euroNegativo(
-          totalGastos
-        )
-
-      : euro(0);
+      ?
+      euroNegativo(totalGastos)
+      :
+      euro(0);
 
 }
 
 
-/* =========================
-   MOVIMIENTOS
-========================= */
+/* MOVIMIENTOS */
 
 function mostrarMovimientos(
   datos
 ) {
 
   const contenedor =
-    document
-      .getElementById(
-        "listaMovimientos"
-      );
+    document.getElementById(
+      "listaMovimientos"
+    );
 
 
-  contenedor.innerHTML =
-    "";
+  contenedor.innerHTML = "";
 
 
   if (
@@ -2470,10 +2575,7 @@ function mostrarMovimientos(
     contenedor.innerHTML = `
 
       <div class="vacio">
-
-        No hay movimientos
-        este mes.
-
+        No hay movimientos este mes.
       </div>
 
     `;
@@ -2484,18 +2586,12 @@ function mostrarMovimientos(
 
 
   const ordenados =
-
     [...datos].sort(
-
-      (a, b) =>
-
-        (
-          b.fecha || ""
-        )
-        .localeCompare(
-          a.fecha || ""
-        )
-
+      (a,b) =>
+        (b.fecha || "")
+          .localeCompare(
+            a.fecha || ""
+          )
     );
 
 
@@ -2503,10 +2599,9 @@ function mostrarMovimientos(
     movimiento => {
 
       const div =
-        document
-          .createElement(
-            "div"
-          );
+        document.createElement(
+          "div"
+        );
 
 
       div.className =
@@ -2518,40 +2613,37 @@ function mostrarMovimientos(
         "Ingreso";
 
 
-      const importe =
-
-        ingreso
-
-          ? euroPositivo(
-              Number(
-                movimiento.cantidad || 0
-              )
-            )
-
-          : euroNegativo(
-              Number(
-                movimiento.cantidad || 0
-              )
-            );
-
-
       const detalle =
-
         ingreso
-
-          ? movimiento.fuente
-
-          : movimiento.categoria;
+          ?
+          movimiento.fuente
+          :
+          movimiento.categoria;
 
 
       const persona =
-
         movimiento.persona ===
           "Familia"
+          ?
+          "🏠 Familia"
+          :
+          movimiento.persona;
 
-          ? "🏠 Familia"
 
-          : movimiento.persona;
+      const importe =
+        ingreso
+          ?
+          euroPositivo(
+            Number(
+              movimiento.cantidad || 0
+            )
+          )
+          :
+          euroNegativo(
+            Number(
+              movimiento.cantidad || 0
+            )
+          );
 
 
       div.innerHTML = `
@@ -2561,30 +2653,25 @@ function mostrarMovimientos(
           <span>
 
             ${
-              movimiento.concepto
-              ||
-              detalle
-              ||
+              movimiento.concepto ||
+              detalle ||
               "Movimiento"
             }
 
           </span>
 
-          <span
-            class="
-              ${
-                ingreso
-                  ? "positivo"
-                  : "negativo"
-              }
-            "
-          >
+          <span class="${
+            ingreso
+              ? "positivo"
+              : "negativo"
+          }">
 
             ${importe}
 
           </span>
 
         </div>
+
 
         <div class="detalle">
 
@@ -2600,21 +2687,33 @@ function mostrarMovimientos(
 
         </div>
 
-        <button
 
-          class="borrar"
+        <div class="acciones-movimiento">
 
-          onclick="
-            borrarMovimiento(
-              '${movimiento.firestoreId}'
-            )
-          "
+          <button
+            class="editar"
+            onclick="
+              editarMovimiento(
+                '${movimiento.firestoreId}'
+              )
+            "
+          >
+            ✏️ Editar
+          </button>
 
-        >
 
-          Eliminar
+          <button
+            class="borrar"
+            onclick="
+              borrarMovimiento(
+                '${movimiento.firestoreId}'
+              )
+            "
+          >
+            Eliminar
+          </button>
 
-        </button>
+        </div>
 
       `;
 
