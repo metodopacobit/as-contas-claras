@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+
+  <title>As contas claras</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+
+    header {
+      background: #0f766e;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      opacity: .9;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .mes {
+      background: white;
+      padding: 14px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 7px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    .resumen {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tarjeta {
+      background: white;
+      border-radius: 14px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .tarjeta strong {
+      display: block;
+      font-size: 21px;
+      margin-top: 6px;
+    }
+
+    .ingresos strong {
+      color: #15803d;
+    }
+
+    .gastos strong {
+      color: #dc2626;
+    }
+
+    .saldo {
+      grid-column: span 2;
+    }
+
+    .saldo strong {
+      color: #0f766e;
+      font-size: 27px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+    }
+
+    .btn {
+      background: #0f766e;
+      color: white;
+      border: none;
+      font-weight: bold;
+      margin-top: 18px;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .movimiento {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 13px 0;
+    }
+
+    .movimiento:last-child {
+      border-bottom: none;
+    }
+
+    .mov-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: bold;
+    }
+
+    .positivo {
+      color: #15803d;
+    }
+
+    .negativo {
+      color: #dc2626;
+    }
+
+    .detalle {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .borrar {
+      width: auto;
+      padding: 5px 10px;
+      margin-top: 7px;
+      font-size: 13px;
+      background: #fee2e2;
+      color: #b91c1c;
+      border: none;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    .persona-resumen {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .vacio {
+      color: #6b7280;
+      text-align: center;
+      padding: 20px;
+    }
+
+    footer {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 13px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>💰 As contas claras</h1>
+  <p>Economía familiar</p>
+</header>
+
+<div class="container">
+
+  <div class="mes">
+    <label for="mes">Mes</label>
+    <input type="month" id="mes">
+  </div>
+
+  <section class="resumen">
+
+    <div class="tarjeta ingresos">
+      Ingresos
+      <strong id="totalIngresos">0 €</strong>
+    </div>
+
+    <div class="tarjeta gastos">
+      Gastos
+      <strong id="totalGastos">0 €</strong>
+    </div>
+
+    <div class="tarjeta saldo">
+      Saldo del mes
+      <strong id="saldo">0 €</strong>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>➕ Nuevo movimiento</h2>
+
+    <label>Fecha</label>
+    <input type="date" id="fecha">
+
+    <label>Tipo</label>
+    <select id="tipo">
+      <option value="Gasto">Gasto</option>
+      <option value="Ingreso">Ingreso</option>
+    </select>
+
+    <label>Persona</label>
+    <select id="persona">
+      <option value="Paco">Paco</option>
+      <option value="Mari">Mari</option>
+      <option value="Nere">Nere</option>
+    </select>
+
+    <div id="bloqueCategoria">
+      <label>Categoría</label>
+      <select id="categoria">
+        <option>Supermercado</option>
+        <option>Hipoteca</option>
+        <option>Luz</option>
+        <option>Telefono</option>
+        <option>App tv</option>
+        <option>Ropa/calzado</option>
+        <option>Fiesta</option>
+        <option>Coches/Moto</option>
+        <option>Salud</option>
+        <option>Viajes</option>
+        <option>Tabaco</option>
+        <option>Seguros</option>
+        <option>Otros</option>
+      </select>
+    </div>
+
+    <div id="bloqueFuente" class="oculto">
+      <label>Fuente de ingreso</label>
+      <select id="fuente"></select>
+    </div>
+
+    <label>Concepto</label>
+    <input
+      type="text"
+      id="concepto"
+      placeholder="Ej. Mercadona, nómina julio..."
+    >
+
+    <label>Cantidad (€)</label>
+    <input
+      type="number"
+      id="cantidad"
+      step="0.01"
+      min="0"
+      inputmode="decimal"
+      placeholder="0,00"
+    >
+
+    <button class="btn" onclick="guardarMovimiento()">
+      Guardar movimiento
+    </button>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>👨‍👩‍👧 Resumen por persona</h2>
+
+    <div id="resumenPersonas"></div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>📋 Movimientos</h2>
+
+    <div id="listaMovimientos"></div>
+
+  </section>
+
+</div>
+
+<footer>
+  As contas claras · Datos guardados en este dispositivo
+</footer>
+
+<script>
+
+const personas = ["Paco", "Mari", "Nere"];
+
+const fuentesIngreso = {
+  Paco: ["Nómina", "Alquiler"],
+  Mari: ["Nómina", "Pensión"],
+  Nere: []
+};
+
+let movimientos =
+  JSON.parse(localStorage.getItem("asContasClaras")) || [];
+
+const formatoEuro = new Intl.NumberFormat(
+  "es-ES",
+  {
+    style: "currency",
+    currency: "EUR"
+  }
+);
+
+function fechaHoy() {
+  const hoy = new Date();
+
+  const year = hoy.getFullYear();
+  const month = String(hoy.getMonth() + 1).padStart(2, "0");
+  const day = String(hoy.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function mesActual() {
+  return fechaHoy().slice(0, 7);
+}
+
+document.getElementById("fecha").value = fechaHoy();
+document.getElementById("mes").value = mesActual();
+
+document
+  .getElementById("tipo")
+  .addEventListener("change", actualizarFormulario);
+
+document
+  .getElementById("persona")
+  .addEventListener("change", actualizarFormulario);
+
+document
+  .getElementById("mes")
+  .addEventListener("change", actualizarPantalla);
+
+
+function actualizarFormulario() {
+
+  const tipo =
+    document.getElementById("tipo").value;
+
+  const persona =
+    document.getElementById("persona").value;
+
+  const bloqueCategoria =
+    document.getElementById("bloqueCategoria");
+
+  const bloqueFuente =
+    document.getElementById("bloqueFuente");
+
+  const fuente =
+    document.getElementById("fuente");
+
+
+  if (tipo === "Ingreso") {
+
+    bloqueCategoria.classList.add("oculto");
+    bloqueFuente.classList.remove("oculto");
+
+    fuente.innerHTML = "";
+
+    const fuentes =
+      fuentesIngreso[persona] || [];
+
+    if (fuentes.length === 0) {
+
+      const opcion =
+        document.createElement("option");
+
+      opcion.textContent =
+        "Esta persona no tiene ingresos";
+
+      opcion.value = "";
+
+      fuente.appendChild(opcion);
+
+    } else {
+
+      fuentes.forEach(nombre => {
+
+        const opcion =
+          document.createElement("option");
+
+        opcion.value = nombre;
+        opcion.textContent = nombre;
+
+        fuente.appendChild(opcion);
+
+      });
+
+    }
+
+  } else {
+
+    bloqueCategoria.classList.remove("oculto");
+    bloqueFuente.classList.add("oculto");
+
+  }
+
+}
+
+
+function guardarMovimiento() {
+
+  const fecha =
+    document.getElementById("fecha").value;
+
+  const tipo =
+    document.getElementById("tipo").value;
+
+  const persona =
+    document.getElementById("persona").value;
+
+  const concepto =
+    document.getElementById("concepto").value.trim();
+
+  const cantidad =
+    Number(document.getElementById("cantidad").value);
+
+  const categoria =
+    tipo === "Gasto"
+      ? document.getElementById("categoria").value
+      : "";
+
+  const fuente =
+    tipo === "Ingreso"
+      ? document.getElementById("fuente").value
+      : "";
+
+
+  if (!fecha) {
+    alert("Selecciona una fecha.");
+    return;
+  }
+
+  if (!cantidad || cantidad <= 0) {
+    alert("Introduce una cantidad válida.");
+    return;
+  }
+
+  if (tipo === "Ingreso" && !fuente) {
+    alert("Esta persona no tiene una fuente de ingresos configurada.");
+    return;
+  }
+
+
+  const movimiento = {
+
+    id:
+      Date.now().toString() +
+      Math.random().toString(16).slice(2),
+
+    fecha,
+    tipo,
+    persona,
+    concepto,
+    cantidad,
+    categoria,
+    fuente
+
+  };
+
+
+  movimientos.push(movimiento);
+
+  guardarDatos();
+
+  document.getElementById("concepto").value = "";
+  document.getElementById("cantidad").value = "";
+
+  document.getElementById("mes").value =
+    fecha.slice(0, 7);
+
+  actualizarPantalla();
+
+}
+
+
+function guardarDatos() {
+
+  localStorage.setItem(
+    "asContasClaras",
+    JSON.stringify(movimientos)
+  );
+
+}
+
+
+function borrarMovimiento(id) {
+
+  const confirmar =
+    confirm("¿Quieres borrar este movimiento?");
+
+  if (!confirmar) return;
+
+  movimientos =
+    movimientos.filter(
+      movimiento => movimiento.id !== id
+    );
+
+  guardarDatos();
+
+  actualizarPantalla();
+
+}
+
+
+function movimientosMes() {
+
+  const mes =
+    document.getElementById("mes").value;
+
+  return movimientos.filter(
+    movimiento =>
+      movimiento.fecha.startsWith(mes)
+  );
+
+}
+
+
+function actualizarPantalla() {
+
+  const datos = movimientosMes();
+
+  let ingresos = 0;
+  let gastos = 0;
+
+
+  datos.forEach(movimiento => {
+
+    if (movimiento.tipo === "Ingreso") {
+      ingresos += movimiento.cantidad;
+    } else {
+      gastos += movimiento.cantidad;
+    }
+
+  });
+
+
+  const saldo =
+    ingresos - gastos;
+
+
+  document.getElementById("totalIngresos").textContent =
+    formatoEuro.format(ingresos);
+
+  document.getElementById("totalGastos").textContent =
+    formatoEuro.format(gastos);
+
+  document.getElementById("saldo").textContent =
+    formatoEuro.format(saldo);
+
+
+  mostrarPersonas(datos);
+
+  mostrarMovimientos(datos);
+
+}
+
+
+function mostrarPersonas(datos) {
+
+  const contenedor =
+    document.getElementById("resumenPersonas");
+
+  contenedor.innerHTML = "";
+
+
+  personas.forEach(persona => {
+
+    const ingresos =
+      datos
+        .filter(
+          m =>
+            m.persona === persona &&
+            m.tipo === "Ingreso"
+        )
+        .reduce(
+          (total, m) =>
+            total + m.cantidad,
+          0
+        );
+
+
+    const gastos =
+      datos
+        .filter(
+          m =>
+            m.persona === persona &&
+            m.tipo === "Gasto"
+        )
+        .reduce(
+          (total, m) =>
+            total + m.cantidad,
+          0
+        );
+
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "persona-resumen";
+
+    div.innerHTML = `
+      <strong>${persona}</strong>
+
+      <span>
+        <span class="positivo">
+          +${formatoEuro.format(ingresos)}
+        </span>
+
+        ·
+
+        <span class="negativo">
+          -${formatoEuro.format(gastos)}
+        </span>
+      </span>
+    `;
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+
+
+function mostrarMovimientos(datos) {
+
+  const contenedor =
+    document.getElementById("listaMovimientos");
+
+  contenedor.innerHTML = "";
+
+
+  if (datos.length === 0) {
+
+    contenedor.innerHTML =
+      `<div class="vacio">
+        No hay movimientos este mes.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const ordenados =
+    [...datos].sort(
+      (a, b) =>
+        b.fecha.localeCompare(a.fecha)
+    );
+
+
+  ordenados.forEach(movimiento => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "movimiento";
+
+
+    const clase =
+      movimiento.tipo === "Ingreso"
+        ? "positivo"
+        : "negativo";
+
+
+    const signo =
+      movimiento.tipo === "Ingreso"
+        ? "+"
+        : "-";
+
+
+    const detalle =
+      movimiento.tipo === "Ingreso"
+        ? movimiento.fuente
+        : movimiento.categoria;
+
+
+    div.innerHTML = `
+
+      <div class="mov-top">
+
+        <span>
+          ${movimiento.concepto || detalle}
+        </span>
+
+        <span class="${clase}">
+          ${signo}${formatoEuro.format(movimiento.cantidad)}
+        </span>
+
+      </div>
+
+      <div class="detalle">
+
+        ${movimiento.fecha}
+        ·
+        ${movimiento.persona}
+        ·
+        ${detalle}
+
+      </div>
+
+      <button
+        class="borrar"
+        onclick="borrarMovimiento('${movimiento.id}')"
+      >
+        Eliminar
+      </button>
+
+    `;
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+
+
+actualizarFormulario();
+actualizarPantalla();
+
+</script>
+
+</body>
+</html>
