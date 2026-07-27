@@ -232,20 +232,94 @@
       font-weight: bold;
     }
 
+    /* =========================
+       CATEGORÍAS DESPLEGABLES
+    ========================= */
+
+    .categoria-desplegable {
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .categoria-desplegable summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 13px 0;
+    }
+
+    .categoria-desplegable summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .categoria-cabecera {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+    }
+
+    .categoria-nombre {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .categoria-flecha {
+      display: inline-block;
+      color: #6b7280;
+      font-size: 12px;
+      transition: transform .2s ease;
+    }
+
+    .categoria-desplegable[open] .categoria-flecha {
+      transform: rotate(90deg);
+    }
+
+    .categoria-detalles {
+      padding: 0 0 12px 18px;
+    }
+
+    .categoria-movimiento {
+      padding: 11px 0;
+      border-top: 1px dashed #e5e7eb;
+    }
+
+    .categoria-movimiento-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: bold;
+    }
+
+    .categoria-movimiento-top span:first-child {
+      flex: 1;
+    }
+
+    .categoria-movimiento-info {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .categoria-sin-movimientos {
+      color: #9ca3af;
+      font-size: 14px;
+      padding: 8px 0 4px;
+    }
+
     .fila-categoria {
       display: flex;
       justify-content: space-between;
       gap: 15px;
       padding: 11px 0;
-      border-bottom: 1px solid #eee;
     }
 
     .total-categorias {
       border-top: 2px solid #d1d5db;
       border-bottom: none;
       font-weight: bold;
-      margin-top: 5px;
-      padding-top: 14px;
+      margin-top: 8px;
+      padding-top: 16px;
     }
 
     .movimiento {
@@ -2105,7 +2179,7 @@ function mostrarPersonas(
 
 
 /* =========================
-   CATEGORÍAS
+   CATEGORÍAS DESPLEGABLES
 ========================= */
 
 function mostrarCategorias(
@@ -2127,65 +2201,217 @@ function mostrarCategorias(
   categorias.forEach(
     categoria => {
 
-      const total =
+      const movimientosCategoria =
 
         datos
 
           .filter(
-            m =>
-              m.tipo === "Gasto"
+            movimiento =>
+              movimiento.tipo === "Gasto"
               &&
-              m.categoria === categoria
+              movimiento.categoria === categoria
           )
 
+          .sort(
+            (a, b) =>
+              (b.fecha || "")
+                .localeCompare(
+                  a.fecha || ""
+                )
+          );
+
+
+      const total =
+
+        movimientosCategoria
+
           .reduce(
-            (suma, m) =>
+            (suma, movimiento) =>
               suma +
-              Number(m.cantidad || 0),
+              Number(
+                movimiento.cantidad || 0
+              ),
             0
           );
 
 
-      const div =
-        document
-          .createElement(
-            "div"
-          );
+      const details =
+        document.createElement(
+          "details"
+        );
 
 
-      div.className =
-        "fila-categoria";
+      details.className =
+        "categoria-desplegable";
 
 
-      div.innerHTML = `
+      const summary =
+        document.createElement(
+          "summary"
+        );
 
-        <strong>
-          ${categoria}
-        </strong>
 
-        <span
-          class="
+      summary.innerHTML = `
+
+        <div class="categoria-cabecera">
+
+          <span class="categoria-nombre">
+
+            <span class="categoria-flecha">
+              ▶
+            </span>
+
+            <span>
+              ${categoria}
+            </span>
+
+          </span>
+
+
+          <span
+            class="
+              ${
+                total > 0
+                  ? "negativo"
+                  : "neutro"
+              }
+            "
+          >
+
             ${
               total > 0
-                ? "negativo"
-                : "neutro"
+                ? euroNegativo(total)
+                : euro(0)
             }
-          "
-        >
 
-          ${
-            total > 0
-              ? euroNegativo(total)
-              : euro(0)
-          }
+          </span>
 
-        </span>
+        </div>
 
       `;
 
 
+      details.appendChild(
+        summary
+      );
+
+
+      const zonaDetalles =
+        document.createElement(
+          "div"
+        );
+
+
+      zonaDetalles.className =
+        "categoria-detalles";
+
+
+      if (
+        movimientosCategoria.length === 0
+      ) {
+
+        zonaDetalles.innerHTML = `
+
+          <div class="categoria-sin-movimientos">
+
+            No hay movimientos
+            en esta categoría este mes.
+
+          </div>
+
+        `;
+
+      }
+
+      else {
+
+        movimientosCategoria.forEach(
+          movimiento => {
+
+            const fila =
+              document.createElement(
+                "div"
+              );
+
+
+            fila.className =
+              "categoria-movimiento";
+
+
+            const concepto =
+              movimiento.concepto
+              ||
+              categoria;
+
+
+            const persona =
+              movimiento.persona ===
+                "Familia"
+
+                ? "🏠 Familia"
+
+                : movimiento.persona;
+
+
+            fila.innerHTML = `
+
+              <div
+                class="
+                  categoria-movimiento-top
+                "
+              >
+
+                <span>
+                  ${concepto}
+                </span>
+
+                <span class="negativo">
+
+                  ${euroNegativo(
+                    Number(
+                      movimiento.cantidad || 0
+                    )
+                  )}
+
+                </span>
+
+              </div>
+
+
+              <div
+                class="
+                  categoria-movimiento-info
+                "
+              >
+
+                ${movimiento.fecha || ""}
+
+                ·
+
+                ${persona || ""}
+
+              </div>
+
+            `;
+
+
+            zonaDetalles.appendChild(
+              fila
+            );
+
+          }
+        );
+
+      }
+
+
+      details.appendChild(
+        zonaDetalles
+      );
+
+
       contenedor.appendChild(
-        div
+        details
       );
 
     }
