@@ -174,6 +174,8 @@
       margin-top: 5px;
     }
 
+    /* RESUMEN POR PERSONA */
+
     .tabla-resumen {
       width: 100%;
       border-collapse: collapse;
@@ -199,6 +201,73 @@
     .tabla-resumen th:not(:first-child),
     .tabla-resumen td:not(:first-child) {
       text-align: right;
+    }
+
+    .fila-persona {
+      cursor: pointer;
+    }
+
+    .fila-persona:hover {
+      background: #f9fafb;
+    }
+
+    .persona-nombre {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .persona-flecha {
+      display: inline-block;
+      color: #6b7280;
+      font-size: 11px;
+      transition: transform .2s ease;
+    }
+
+    .persona-flecha.abierta {
+      transform: rotate(90deg);
+    }
+
+    .fila-detalle-persona td {
+      padding: 0;
+      border-bottom: 1px solid #d1d5db;
+      background: #fafafa;
+    }
+
+    .detalle-persona-contenido {
+      padding: 4px 12px 13px 20px;
+    }
+
+    .gasto-persona {
+      padding: 11px 0;
+      border-top: 1px dashed #e5e7eb;
+    }
+
+    .gasto-persona:first-child {
+      border-top: none;
+    }
+
+    .gasto-persona-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: bold;
+    }
+
+    .gasto-persona-top span:first-child {
+      flex: 1;
+    }
+
+    .gasto-persona-info {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .persona-sin-gastos {
+      color: #9ca3af;
+      font-size: 14px;
+      padding: 12px 0;
     }
 
     .fila-total {
@@ -381,7 +450,7 @@
       line-height: 1.5;
     }
 
-    /* VENTANA EDITAR */
+    /* MODAL EDITAR */
 
     .modal-fondo {
       position: fixed;
@@ -505,16 +574,12 @@
 
       <div class="tarjeta ingresos">
         Ingresos
-        <strong id="totalIngresos">
-          0,00 €
-        </strong>
+        <strong id="totalIngresos">0,00 €</strong>
       </div>
 
       <div class="tarjeta gastos">
         Gastos
-        <strong id="totalGastos">
-          0,00 €
-        </strong>
+        <strong id="totalGastos">0,00 €</strong>
       </div>
 
       <div class="tarjeta saldo">
@@ -557,7 +622,6 @@
         <label>Categoría</label>
 
         <select id="categoria">
-
           <option value="Supermercado">Supermercado</option>
           <option value="Hipoteca">Hipoteca</option>
           <option value="Luz">Luz</option>
@@ -573,7 +637,6 @@
           <option value="Plan de inversión">Plan de inversión</option>
           <option value="Obra">Obra</option>
           <option value="Otros">Otros</option>
-
         </select>
 
       </div>
@@ -713,38 +776,18 @@
     <h2>✏️ Editar movimiento</h2>
 
     <input type="hidden" id="editarId">
-
     <input type="hidden" id="editarTipo">
 
-
     <label>Fecha</label>
-
-    <input
-      type="date"
-      id="editarFecha"
-    >
-
+    <input type="date" id="editarFecha">
 
     <label>Persona</label>
 
     <select id="editarPersona">
-
-      <option value="Familia">
-        Familia
-      </option>
-
-      <option value="Paco">
-        Paco
-      </option>
-
-      <option value="Mari">
-        Mari
-      </option>
-
-      <option value="Nere">
-        Nere
-      </option>
-
+      <option value="Familia">Familia</option>
+      <option value="Paco">Paco</option>
+      <option value="Mari">Mari</option>
+      <option value="Nere">Nere</option>
     </select>
 
 
@@ -753,7 +796,6 @@
       <label>Categoría</label>
 
       <select id="editarCategoria">
-
         <option value="Supermercado">Supermercado</option>
         <option value="Hipoteca">Hipoteca</option>
         <option value="Luz">Luz</option>
@@ -766,27 +808,17 @@
         <option value="Viajes">Viajes</option>
         <option value="Tabaco">Tabaco</option>
         <option value="Seguros">Seguros</option>
-
-        <option value="Plan de inversión">
-          Plan de inversión
-        </option>
-
+        <option value="Plan de inversión">Plan de inversión</option>
         <option value="Obra">Obra</option>
         <option value="Otros">Otros</option>
-
       </select>
 
     </div>
 
 
-    <div
-      id="editarBloqueFuente"
-      class="oculto"
-    >
+    <div id="editarBloqueFuente" class="oculto">
 
-      <label>
-        Fuente de ingreso
-      </label>
+      <label>Fuente de ingreso</label>
 
       <select id="editarFuente"></select>
 
@@ -794,11 +826,7 @@
 
 
     <label>Concepto</label>
-
-    <input
-      type="text"
-      id="editarConcepto"
-    >
+    <input type="text" id="editarConcepto">
 
 
     <label>Cantidad (€)</label>
@@ -841,8 +869,6 @@
 
 
 <script type="module">
-
-/* FIREBASE */
 
 import {
   initializeApp
@@ -896,39 +922,27 @@ const firebaseConfig = {
 };
 
 
-const app =
-  initializeApp(firebaseConfig);
-
-const auth =
-  getAuth(app);
-
-const db =
-  getFirestore(app);
-
-const provider =
-  new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
 
 
 const emailsPermitidos = [
-
   "rjaresarias@gmail.com",
   "merylaranjo@gmail.com"
-
 ];
 
 
 const personas = [
-
   "Familia",
   "Paco",
   "Mari",
   "Nere"
-
 ];
 
 
 const categorias = [
-
   "Supermercado",
   "Hipoteca",
   "Luz",
@@ -944,7 +958,6 @@ const categorias = [
   "Plan de inversión",
   "Obra",
   "Otros"
-
 ];
 
 
@@ -964,7 +977,6 @@ const fuentesIngreso = {
 
 
 let movimientos = [];
-
 let dejarDeEscuchar = null;
 
 
@@ -1017,11 +1029,9 @@ function euroNegativo(valor) {
 
 function fechaHoy() {
 
-  const hoy =
-    new Date();
+  const hoy = new Date();
 
-  const año =
-    hoy.getFullYear();
+  const año = hoy.getFullYear();
 
   const mes =
     String(
@@ -1038,20 +1048,14 @@ function fechaHoy() {
 
 
 function mesActual() {
-
   return fechaHoy().slice(0, 7);
 }
 
 
-document
-  .getElementById("fecha")
-  .value =
+document.getElementById("fecha").value =
   fechaHoy();
 
-
-document
-  .getElementById("mes")
-  .value =
+document.getElementById("mes").value =
   mesActual();
 
 
@@ -1151,20 +1155,16 @@ onAuthStateChanged(
     aplicacion.classList.remove("oculto");
 
 
-    document
-      .getElementById(
-        "nombreUsuario"
-      )
-      .textContent =
+    document.getElementById(
+      "nombreUsuario"
+    ).textContent =
       usuario.displayName ||
       "Usuario";
 
 
-    document
-      .getElementById(
-        "emailUsuario"
-      )
-      .textContent =
+    document.getElementById(
+      "emailUsuario"
+    ).textContent =
       email;
 
 
@@ -1204,11 +1204,9 @@ function escucharMovimientos() {
           );
 
 
-        document
-          .getElementById(
-            "estadoConexion"
-          )
-          .textContent =
+        document.getElementById(
+          "estadoConexion"
+        ).textContent =
           "☁️ Datos sincronizados";
 
 
@@ -1220,11 +1218,9 @@ function escucharMovimientos() {
 
         console.error(error);
 
-        document
-          .getElementById(
-            "estadoConexion"
-          )
-          .textContent =
+        document.getElementById(
+          "estadoConexion"
+        ).textContent =
           "⚠️ Error de sincronización";
 
       }
@@ -1263,14 +1259,15 @@ document
 function actualizarFormulario() {
 
   const tipo =
-    document
-      .getElementById("tipo")
-      .value;
+    document.getElementById(
+      "tipo"
+    ).value;
 
 
   const persona =
-    document
-      .getElementById("persona");
+    document.getElementById(
+      "persona"
+    );
 
 
   const familia =
@@ -1287,22 +1284,18 @@ function actualizarFormulario() {
 
   if (tipo === "Ingreso") {
 
-    document
-      .getElementById(
-        "bloqueCategoria"
-      )
-      .classList.add(
-        "oculto"
-      );
+    document.getElementById(
+      "bloqueCategoria"
+    ).classList.add(
+      "oculto"
+    );
 
 
-    document
-      .getElementById(
-        "bloqueFuente"
-      )
-      .classList.remove(
-        "oculto"
-      );
+    document.getElementById(
+      "bloqueFuente"
+    ).classList.remove(
+      "oculto"
+    );
 
 
     familia.disabled = true;
@@ -1329,29 +1322,22 @@ function actualizarFormulario() {
 
   else {
 
-    document
-      .getElementById(
-        "bloqueCategoria"
-      )
-      .classList.remove(
-        "oculto"
-      );
+    document.getElementById(
+      "bloqueCategoria"
+    ).classList.remove(
+      "oculto"
+    );
 
 
-    document
-      .getElementById(
-        "bloqueFuente"
-      )
-      .classList.add(
-        "oculto"
-      );
+    document.getElementById(
+      "bloqueFuente"
+    ).classList.add(
+      "oculto"
+    );
 
 
-    familia.disabled =
-      false;
-
-    nere.disabled =
-      false;
+    familia.disabled = false;
+    nere.disabled = false;
 
   }
 
@@ -1552,9 +1538,7 @@ async function guardarMovimiento() {
 }
 
 
-/* =========================
-   EDITAR
-========================= */
+/* EDITAR */
 
 window.editarMovimiento =
   function(id) {
@@ -1612,57 +1596,45 @@ window.editarMovimiento =
       "Ingreso"
     ) {
 
-      document
-        .getElementById(
-          "editarBloqueCategoria"
-        )
-        .classList.add(
-          "oculto"
-        );
+      document.getElementById(
+        "editarBloqueCategoria"
+      ).classList.add(
+        "oculto"
+      );
 
 
-      document
-        .getElementById(
-          "editarBloqueFuente"
-        )
-        .classList.remove(
-          "oculto"
-        );
+      document.getElementById(
+        "editarBloqueFuente"
+      ).classList.remove(
+        "oculto"
+      );
 
 
       actualizarPersonasEdicionIngreso();
 
 
       rellenarFuentes(
-
         "editarFuente",
-
         movimiento.persona,
-
         movimiento.fuente
-
       );
 
     }
 
     else {
 
-      document
-        .getElementById(
-          "editarBloqueCategoria"
-        )
-        .classList.remove(
-          "oculto"
-        );
+      document.getElementById(
+        "editarBloqueCategoria"
+      ).classList.remove(
+        "oculto"
+      );
 
 
-      document
-        .getElementById(
-          "editarBloqueFuente"
-        )
-        .classList.add(
-          "oculto"
-        );
+      document.getElementById(
+        "editarBloqueFuente"
+      ).classList.add(
+        "oculto"
+      );
 
 
       actualizarPersonasEdicionGasto();
@@ -1677,13 +1649,11 @@ window.editarMovimiento =
     }
 
 
-    document
-      .getElementById(
-        "modalEditar"
-      )
-      .classList.remove(
-        "oculto"
-      );
+    document.getElementById(
+      "modalEditar"
+    ).classList.remove(
+      "oculto"
+    );
 
   };
 
@@ -1696,20 +1666,16 @@ function actualizarPersonasEdicionIngreso() {
     );
 
 
-  select
-    .querySelector(
-      '[value="Familia"]'
-    )
-    .disabled =
-      true;
+  select.querySelector(
+    '[value="Familia"]'
+  ).disabled =
+    true;
 
 
-  select
-    .querySelector(
-      '[value="Nere"]'
-    )
-    .disabled =
-      true;
+  select.querySelector(
+    '[value="Nere"]'
+  ).disabled =
+    true;
 
 
   if (
@@ -1733,20 +1699,16 @@ function actualizarPersonasEdicionGasto() {
     );
 
 
-  select
-    .querySelector(
-      '[value="Familia"]'
-    )
-    .disabled =
-      false;
+  select.querySelector(
+    '[value="Familia"]'
+  ).disabled =
+    false;
 
 
-  select
-    .querySelector(
-      '[value="Nere"]'
-    )
-    .disabled =
-      false;
+  select.querySelector(
+    '[value="Nere"]'
+  ).disabled =
+    false;
 
 }
 
@@ -1770,13 +1732,10 @@ document
       ) {
 
         rellenarFuentes(
-
           "editarFuente",
-
           document.getElementById(
             "editarPersona"
           ).value
-
         );
 
       }
@@ -1797,13 +1756,11 @@ document
 
 function cerrarEditor() {
 
-  document
-    .getElementById(
-      "modalEditar"
-    )
-    .classList.add(
-      "oculto"
-    );
+  document.getElementById(
+    "modalEditar"
+  ).classList.add(
+    "oculto"
+  );
 
 }
 
@@ -1926,7 +1883,8 @@ async function guardarEdicion() {
       );
 
 
-    boton.disabled = true;
+    boton.disabled =
+      true;
 
     boton.textContent =
       "Guardando...";
@@ -1944,11 +1902,6 @@ async function guardarEdicion() {
 
     );
 
-
-    /*
-      Si cambia de mes,
-      mostramos el nuevo mes.
-    */
 
     document.getElementById(
       "mes"
@@ -2195,7 +2148,7 @@ function mostrarSaldo(
 }
 
 
-/* PERSONAS */
+/* RESUMEN POR PERSONA DESPLEGABLE */
 
 function mostrarPersonas(
   datos,
@@ -2230,13 +2183,24 @@ function mostrarPersonas(
           );
 
 
-      const gastos =
+      const gastosPersona =
         datos
           .filter(
             m =>
               m.persona === persona &&
               m.tipo === "Gasto"
           )
+          .sort(
+            (a,b) =>
+              (b.fecha || "")
+                .localeCompare(
+                  a.fecha || ""
+                )
+          );
+
+
+      const gastos =
+        gastosPersona
           .reduce(
             (total, m) =>
               total +
@@ -2251,6 +2215,10 @@ function mostrarPersonas(
         );
 
 
+      fila.className =
+        "fila-persona";
+
+
       const nombre =
         persona === "Familia"
           ? "🏠 Familia"
@@ -2260,7 +2228,19 @@ function mostrarPersonas(
       fila.innerHTML = `
 
         <td>
-          <strong>${nombre}</strong>
+
+          <span class="persona-nombre">
+
+            <span class="persona-flecha">
+              ▶
+            </span>
+
+            <strong>
+              ${nombre}
+            </strong>
+
+          </span>
+
         </td>
 
         <td class="${
@@ -2294,8 +2274,184 @@ function mostrarPersonas(
       `;
 
 
+      const filaDetalles =
+        document.createElement(
+          "tr"
+        );
+
+
+      filaDetalles.className =
+        "fila-detalle-persona oculto";
+
+
+      const celda =
+        document.createElement(
+          "td"
+        );
+
+
+      celda.colSpan =
+        3;
+
+
+      const contenido =
+        document.createElement(
+          "div"
+        );
+
+
+      contenido.className =
+        "detalle-persona-contenido";
+
+
+      if (
+        gastosPersona.length === 0
+      ) {
+
+        contenido.innerHTML = `
+
+          <div class="persona-sin-gastos">
+
+            No hay gastos de
+            ${nombre}
+            este mes.
+
+          </div>
+
+        `;
+
+      }
+
+      else {
+
+        gastosPersona.forEach(
+          movimiento => {
+
+            const gasto =
+              document.createElement(
+                "div"
+              );
+
+
+            gasto.className =
+              "gasto-persona";
+
+
+            const concepto =
+              movimiento.concepto
+              ||
+              movimiento.categoria
+              ||
+              "Gasto";
+
+
+            gasto.innerHTML = `
+
+              <div class="gasto-persona-top">
+
+                <span>
+                  ${concepto}
+                </span>
+
+                <span class="negativo">
+
+                  ${euroNegativo(
+                    Number(
+                      movimiento.cantidad || 0
+                    )
+                  )}
+
+                </span>
+
+              </div>
+
+
+              <div class="gasto-persona-info">
+
+                ${movimiento.fecha || ""}
+
+                ·
+
+                ${movimiento.categoria || ""}
+
+              </div>
+
+            `;
+
+
+            contenido.appendChild(
+              gasto
+            );
+
+          }
+        );
+
+      }
+
+
+      celda.appendChild(
+        contenido
+      );
+
+
+      filaDetalles.appendChild(
+        celda
+      );
+
+
+      fila.addEventListener(
+        "click",
+        () => {
+
+          const estaCerrada =
+            filaDetalles.classList
+              .contains(
+                "oculto"
+              );
+
+
+          filaDetalles
+            .classList
+            .toggle(
+              "oculto"
+            );
+
+
+          const flecha =
+            fila.querySelector(
+              ".persona-flecha"
+            );
+
+
+          if (
+            estaCerrada
+          ) {
+
+            flecha.classList.add(
+              "abierta"
+            );
+
+          }
+
+          else {
+
+            flecha.classList.remove(
+              "abierta"
+            );
+
+          }
+
+        }
+      );
+
+
       tabla.appendChild(
         fila
+      );
+
+
+      tabla.appendChild(
+        filaDetalles
       );
 
     }
