@@ -1,25 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="theme-color"
-    content="#0f766e"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
   <title>As contas claras</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -60,9 +48,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.05);
     }
 
-    .panel h2 {
-      margin-top: 0;
-    }
+    .panel h2 { margin-top: 0; }
 
     input,
     select,
@@ -81,9 +67,7 @@
       margin-top: 12px;
     }
 
-    button {
-      cursor: pointer;
-    }
+    button { cursor: pointer; }
 
     .btn {
       background: #0f766e;
@@ -109,52 +93,7 @@
       font-size: 13px;
     }
 
-    .resumen-general {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .tarjeta {
-      background: white;
-      border-radius: 14px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,.05);
-    }
-
-    .tarjeta strong {
-      display: block;
-      font-size: 22px;
-      margin-top: 6px;
-    }
-
-    .ingresos strong,
-    .positivo {
-      color: #15803d !important;
-    }
-
-    .gastos strong,
-    .negativo {
-      color: #dc2626 !important;
-    }
-
-    .neutro {
-      color: #6b7280 !important;
-    }
-
-    .saldo {
-      grid-column: span 2;
-    }
-
-    .saldo strong {
-      font-size: 28px;
-    }
-
-    .oculto {
-      display: none !important;
-    }
+    .oculto { display: none !important; }
 
     .usuario {
       display: flex;
@@ -164,14 +103,117 @@
       font-size: 14px;
     }
 
-    .usuario strong {
-      display: block;
-    }
+    .usuario strong { display: block; }
 
     .estado {
       font-size: 13px;
       color: #15803d;
       margin-top: 5px;
+    }
+
+    .positivo { color: #15803d !important; }
+    .negativo { color: #dc2626 !important; }
+    .neutro { color: #6b7280 !important; }
+    .inversion-color { color: #7c3aed !important; }
+
+    /* TARJETAS RESUMEN DESPLEGABLES */
+
+    .resumen-general {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: start;
+    }
+
+    details.tarjeta {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      overflow: hidden;
+    }
+
+    details.tarjeta summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      min-height: 88px;
+    }
+
+    details.tarjeta summary::-webkit-details-marker { display: none; }
+
+    details.tarjeta summary .titulo-tarjeta {
+      display: block;
+      color: #374151;
+      font-size: 14px;
+    }
+
+    details.tarjeta summary strong {
+      display: block;
+      font-size: 22px;
+      margin-top: 6px;
+    }
+
+    .flecha-tarjeta {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: #9ca3af;
+      font-size: 11px;
+      transition: transform .2s ease;
+    }
+
+    details.tarjeta[open] .flecha-tarjeta { transform: rotate(90deg); }
+
+    .detalle-tarjeta {
+      border-top: 1px solid #e5e7eb;
+      padding: 6px 12px 12px;
+      background: #fafafa;
+    }
+
+    .detalle-tarjeta-item {
+      padding: 10px 0;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+
+    .detalle-tarjeta-item:last-child { border-bottom: none; }
+
+    .detalle-tarjeta-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .detalle-tarjeta-info {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .detalle-tarjeta-vacio {
+      color: #9ca3af;
+      font-size: 13px;
+      text-align: center;
+      padding: 10px 0 4px;
+    }
+
+    .detalle-saldo-linea {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px dashed #e5e7eb;
+      font-size: 14px;
+    }
+
+    .detalle-saldo-linea:last-child {
+      border-bottom: none;
+      font-weight: bold;
     }
 
     /* RESUMEN POR PERSONA */
@@ -194,22 +236,13 @@
     }
 
     .tabla-resumen th:first-child,
-    .tabla-resumen td:first-child {
-      text-align: left;
-    }
+    .tabla-resumen td:first-child { text-align: left; }
 
     .tabla-resumen th:not(:first-child),
-    .tabla-resumen td:not(:first-child) {
-      text-align: right;
-    }
+    .tabla-resumen td:not(:first-child) { text-align: right; }
 
-    .fila-persona {
-      cursor: pointer;
-    }
-
-    .fila-persona:hover {
-      background: #f9fafb;
-    }
+    .fila-persona { cursor: pointer; }
+    .fila-persona:hover { background: #f9fafb; }
 
     .persona-nombre {
       display: flex;
@@ -224,9 +257,7 @@
       transition: transform .2s ease;
     }
 
-    .persona-flecha.abierta {
-      transform: rotate(90deg);
-    }
+    .persona-flecha.abierta { transform: rotate(90deg); }
 
     .fila-detalle-persona td {
       padding: 0;
@@ -235,39 +266,50 @@
     }
 
     .detalle-persona-contenido {
-      padding: 4px 12px 13px 20px;
+      padding: 8px 12px 14px 20px;
     }
 
-    .gasto-persona {
-      padding: 11px 0;
-      border-top: 1px dashed #e5e7eb;
+    .persona-bloque-titulo {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+      padding: 8px 0;
+      font-size: 14px;
+      font-weight: bold;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    .gasto-persona:first-child {
-      border-top: none;
+    .persona-bloque-titulo:first-child { margin-top: 0; }
+
+    .mov-persona {
+      padding: 10px 0;
+      border-bottom: 1px dashed #e5e7eb;
     }
 
-    .gasto-persona-top {
+    .mov-persona:last-child { border-bottom: none; }
+
+    .mov-persona-top {
       display: flex;
       justify-content: space-between;
       gap: 12px;
       font-weight: bold;
+      font-size: 14px;
     }
 
-    .gasto-persona-top span:first-child {
-      flex: 1;
-    }
+    .mov-persona-top span:first-child { flex: 1; }
 
-    .gasto-persona-info {
+    .mov-persona-info {
       color: #6b7280;
-      font-size: 13px;
+      font-size: 12px;
       margin-top: 4px;
     }
 
-    .persona-sin-gastos {
+    .persona-sin-movimientos {
       color: #9ca3af;
-      font-size: 14px;
-      padding: 12px 0;
+      font-size: 13px;
+      padding: 10px 0;
     }
 
     .fila-total {
@@ -275,37 +317,11 @@
       background: #f9fafb;
     }
 
-    .fila-total td {
-      border-top: 2px solid #d1d5db;
-    }
+    .fila-total td { border-top: 2px solid #d1d5db; }
 
-    .saldo-final {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #f9fafb;
-      text-align: center;
-    }
+    /* CATEGORÍAS */
 
-    .saldo-final span {
-      display: block;
-    }
-
-    .saldo-final .titulo {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .saldo-final .cantidad {
-      font-size: 29px;
-      font-weight: bold;
-    }
-
-    /* CATEGORÍAS DESPLEGABLES */
-
-    .categoria-desplegable {
-      border-bottom: 1px solid #eee;
-    }
+    .categoria-desplegable { border-bottom: 1px solid #eee; }
 
     .categoria-desplegable summary {
       list-style: none;
@@ -313,9 +329,7 @@
       padding: 13px 0;
     }
 
-    .categoria-desplegable summary::-webkit-details-marker {
-      display: none;
-    }
+    .categoria-desplegable summary::-webkit-details-marker { display: none; }
 
     .categoria-cabecera {
       display: flex;
@@ -337,13 +351,9 @@
       transition: transform .2s;
     }
 
-    .categoria-desplegable[open] .categoria-flecha {
-      transform: rotate(90deg);
-    }
+    .categoria-desplegable[open] .categoria-flecha { transform: rotate(90deg); }
 
-    .categoria-detalles {
-      padding: 0 0 12px 18px;
-    }
+    .categoria-detalles { padding: 0 0 12px 18px; }
 
     .categoria-movimiento {
       padding: 11px 0;
@@ -397,9 +407,7 @@
       font-weight: bold;
     }
 
-    .mov-top span:first-child {
-      flex: 1;
-    }
+    .mov-top span:first-child { flex: 1; }
 
     .detalle {
       color: #6b7280;
@@ -474,9 +482,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
 
-    .modal h2 {
-      margin-top: 0;
-    }
+    .modal h2 { margin-top: 0; }
 
     .botones-modal {
       display: flex;
@@ -511,105 +517,123 @@
         font-size: 13px;
         padding: 10px 3px;
       }
+
+      details.tarjeta summary strong { font-size: 19px; }
+      .detalle-tarjeta { padding-left: 9px; padding-right: 9px; }
     }
   </style>
 </head>
 
 <body>
-
 <header>
   <h1>💰 As contas claras</h1>
   <p>Economía familiar compartida</p>
 </header>
 
-
 <div class="container">
 
   <section id="pantallaLogin" class="panel login">
-
     <h2>🔐 Acceso familiar</h2>
-
-    <p>
-      Entra con la cuenta de Google autorizada.
-      Los movimientos se compartirán entre ambos móviles.
-    </p>
-
-    <button id="botonLogin" class="btn-google">
-      Entrar con Google
-    </button>
-
+    <p>Entra con la cuenta de Google autorizada. Los movimientos se compartirán entre ambos móviles.</p>
+    <button id="botonLogin" class="btn-google">Entrar con Google</button>
   </section>
-
 
   <div id="aplicacion" class="oculto">
 
     <section class="panel usuario">
-
       <div>
         <strong id="nombreUsuario">Usuario</strong>
         <span id="emailUsuario"></span>
-
-        <div id="estadoConexion" class="estado">
-          ☁️ Sincronizando...
-        </div>
+        <div id="estadoConexion" class="estado">☁️ Sincronizando...</div>
       </div>
-
-      <button id="botonSalir" class="btn-salir">
-        Salir
-      </button>
-
+      <button id="botonSalir" class="btn-salir">Salir</button>
     </section>
-
 
     <div class="mes">
-
       <label for="mes">Mes</label>
-
       <input type="month" id="mes">
-
     </div>
 
-
+    <!-- RESUMEN GENERAL: TODAS LAS TARJETAS SON DESPLEGABLES -->
     <section class="resumen-general">
 
-      <div class="tarjeta ingresos">
-        Ingresos
-        <strong id="totalIngresos">0,00 €</strong>
-      </div>
+      <details class="tarjeta">
+        <summary>
+          <span class="flecha-tarjeta">▶</span>
+          <span class="titulo-tarjeta">Ingresos</span>
+          <strong id="totalIngresos" class="positivo">0,00 €</strong>
+        </summary>
+        <div id="detalleTarjetaIngresos" class="detalle-tarjeta"></div>
+      </details>
 
-      <div class="tarjeta gastos">
-        Gastos
-        <strong id="totalGastos">0,00 €</strong>
-      </div>
+      <details class="tarjeta">
+        <summary>
+          <span class="flecha-tarjeta">▶</span>
+          <span class="titulo-tarjeta">Gastos</span>
+          <strong id="totalGastos" class="negativo">0,00 €</strong>
+        </summary>
+        <div id="detalleTarjetaGastos" class="detalle-tarjeta"></div>
+      </details>
 
-      <div class="tarjeta saldo">
-        Saldo del mes
-        <strong id="saldoGeneral" class="neutro">
-          0,00 €
-        </strong>
-      </div>
+      <details class="tarjeta">
+        <summary>
+          <span class="flecha-tarjeta">▶</span>
+          <span class="titulo-tarjeta">Saldo fin de mes</span>
+          <strong id="saldoGeneral" class="neutro">0,00 €</strong>
+        </summary>
+        <div id="detalleTarjetaSaldo" class="detalle-tarjeta"></div>
+      </details>
+
+      <details class="tarjeta">
+        <summary>
+          <span class="flecha-tarjeta">▶</span>
+          <span class="titulo-tarjeta">Inversión</span>
+          <strong id="totalInversion" class="inversion-color">0,00 €</strong>
+        </summary>
+        <div id="detalleTarjetaInversion" class="detalle-tarjeta"></div>
+      </details>
 
     </section>
 
-
-    <!-- NUEVO MOVIMIENTO -->
-
+    <!-- RESUMEN PERSONAS -->
     <section class="panel">
+      <h2>👨‍👩‍👧 Resumen por persona</h2>
 
+      <table class="tabla-resumen">
+        <thead>
+          <tr>
+            <th>Persona</th>
+            <th>Ingresos</th>
+            <th>Gastos</th>
+          </tr>
+        </thead>
+
+        <tbody id="tablaPersonas"></tbody>
+
+        <tfoot>
+          <tr class="fila-total">
+            <td>TOTAL</td>
+            <td id="totalPersonasIngresos">0,00 €</td>
+            <td id="totalPersonasGastos">0,00 €</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <!-- NUEVO MOVIMIENTO: AHORA DEBAJO DE RESUMEN POR PERSONA -->
+    <section class="panel">
       <h2>➕ Nuevo movimiento</h2>
 
       <label>Fecha</label>
       <input type="date" id="fecha">
 
       <label>Tipo</label>
-
       <select id="tipo">
         <option value="Gasto">Gasto</option>
         <option value="Ingreso">Ingreso</option>
       </select>
 
       <label>Persona</label>
-
       <select id="persona">
         <option value="Familia">Familia</option>
         <option value="Paco">Paco</option>
@@ -618,9 +642,7 @@
       </select>
 
       <div id="bloqueCategoria">
-
         <label>Categoría</label>
-
         <select id="categoria">
           <option value="Supermercado">Supermercado</option>
           <option value="Hipoteca">Hipoteca</option>
@@ -638,141 +660,45 @@
           <option value="Obra">Obra</option>
           <option value="Otros">Otros</option>
         </select>
-
       </div>
-
 
       <div id="bloqueFuente" class="oculto">
-
         <label>Fuente de ingreso</label>
-
         <select id="fuente"></select>
-
       </div>
-
 
       <label>Concepto</label>
-
-      <input
-        type="text"
-        id="concepto"
-        placeholder="Ej. Mercadona, obra cocina, nómina..."
-      >
-
+      <input type="text" id="concepto" placeholder="Ej. Mercadona, obra cocina, nómina...">
 
       <label>Cantidad (€)</label>
+      <input type="number" id="cantidad" min="0" step="0.01" inputmode="decimal" placeholder="0,00">
 
-      <input
-        type="number"
-        id="cantidad"
-        min="0"
-        step="0.01"
-        inputmode="decimal"
-        placeholder="0,00"
-      >
-
-
-      <button id="botonGuardar" class="btn">
-        Guardar movimiento
-      </button>
-
+      <button id="botonGuardar" class="btn">Guardar movimiento</button>
     </section>
-
-
-    <!-- RESUMEN PERSONAS -->
-
-    <section class="panel">
-
-      <h2>👨‍👩‍👧 Resumen por persona</h2>
-
-      <table class="tabla-resumen">
-
-        <thead>
-          <tr>
-            <th>Persona</th>
-            <th>Ingresos</th>
-            <th>Gastos</th>
-          </tr>
-        </thead>
-
-        <tbody id="tablaPersonas"></tbody>
-
-        <tfoot>
-          <tr class="fila-total">
-
-            <td>TOTAL</td>
-
-            <td id="totalPersonasIngresos">
-              0,00 €
-            </td>
-
-            <td id="totalPersonasGastos">
-              0,00 €
-            </td>
-
-          </tr>
-        </tfoot>
-
-      </table>
-
-
-      <div class="saldo-final">
-
-        <span class="titulo">
-          Saldo fin de mes
-        </span>
-
-        <span id="saldoFinMes" class="cantidad neutro">
-          0,00 €
-        </span>
-
-      </div>
-
-    </section>
-
 
     <!-- CATEGORÍAS -->
-
     <section class="panel">
-
       <h2>📊 Gastos por categoría</h2>
-
       <div id="resumenCategorias"></div>
 
       <div class="fila-categoria total-categorias">
-
         <strong>Total gastos</strong>
-
-        <strong id="totalCategorias" class="neutro">
-          0,00 €
-        </strong>
-
+        <strong id="totalCategorias" class="neutro">0,00 €</strong>
       </div>
-
     </section>
 
-
     <!-- MOVIMIENTOS -->
-
     <section class="panel">
-
       <h2>📋 Movimientos</h2>
-
       <div id="listaMovimientos"></div>
-
     </section>
 
   </div>
-
 </div>
 
-
 <!-- MODAL EDITAR -->
-
 <div id="modalEditar" class="modal-fondo oculto">
-
   <div class="modal">
-
     <h2>✏️ Editar movimiento</h2>
 
     <input type="hidden" id="editarId">
@@ -782,7 +708,6 @@
     <input type="date" id="editarFecha">
 
     <label>Persona</label>
-
     <select id="editarPersona">
       <option value="Familia">Familia</option>
       <option value="Paco">Paco</option>
@@ -790,11 +715,8 @@
       <option value="Nere">Nere</option>
     </select>
 
-
     <div id="editarBloqueCategoria">
-
       <label>Categoría</label>
-
       <select id="editarCategoria">
         <option value="Supermercado">Supermercado</option>
         <option value="Hipoteca">Hipoteca</option>
@@ -812,68 +734,30 @@
         <option value="Obra">Obra</option>
         <option value="Otros">Otros</option>
       </select>
-
     </div>
-
 
     <div id="editarBloqueFuente" class="oculto">
-
       <label>Fuente de ingreso</label>
-
       <select id="editarFuente"></select>
-
     </div>
-
 
     <label>Concepto</label>
     <input type="text" id="editarConcepto">
 
-
     <label>Cantidad (€)</label>
-
-    <input
-      type="number"
-      id="editarCantidad"
-      min="0"
-      step="0.01"
-      inputmode="decimal"
-    >
-
+    <input type="number" id="editarCantidad" min="0" step="0.01" inputmode="decimal">
 
     <div class="botones-modal">
-
-      <button
-        id="botonGuardarEdicion"
-        class="guardar-edicion"
-      >
-        Guardar cambios
-      </button>
-
-      <button
-        id="botonCancelarEdicion"
-        class="cancelar-edicion"
-      >
-        Cancelar
-      </button>
-
+      <button id="botonGuardarEdicion" class="guardar-edicion">Guardar cambios</button>
+      <button id="botonCancelarEdicion" class="cancelar-edicion">Cancelar</button>
     </div>
-
   </div>
-
 </div>
 
-
-<footer>
-  As contas claras · Datos compartidos y guardados en Firebase
-</footer>
-
+<footer>As contas claras · Datos compartidos y guardados en Firebase</footer>
 
 <script type="module">
-
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
 import {
   getAuth,
@@ -882,7 +766,6 @@ import {
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-
 
 import {
   getFirestore,
@@ -895,52 +778,27 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyD2gY1lwSm-EstQMfNAi7EqUTxT5sGwx5c",
-
-  authDomain:
-    "as-contas-claras.firebaseapp.com",
-
-  projectId:
-    "as-contas-claras",
-
-  storageBucket:
-    "as-contas-claras.firebasestorage.app",
-
-  messagingSenderId:
-    "955037474682",
-
-  appId:
-    "1:955037474682:web:715560db8751ffac5700c3",
-
-  measurementId:
-    "G-NG0387YDJ8"
-
+  apiKey: "AIzaSyD2gY1lwSm-EstQMfNAi7EqUTxT5sGwx5c",
+  authDomain: "as-contas-claras.firebaseapp.com",
+  projectId: "as-contas-claras",
+  storageBucket: "as-contas-claras.firebasestorage.app",
+  messagingSenderId: "955037474682",
+  appId: "1:955037474682:web:715560db8751ffac5700c3",
+  measurementId: "G-NG0387YDJ8"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-
 const emailsPermitidos = [
   "rjaresarias@gmail.com",
   "merylaranjo@gmail.com"
 ];
 
-
-const personas = [
-  "Familia",
-  "Paco",
-  "Mari",
-  "Nere"
-];
-
+const personas = ["Familia", "Paco", "Mari", "Nere"];
 
 const categorias = [
   "Supermercado",
@@ -960,1934 +818,766 @@ const categorias = [
   "Otros"
 ];
 
-
 const fuentesIngreso = {
-
-  Paco: [
-    "Nómina",
-    "Alquiler"
-  ],
-
-  Mari: [
-    "Nómina",
-    "Pensión"
-  ]
-
+  Paco: ["Nómina", "Alquiler"],
+  Mari: ["Nómina", "Pensión"]
 };
-
 
 let movimientos = [];
 let dejarDeEscuchar = null;
 
-
-/* EURO */
-
-const formatoEuro =
-  new Intl.NumberFormat(
-    "es-ES",
-    {
-      style: "currency",
-      currency: "EUR"
-    }
-  );
-
+const formatoEuro = new Intl.NumberFormat("es-ES", {
+  style: "currency",
+  currency: "EUR"
+});
 
 function euro(valor) {
-
-  if (Math.abs(valor) < 0.005) {
-    return formatoEuro.format(0);
-  }
-
+  if (Math.abs(valor) < 0.005) return formatoEuro.format(0);
   return formatoEuro.format(valor);
 }
 
-
 function euroPositivo(valor) {
-
-  if (Math.abs(valor) < 0.005) {
-    return formatoEuro.format(0);
-  }
-
+  if (Math.abs(valor) < 0.005) return formatoEuro.format(0);
   return "+" + formatoEuro.format(valor);
 }
 
-
 function euroNegativo(valor) {
-
-  if (Math.abs(valor) < 0.005) {
-    return formatoEuro.format(0);
-  }
-
-  return "-" +
-    formatoEuro.format(
-      Math.abs(valor)
-    );
+  if (Math.abs(valor) < 0.005) return formatoEuro.format(0);
+  return "-" + formatoEuro.format(Math.abs(valor));
 }
 
-
-/* FECHA */
+function esc(valor) {
+  return String(valor ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
 function fechaHoy() {
-
   const hoy = new Date();
-
   const año = hoy.getFullYear();
-
-  const mes =
-    String(
-      hoy.getMonth() + 1
-    ).padStart(2, "0");
-
-  const dia =
-    String(
-      hoy.getDate()
-    ).padStart(2, "0");
-
+  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+  const dia = String(hoy.getDate()).padStart(2, "0");
   return `${año}-${mes}-${dia}`;
 }
-
 
 function mesActual() {
   return fechaHoy().slice(0, 7);
 }
 
-
-document.getElementById("fecha").value =
-  fechaHoy();
-
-document.getElementById("mes").value =
-  mesActual();
-
+document.getElementById("fecha").value = fechaHoy();
+document.getElementById("mes").value = mesActual();
 
 /* LOGIN */
 
-document
-  .getElementById("botonLogin")
-  .addEventListener(
-    "click",
-    async () => {
-
-      try {
-
-        await signInWithPopup(
-          auth,
-          provider
-        );
-
-      }
-
-      catch(error) {
-
-        console.error(error);
-
-        alert(
-          "No se pudo iniciar sesión con Google."
-        );
-
-      }
-
-    }
-  );
-
-
-document
-  .getElementById("botonSalir")
-  .addEventListener(
-    "click",
-    async () => {
-
-      await signOut(auth);
-
-    }
-  );
-
-
-onAuthStateChanged(
-  auth,
-  usuario => {
-
-    const login =
-      document.getElementById(
-        "pantallaLogin"
-      );
-
-    const aplicacion =
-      document.getElementById(
-        "aplicacion"
-      );
-
-
-    if (!usuario) {
-
-      if (dejarDeEscuchar) {
-        dejarDeEscuchar();
-      }
-
-      login.classList.remove("oculto");
-
-      aplicacion.classList.add("oculto");
-
-      return;
-    }
-
-
-    const email =
-      (usuario.email || "")
-        .toLowerCase();
-
-
-    if (
-      !emailsPermitidos.includes(email)
-    ) {
-
-      alert(
-        "Esta cuenta no está autorizada."
-      );
-
-      signOut(auth);
-
-      return;
-    }
-
-
-    login.classList.add("oculto");
-
-    aplicacion.classList.remove("oculto");
-
-
-    document.getElementById(
-      "nombreUsuario"
-    ).textContent =
-      usuario.displayName ||
-      "Usuario";
-
-
-    document.getElementById(
-      "emailUsuario"
-    ).textContent =
-      email;
-
-
-    escucharMovimientos();
-
+document.getElementById("botonLogin").addEventListener("click", async () => {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo iniciar sesión con Google.");
   }
-);
+});
 
+document.getElementById("botonSalir").addEventListener("click", async () => {
+  await signOut(auth);
+});
 
-/* TIEMPO REAL */
+onAuthStateChanged(auth, usuario => {
+  const login = document.getElementById("pantallaLogin");
+  const aplicacion = document.getElementById("aplicacion");
+
+  if (!usuario) {
+    if (dejarDeEscuchar) {
+      dejarDeEscuchar();
+      dejarDeEscuchar = null;
+    }
+
+    movimientos = [];
+    login.classList.remove("oculto");
+    aplicacion.classList.add("oculto");
+    return;
+  }
+
+  const email = (usuario.email || "").toLowerCase();
+
+  if (!emailsPermitidos.includes(email)) {
+    alert("Esta cuenta no está autorizada.");
+    signOut(auth);
+    return;
+  }
+
+  login.classList.add("oculto");
+  aplicacion.classList.remove("oculto");
+
+  document.getElementById("nombreUsuario").textContent = usuario.displayName || "Usuario";
+  document.getElementById("emailUsuario").textContent = email;
+
+  escucharMovimientos();
+});
+
+/* FIRESTORE TIEMPO REAL */
 
 function escucharMovimientos() {
+  if (dejarDeEscuchar) dejarDeEscuchar();
 
-  if (dejarDeEscuchar) {
-    dejarDeEscuchar();
-  }
+  document.getElementById("estadoConexion").textContent = "☁️ Sincronizando...";
 
+  dejarDeEscuchar = onSnapshot(
+    collection(db, "movimientos"),
+    snapshot => {
+      movimientos = snapshot.docs.map(documento => ({
+        firestoreId: documento.id,
+        ...documento.data()
+      }));
 
-  dejarDeEscuchar =
-    onSnapshot(
-
-      collection(
-        db,
-        "movimientos"
-      ),
-
-      snapshot => {
-
-        movimientos =
-          snapshot.docs.map(
-            documento => ({
-              firestoreId:
-                documento.id,
-
-              ...documento.data()
-            })
-          );
-
-
-        document.getElementById(
-          "estadoConexion"
-        ).textContent =
-          "☁️ Datos sincronizados";
-
-
-        actualizarPantalla();
-
-      },
-
-      error => {
-
-        console.error(error);
-
-        document.getElementById(
-          "estadoConexion"
-        ).textContent =
-          "⚠️ Error de sincronización";
-
-      }
-
-    );
-
+      document.getElementById("estadoConexion").textContent = "☁️ Datos sincronizados";
+      actualizarPantalla();
+    },
+    error => {
+      console.error(error);
+      document.getElementById("estadoConexion").textContent = "⚠️ Error de sincronización";
+    }
+  );
 }
-
 
 /* FORMULARIO NUEVO */
 
-document
-  .getElementById("tipo")
-  .addEventListener(
-    "change",
-    actualizarFormulario
-  );
-
-
-document
-  .getElementById("persona")
-  .addEventListener(
-    "change",
-    actualizarFormulario
-  );
-
-
-document
-  .getElementById("mes")
-  .addEventListener(
-    "change",
-    actualizarPantalla
-  );
-
+document.getElementById("tipo").addEventListener("change", actualizarFormulario);
+document.getElementById("persona").addEventListener("change", actualizarFormulario);
+document.getElementById("mes").addEventListener("change", actualizarPantalla);
 
 function actualizarFormulario() {
-
-  const tipo =
-    document.getElementById(
-      "tipo"
-    ).value;
-
-
-  const persona =
-    document.getElementById(
-      "persona"
-    );
-
-
-  const familia =
-    persona.querySelector(
-      '[value="Familia"]'
-    );
-
-
-  const nere =
-    persona.querySelector(
-      '[value="Nere"]'
-    );
-
+  const tipo = document.getElementById("tipo").value;
+  const persona = document.getElementById("persona");
+  const familia = persona.querySelector('[value="Familia"]');
+  const nere = persona.querySelector('[value="Nere"]');
 
   if (tipo === "Ingreso") {
-
-    document.getElementById(
-      "bloqueCategoria"
-    ).classList.add(
-      "oculto"
-    );
-
-
-    document.getElementById(
-      "bloqueFuente"
-    ).classList.remove(
-      "oculto"
-    );
-
+    document.getElementById("bloqueCategoria").classList.add("oculto");
+    document.getElementById("bloqueFuente").classList.remove("oculto");
 
     familia.disabled = true;
     nere.disabled = true;
 
-
-    if (
-      persona.value === "Familia" ||
-      persona.value === "Nere"
-    ) {
-
-      persona.value =
-        "Paco";
-
+    if (persona.value === "Familia" || persona.value === "Nere") {
+      persona.value = "Paco";
     }
 
-
-    rellenarFuentes(
-      "fuente",
-      persona.value
-    );
-
-  }
-
-  else {
-
-    document.getElementById(
-      "bloqueCategoria"
-    ).classList.remove(
-      "oculto"
-    );
-
-
-    document.getElementById(
-      "bloqueFuente"
-    ).classList.add(
-      "oculto"
-    );
-
+    rellenarFuentes("fuente", persona.value);
+  } else {
+    document.getElementById("bloqueCategoria").classList.remove("oculto");
+    document.getElementById("bloqueFuente").classList.add("oculto");
 
     familia.disabled = false;
     nere.disabled = false;
-
   }
-
 }
 
-
-function rellenarFuentes(
-  idSelect,
-  persona,
-  seleccionada = ""
-) {
-
-  const select =
-    document.getElementById(
-      idSelect
-    );
-
-
+function rellenarFuentes(idSelect, persona, seleccionada = "") {
+  const select = document.getElementById(idSelect);
   select.innerHTML = "";
 
-
-  (
-    fuentesIngreso[persona] ||
-    []
-  )
-  .forEach(
-    fuente => {
-
-      const option =
-        document.createElement(
-          "option"
-        );
-
-
-      option.value =
-        fuente;
-
-      option.textContent =
-        fuente;
-
-
-      if (
-        fuente === seleccionada
-      ) {
-
-        option.selected =
-          true;
-
-      }
-
-
-      select.appendChild(
-        option
-      );
-
-    }
-  );
-
+  (fuentesIngreso[persona] || []).forEach(fuente => {
+    const option = document.createElement("option");
+    option.value = fuente;
+    option.textContent = fuente;
+    option.selected = fuente === seleccionada;
+    select.appendChild(option);
+  });
 }
-
 
 /* GUARDAR NUEVO */
 
-document
-  .getElementById(
-    "botonGuardar"
-  )
-  .addEventListener(
-    "click",
-    guardarMovimiento
-  );
-
+document.getElementById("botonGuardar").addEventListener("click", guardarMovimiento);
 
 async function guardarMovimiento() {
+  if (!auth.currentUser) return;
 
-  const fecha =
-    document.getElementById(
-      "fecha"
-    ).value;
-
-  const tipo =
-    document.getElementById(
-      "tipo"
-    ).value;
-
-  const persona =
-    document.getElementById(
-      "persona"
-    ).value;
-
-  const concepto =
-    document.getElementById(
-      "concepto"
-    ).value.trim();
-
-  const cantidad =
-    Number(
-      document.getElementById(
-        "cantidad"
-      ).value
-    );
-
+  const fecha = document.getElementById("fecha").value;
+  const tipo = document.getElementById("tipo").value;
+  const persona = document.getElementById("persona").value;
+  const concepto = document.getElementById("concepto").value.trim();
+  const cantidad = Number(document.getElementById("cantidad").value);
 
   if (!fecha) {
-
-    alert(
-      "Selecciona una fecha."
-    );
-
+    alert("Selecciona una fecha.");
     return;
   }
 
-
-  if (
-    !cantidad ||
-    cantidad <= 0
-  ) {
-
-    alert(
-      "Introduce una cantidad válida."
-    );
-
+  if (!cantidad || cantidad <= 0) {
+    alert("Introduce una cantidad válida.");
     return;
   }
 
+  const categoria = tipo === "Gasto"
+    ? document.getElementById("categoria").value
+    : "";
 
-  const categoria =
-    tipo === "Gasto"
-      ?
-      document.getElementById(
-        "categoria"
-      ).value
-      :
-      "";
+  const fuente = tipo === "Ingreso"
+    ? document.getElementById("fuente").value
+    : "";
 
-
-  const fuente =
-    tipo === "Ingreso"
-      ?
-      document.getElementById(
-        "fuente"
-      ).value
-      :
-      "";
-
+  const boton = document.getElementById("botonGuardar");
 
   try {
+    boton.disabled = true;
+    boton.textContent = "Guardando...";
 
-    await addDoc(
+    await addDoc(collection(db, "movimientos"), {
+      fecha,
+      tipo,
+      persona,
+      concepto,
+      cantidad,
+      categoria,
+      fuente,
+      creadoPor: auth.currentUser.email,
+      creadoEn: serverTimestamp()
+    });
 
-      collection(
-        db,
-        "movimientos"
-      ),
-
-      {
-
-        fecha,
-        tipo,
-        persona,
-        concepto,
-        cantidad,
-        categoria,
-        fuente,
-
-        creadoPor:
-          auth.currentUser.email,
-
-        creadoEn:
-          serverTimestamp()
-
-      }
-
-    );
-
-
-    document.getElementById(
-      "concepto"
-    ).value = "";
-
-
-    document.getElementById(
-      "cantidad"
-    ).value = "";
-
-  }
-
-  catch(error) {
-
+    document.getElementById("concepto").value = "";
+    document.getElementById("cantidad").value = "";
+    document.getElementById("mes").value = fecha.slice(0, 7);
+  } catch (error) {
     console.error(error);
-
-    alert(
-      "No se pudo guardar."
-    );
-
+    alert("No se pudo guardar.");
+  } finally {
+    boton.disabled = false;
+    boton.textContent = "Guardar movimiento";
   }
-
 }
-
 
 /* EDITAR */
 
-window.editarMovimiento =
-  function(id) {
+window.editarMovimiento = function(id) {
+  const movimiento = movimientos.find(m => m.firestoreId === id);
+  if (!movimiento) return;
 
-    const movimiento =
-      movimientos.find(
-        m =>
-          m.firestoreId === id
-      );
+  document.getElementById("editarId").value = id;
+  document.getElementById("editarTipo").value = movimiento.tipo;
+  document.getElementById("editarFecha").value = movimiento.fecha || "";
+  document.getElementById("editarPersona").value = movimiento.persona || "Familia";
+  document.getElementById("editarConcepto").value = movimiento.concepto || "";
+  document.getElementById("editarCantidad").value = movimiento.cantidad || "";
 
+  if (movimiento.tipo === "Ingreso") {
+    document.getElementById("editarBloqueCategoria").classList.add("oculto");
+    document.getElementById("editarBloqueFuente").classList.remove("oculto");
 
-    if (!movimiento) {
-      return;
-    }
+    actualizarPersonasEdicionIngreso();
+    rellenarFuentes("editarFuente", movimiento.persona, movimiento.fuente);
+  } else {
+    document.getElementById("editarBloqueCategoria").classList.remove("oculto");
+    document.getElementById("editarBloqueFuente").classList.add("oculto");
 
+    actualizarPersonasEdicionGasto();
+    document.getElementById("editarCategoria").value = movimiento.categoria || "Otros";
+  }
 
-    document.getElementById(
-      "editarId"
-    ).value =
-      id;
-
-
-    document.getElementById(
-      "editarTipo"
-    ).value =
-      movimiento.tipo;
-
-
-    document.getElementById(
-      "editarFecha"
-    ).value =
-      movimiento.fecha || "";
-
-
-    document.getElementById(
-      "editarPersona"
-    ).value =
-      movimiento.persona || "Familia";
-
-
-    document.getElementById(
-      "editarConcepto"
-    ).value =
-      movimiento.concepto || "";
-
-
-    document.getElementById(
-      "editarCantidad"
-    ).value =
-      movimiento.cantidad || "";
-
-
-    if (
-      movimiento.tipo ===
-      "Ingreso"
-    ) {
-
-      document.getElementById(
-        "editarBloqueCategoria"
-      ).classList.add(
-        "oculto"
-      );
-
-
-      document.getElementById(
-        "editarBloqueFuente"
-      ).classList.remove(
-        "oculto"
-      );
-
-
-      actualizarPersonasEdicionIngreso();
-
-
-      rellenarFuentes(
-        "editarFuente",
-        movimiento.persona,
-        movimiento.fuente
-      );
-
-    }
-
-    else {
-
-      document.getElementById(
-        "editarBloqueCategoria"
-      ).classList.remove(
-        "oculto"
-      );
-
-
-      document.getElementById(
-        "editarBloqueFuente"
-      ).classList.add(
-        "oculto"
-      );
-
-
-      actualizarPersonasEdicionGasto();
-
-
-      document.getElementById(
-        "editarCategoria"
-      ).value =
-        movimiento.categoria ||
-        "Otros";
-
-    }
-
-
-    document.getElementById(
-      "modalEditar"
-    ).classList.remove(
-      "oculto"
-    );
-
-  };
-
+  document.getElementById("modalEditar").classList.remove("oculto");
+};
 
 function actualizarPersonasEdicionIngreso() {
+  const select = document.getElementById("editarPersona");
+  select.querySelector('[value="Familia"]').disabled = true;
+  select.querySelector('[value="Nere"]').disabled = true;
 
-  const select =
-    document.getElementById(
-      "editarPersona"
-    );
-
-
-  select.querySelector(
-    '[value="Familia"]'
-  ).disabled =
-    true;
-
-
-  select.querySelector(
-    '[value="Nere"]'
-  ).disabled =
-    true;
-
-
-  if (
-    select.value === "Familia" ||
-    select.value === "Nere"
-  ) {
-
-    select.value =
-      "Paco";
-
+  if (select.value === "Familia" || select.value === "Nere") {
+    select.value = "Paco";
   }
-
 }
-
 
 function actualizarPersonasEdicionGasto() {
-
-  const select =
-    document.getElementById(
-      "editarPersona"
-    );
-
-
-  select.querySelector(
-    '[value="Familia"]'
-  ).disabled =
-    false;
-
-
-  select.querySelector(
-    '[value="Nere"]'
-  ).disabled =
-    false;
-
+  const select = document.getElementById("editarPersona");
+  select.querySelector('[value="Familia"]').disabled = false;
+  select.querySelector('[value="Nere"]').disabled = false;
 }
 
+document.getElementById("editarPersona").addEventListener("change", () => {
+  const tipo = document.getElementById("editarTipo").value;
 
-document
-  .getElementById(
-    "editarPersona"
-  )
-  .addEventListener(
-    "change",
-    () => {
+  if (tipo === "Ingreso") {
+    rellenarFuentes(
+      "editarFuente",
+      document.getElementById("editarPersona").value
+    );
+  }
+});
 
-      const tipo =
-        document.getElementById(
-          "editarTipo"
-        ).value;
-
-
-      if (
-        tipo === "Ingreso"
-      ) {
-
-        rellenarFuentes(
-          "editarFuente",
-          document.getElementById(
-            "editarPersona"
-          ).value
-        );
-
-      }
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "botonCancelarEdicion"
-  )
-  .addEventListener(
-    "click",
-    cerrarEditor
-  );
-
+document.getElementById("botonCancelarEdicion").addEventListener("click", cerrarEditor);
 
 function cerrarEditor() {
-
-  document.getElementById(
-    "modalEditar"
-  ).classList.add(
-    "oculto"
-  );
-
+  document.getElementById("modalEditar").classList.add("oculto");
 }
 
-
-document
-  .getElementById(
-    "botonGuardarEdicion"
-  )
-  .addEventListener(
-    "click",
-    guardarEdicion
-  );
-
+document.getElementById("botonGuardarEdicion").addEventListener("click", guardarEdicion);
 
 async function guardarEdicion() {
-
-  const id =
-    document.getElementById(
-      "editarId"
-    ).value;
-
-
-  const tipo =
-    document.getElementById(
-      "editarTipo"
-    ).value;
-
-
-  const fecha =
-    document.getElementById(
-      "editarFecha"
-    ).value;
-
-
-  const persona =
-    document.getElementById(
-      "editarPersona"
-    ).value;
-
-
-  const concepto =
-    document.getElementById(
-      "editarConcepto"
-    ).value.trim();
-
-
-  const cantidad =
-    Number(
-      document.getElementById(
-        "editarCantidad"
-      ).value
-    );
-
+  const id = document.getElementById("editarId").value;
+  const tipo = document.getElementById("editarTipo").value;
+  const fecha = document.getElementById("editarFecha").value;
+  const persona = document.getElementById("editarPersona").value;
+  const concepto = document.getElementById("editarConcepto").value.trim();
+  const cantidad = Number(document.getElementById("editarCantidad").value);
 
   if (!fecha) {
-
-    alert(
-      "Selecciona una fecha."
-    );
-
+    alert("Selecciona una fecha.");
     return;
   }
 
-
-  if (
-    !cantidad ||
-    cantidad <= 0
-  ) {
-
-    alert(
-      "Introduce una cantidad válida."
-    );
-
+  if (!cantidad || cantidad <= 0) {
+    alert("Introduce una cantidad válida.");
     return;
   }
 
+  const cambios = { fecha, persona, concepto, cantidad };
 
-  const cambios = {
-
-    fecha,
-    persona,
-    concepto,
-    cantidad
-
-  };
-
-
-  if (
-    tipo === "Gasto"
-  ) {
-
-    cambios.categoria =
-      document.getElementById(
-        "editarCategoria"
-      ).value;
-
-    cambios.fuente =
-      "";
-
+  if (tipo === "Gasto") {
+    cambios.categoria = document.getElementById("editarCategoria").value;
+    cambios.fuente = "";
+  } else {
+    cambios.categoria = "";
+    cambios.fuente = document.getElementById("editarFuente").value;
   }
 
-  else {
-
-    cambios.categoria =
-      "";
-
-    cambios.fuente =
-      document.getElementById(
-        "editarFuente"
-      ).value;
-
-  }
-
+  const boton = document.getElementById("botonGuardarEdicion");
 
   try {
+    boton.disabled = true;
+    boton.textContent = "Guardando...";
 
-    const boton =
-      document.getElementById(
-        "botonGuardarEdicion"
-      );
+    await updateDoc(doc(db, "movimientos", id), cambios);
 
-
-    boton.disabled =
-      true;
-
-    boton.textContent =
-      "Guardando...";
-
-
-    await updateDoc(
-
-      doc(
-        db,
-        "movimientos",
-        id
-      ),
-
-      cambios
-
-    );
-
-
-    document.getElementById(
-      "mes"
-    ).value =
-      fecha.slice(0, 7);
-
-
+    document.getElementById("mes").value = fecha.slice(0, 7);
     cerrarEditor();
-
-
-    boton.disabled =
-      false;
-
-    boton.textContent =
-      "Guardar cambios";
-
-  }
-
-  catch(error) {
-
+  } catch (error) {
     console.error(error);
-
-
-    alert(
-      "No se pudieron guardar los cambios."
-    );
-
-
-    const boton =
-      document.getElementById(
-        "botonGuardarEdicion"
-      );
-
-
-    boton.disabled =
-      false;
-
-    boton.textContent =
-      "Guardar cambios";
-
+    alert("No se pudieron guardar los cambios.");
+  } finally {
+    boton.disabled = false;
+    boton.textContent = "Guardar cambios";
   }
-
 }
-
 
 /* BORRAR */
 
-window.borrarMovimiento =
-  async function(id) {
+window.borrarMovimiento = async function(id) {
+  if (!confirm("¿Quieres borrar este movimiento?")) return;
 
-    const confirmar =
-      confirm(
-        "¿Quieres borrar este movimiento?"
-      );
+  try {
+    await deleteDoc(doc(db, "movimientos", id));
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo borrar.");
+  }
+};
 
-
-    if (!confirmar) {
-      return;
-    }
-
-
-    try {
-
-      await deleteDoc(
-
-        doc(
-          db,
-          "movimientos",
-          id
-        )
-
-      );
-
-    }
-
-    catch(error) {
-
-      console.error(error);
-
-      alert(
-        "No se pudo borrar."
-      );
-
-    }
-
-  };
-
-
-/* MES */
+/* DATOS DEL MES */
 
 function movimientosMes() {
+  const mes = document.getElementById("mes").value;
 
-  const mes =
-    document.getElementById(
-      "mes"
-    ).value;
-
-
-  return movimientos.filter(
-    movimiento =>
-
-      typeof movimiento.fecha ===
-        "string"
-
-      &&
-
-      movimiento.fecha.startsWith(
-        mes
-      )
+  return movimientos.filter(movimiento =>
+    typeof movimiento.fecha === "string" && movimiento.fecha.startsWith(mes)
   );
-
 }
 
+function ordenarPorFecha(datos) {
+  return [...datos].sort((a, b) =>
+    (b.fecha || "").localeCompare(a.fecha || "")
+  );
+}
 
 /* ACTUALIZAR PANTALLA */
 
 function actualizarPantalla() {
+  const datos = movimientosMes();
 
-  const datos =
-    movimientosMes();
+  const ingresos = datos
+    .filter(m => m.tipo === "Ingreso")
+    .reduce((total, m) => total + Number(m.cantidad || 0), 0);
 
+  const gastos = datos
+    .filter(m => m.tipo === "Gasto")
+    .reduce((total, m) => total + Number(m.cantidad || 0), 0);
 
-  let ingresos = 0;
-  let gastos = 0;
-
-
-  datos.forEach(
-    movimiento => {
-
-      const cantidad =
-        Number(
-          movimiento.cantidad
-        ) || 0;
-
-
-      if (
-        movimiento.tipo ===
-        "Ingreso"
-      ) {
-
-        ingresos += cantidad;
-
-      }
-
-      else {
-
-        gastos += cantidad;
-
-      }
-
-    }
+  const movimientosInversion = datos.filter(m =>
+    m.tipo === "Gasto" && m.categoria === "Plan de inversión"
   );
 
+  const inversion = movimientosInversion
+    .reduce((total, m) => total + Number(m.cantidad || 0), 0);
 
-  document.getElementById(
-    "totalIngresos"
-  ).textContent =
-    euro(ingresos);
+  document.getElementById("totalIngresos").textContent = euro(ingresos);
+  document.getElementById("totalGastos").textContent = euro(gastos);
+  document.getElementById("totalInversion").textContent = euro(inversion);
 
+  mostrarSaldo("saldoGeneral", ingresos - gastos);
 
-  document.getElementById(
-    "totalGastos"
-  ).textContent =
-    euro(gastos);
-
-
-  mostrarSaldo(
-    "saldoGeneral",
-    ingresos - gastos
-  );
-
-
-  mostrarPersonas(
-    datos,
-    ingresos,
-    gastos
-  );
-
-
-  mostrarCategorias(
-    datos,
-    gastos
-  );
-
-
-  mostrarMovimientos(
-    datos
-  );
-
+  mostrarTarjetasResumen(datos, ingresos, gastos, inversion);
+  mostrarPersonas(datos, ingresos, gastos);
+  mostrarCategorias(datos, gastos);
+  mostrarMovimientos(datos);
 }
 
-
-function mostrarSaldo(
-  id,
-  saldo
-) {
-
-  const elemento =
-    document.getElementById(
-      id
-    );
-
-
-  elemento.classList.remove(
-    "positivo",
-    "negativo",
-    "neutro"
-  );
-
+function mostrarSaldo(id, saldo) {
+  const elemento = document.getElementById(id);
+  elemento.classList.remove("positivo", "negativo", "neutro");
 
   if (saldo > 0) {
-
-    elemento.textContent =
-      euroPositivo(saldo);
-
-    elemento.classList.add(
-      "positivo"
-    );
-
+    elemento.textContent = euroPositivo(saldo);
+    elemento.classList.add("positivo");
+  } else if (saldo < 0) {
+    elemento.textContent = euroNegativo(saldo);
+    elemento.classList.add("negativo");
+  } else {
+    elemento.textContent = euro(0);
+    elemento.classList.add("neutro");
   }
-
-  else if (saldo < 0) {
-
-    elemento.textContent =
-      euroNegativo(saldo);
-
-    elemento.classList.add(
-      "negativo"
-    );
-
-  }
-
-  else {
-
-    elemento.textContent =
-      euro(0);
-
-    elemento.classList.add(
-      "neutro"
-    );
-
-  }
-
 }
 
+/* TARJETAS DESPLEGABLES */
 
-/* RESUMEN POR PERSONA DESPLEGABLE */
+function movimientoTarjetaHTML(movimiento) {
+  const ingreso = movimiento.tipo === "Ingreso";
+  const detalle = ingreso ? movimiento.fuente : movimiento.categoria;
+  const persona = movimiento.persona === "Familia" ? "🏠 Familia" : movimiento.persona;
+  const importe = ingreso
+    ? euroPositivo(Number(movimiento.cantidad || 0))
+    : euroNegativo(Number(movimiento.cantidad || 0));
 
-function mostrarPersonas(
-  datos,
-  totalIngresos,
-  totalGastos
-) {
+  return `
+    <div class="detalle-tarjeta-item">
+      <div class="detalle-tarjeta-top">
+        <span>${esc(movimiento.concepto || detalle || "Movimiento")}</span>
+        <span class="${ingreso ? "positivo" : "negativo"}">${importe}</span>
+      </div>
+      <div class="detalle-tarjeta-info">
+        ${esc(movimiento.fecha || "")} · ${esc(persona || "")} · ${esc(detalle || "")}
+      </div>
+    </div>
+  `;
+}
 
-  const tabla =
-    document.getElementById(
-      "tablaPersonas"
-    );
+function mostrarTarjetasResumen(datos, ingresos, gastos, inversion) {
+  const ingresosDatos = ordenarPorFecha(datos.filter(m => m.tipo === "Ingreso"));
+  const gastosDatos = ordenarPorFecha(datos.filter(m => m.tipo === "Gasto"));
+  const inversionDatos = ordenarPorFecha(
+    datos.filter(m => m.tipo === "Gasto" && m.categoria === "Plan de inversión")
+  );
 
+  const detalleIngresos = document.getElementById("detalleTarjetaIngresos");
+  detalleIngresos.innerHTML = ingresosDatos.length
+    ? ingresosDatos.map(movimientoTarjetaHTML).join("")
+    : '<div class="detalle-tarjeta-vacio">No hay ingresos este mes.</div>';
 
+  const detalleGastos = document.getElementById("detalleTarjetaGastos");
+  detalleGastos.innerHTML = gastosDatos.length
+    ? gastosDatos.map(movimientoTarjetaHTML).join("")
+    : '<div class="detalle-tarjeta-vacio">No hay gastos este mes.</div>';
+
+  const saldo = ingresos - gastos;
+  const detalleSaldo = document.getElementById("detalleTarjetaSaldo");
+  detalleSaldo.innerHTML = `
+    <div class="detalle-saldo-linea">
+      <span>Ingresos</span>
+      <strong class="${ingresos > 0 ? "positivo" : "neutro"}">${ingresos > 0 ? euroPositivo(ingresos) : euro(0)}</strong>
+    </div>
+    <div class="detalle-saldo-linea">
+      <span>Gastos</span>
+      <strong class="${gastos > 0 ? "negativo" : "neutro"}">${gastos > 0 ? euroNegativo(gastos) : euro(0)}</strong>
+    </div>
+    <div class="detalle-saldo-linea">
+      <span>Saldo fin de mes</span>
+      <strong class="${saldo > 0 ? "positivo" : saldo < 0 ? "negativo" : "neutro"}">
+        ${saldo > 0 ? euroPositivo(saldo) : saldo < 0 ? euroNegativo(saldo) : euro(0)}
+      </strong>
+    </div>
+  `;
+
+  const detalleInversion = document.getElementById("detalleTarjetaInversion");
+  detalleInversion.innerHTML = inversionDatos.length
+    ? inversionDatos.map(movimientoTarjetaHTML).join("")
+    : '<div class="detalle-tarjeta-vacio">No hay inversiones este mes.</div>';
+}
+
+/* RESUMEN POR PERSONA: INGRESOS Y GASTOS DESGLOSADOS */
+
+function mostrarPersonas(datos, totalIngresos, totalGastos) {
+  const tabla = document.getElementById("tablaPersonas");
   tabla.innerHTML = "";
 
-
-  personas.forEach(
-    persona => {
-
-      const ingresos =
-        datos
-          .filter(
-            m =>
-              m.persona === persona &&
-              m.tipo === "Ingreso"
-          )
-          .reduce(
-            (total, m) =>
-              total +
-              Number(m.cantidad || 0),
-            0
-          );
-
-
-      const gastosPersona =
-        datos
-          .filter(
-            m =>
-              m.persona === persona &&
-              m.tipo === "Gasto"
-          )
-          .sort(
-            (a,b) =>
-              (b.fecha || "")
-                .localeCompare(
-                  a.fecha || ""
-                )
-          );
-
-
-      const gastos =
-        gastosPersona
-          .reduce(
-            (total, m) =>
-              total +
-              Number(m.cantidad || 0),
-            0
-          );
-
-
-      const fila =
-        document.createElement(
-          "tr"
-        );
-
-
-      fila.className =
-        "fila-persona";
-
-
-      const nombre =
-        persona === "Familia"
-          ? "🏠 Familia"
-          : persona;
-
-
-      fila.innerHTML = `
-
-        <td>
-
-          <span class="persona-nombre">
-
-            <span class="persona-flecha">
-              ▶
-            </span>
-
-            <strong>
-              ${nombre}
-            </strong>
-
-          </span>
-
-        </td>
-
-        <td class="${
-          ingresos > 0
-            ? "positivo"
-            : "neutro"
-        }">
-
-          ${
-            ingresos > 0
-              ? euroPositivo(ingresos)
-              : euro(0)
-          }
-
-        </td>
-
-        <td class="${
-          gastos > 0
-            ? "negativo"
-            : "neutro"
-        }">
-
-          ${
-            gastos > 0
-              ? euroNegativo(gastos)
-              : euro(0)
-          }
-
-        </td>
-
-      `;
-
-
-      const filaDetalles =
-        document.createElement(
-          "tr"
-        );
-
-
-      filaDetalles.className =
-        "fila-detalle-persona oculto";
-
-
-      const celda =
-        document.createElement(
-          "td"
-        );
-
-
-      celda.colSpan =
-        3;
-
-
-      const contenido =
-        document.createElement(
-          "div"
-        );
-
-
-      contenido.className =
-        "detalle-persona-contenido";
-
-
-      if (
-        gastosPersona.length === 0
-      ) {
-
-        contenido.innerHTML = `
-
-          <div class="persona-sin-gastos">
-
-            No hay gastos de
-            ${nombre}
-            este mes.
-
-          </div>
-
-        `;
-
-      }
-
-      else {
-
-        gastosPersona.forEach(
-          movimiento => {
-
-            const gasto =
-              document.createElement(
-                "div"
-              );
-
-
-            gasto.className =
-              "gasto-persona";
-
-
-            const concepto =
-              movimiento.concepto
-              ||
-              movimiento.categoria
-              ||
-              "Gasto";
-
-
-            gasto.innerHTML = `
-
-              <div class="gasto-persona-top">
-
-                <span>
-                  ${concepto}
-                </span>
-
-                <span class="negativo">
-
-                  ${euroNegativo(
-                    Number(
-                      movimiento.cantidad || 0
-                    )
-                  )}
-
-                </span>
-
-              </div>
-
-
-              <div class="gasto-persona-info">
-
-                ${movimiento.fecha || ""}
-
-                ·
-
-                ${movimiento.categoria || ""}
-
-              </div>
-
-            `;
-
-
-            contenido.appendChild(
-              gasto
-            );
-
-          }
-        );
-
-      }
-
-
-      celda.appendChild(
-        contenido
-      );
-
-
-      filaDetalles.appendChild(
-        celda
-      );
-
-
-      fila.addEventListener(
-        "click",
-        () => {
-
-          const estaCerrada =
-            filaDetalles.classList
-              .contains(
-                "oculto"
-              );
-
-
-          filaDetalles
-            .classList
-            .toggle(
-              "oculto"
-            );
-
-
-          const flecha =
-            fila.querySelector(
-              ".persona-flecha"
-            );
-
-
-          if (
-            estaCerrada
-          ) {
-
-            flecha.classList.add(
-              "abierta"
-            );
-
-          }
-
-          else {
-
-            flecha.classList.remove(
-              "abierta"
-            );
-
-          }
-
-        }
-      );
-
-
-      tabla.appendChild(
-        fila
-      );
-
-
-      tabla.appendChild(
-        filaDetalles
-      );
-
-    }
-  );
-
-
-  document.getElementById(
-    "totalPersonasIngresos"
-  ).textContent =
-    euro(totalIngresos);
-
-
-  document.getElementById(
-    "totalPersonasGastos"
-  ).textContent =
-    euro(totalGastos);
-
-
-  mostrarSaldo(
-    "saldoFinMes",
-    totalIngresos -
-    totalGastos
-  );
-
-}
-
-
-/* CATEGORÍAS */
-
-function mostrarCategorias(
-  datos,
-  totalGastos
-) {
-
-  const contenedor =
-    document.getElementById(
-      "resumenCategorias"
+  personas.forEach(persona => {
+    const ingresosPersona = ordenarPorFecha(
+      datos.filter(m => m.persona === persona && m.tipo === "Ingreso")
     );
 
-
-  contenedor.innerHTML = "";
-
-
-  categorias.forEach(
-    categoria => {
-
-      const movimientosCategoria =
-        datos
-          .filter(
-            movimiento =>
-              movimiento.tipo === "Gasto" &&
-              movimiento.categoria === categoria
-          )
-          .sort(
-            (a,b) =>
-              (b.fecha || "")
-                .localeCompare(
-                  a.fecha || ""
-                )
-          );
-
-
-      const total =
-        movimientosCategoria
-          .reduce(
-            (suma,m) =>
-              suma +
-              Number(m.cantidad || 0),
-            0
-          );
-
-
-      const details =
-        document.createElement(
-          "details"
-        );
-
-
-      details.className =
-        "categoria-desplegable";
-
-
-      const summary =
-        document.createElement(
-          "summary"
-        );
-
-
-      summary.innerHTML = `
-
-        <div class="categoria-cabecera">
-
-          <span class="categoria-nombre">
-
-            <span class="categoria-flecha">
-              ▶
-            </span>
-
-            ${categoria}
-
-          </span>
-
-
-          <span class="${
-            total > 0
-              ? "negativo"
-              : "neutro"
-          }">
-
-            ${
-              total > 0
-                ? euroNegativo(total)
-                : euro(0)
-            }
-
-          </span>
-
-        </div>
-
-      `;
-
-
-      details.appendChild(
-        summary
-      );
-
-
-      const zona =
-        document.createElement(
-          "div"
-        );
-
-
-      zona.className =
-        "categoria-detalles";
-
-
-      if (
-        movimientosCategoria.length === 0
-      ) {
-
-        zona.innerHTML = `
-
-          <div class="categoria-sin-movimientos">
-            No hay movimientos este mes.
-          </div>
-
-        `;
-
-      }
-
-      else {
-
-        movimientosCategoria
-          .forEach(
-            movimiento => {
-
-              const div =
-                document.createElement(
-                  "div"
-                );
-
-
-              div.className =
-                "categoria-movimiento";
-
-
-              const persona =
-                movimiento.persona ===
-                  "Familia"
-                  ?
-                  "🏠 Familia"
-                  :
-                  movimiento.persona;
-
-
-              div.innerHTML = `
-
-                <div class="categoria-movimiento-top">
-
-                  <span>
-                    ${
-                      movimiento.concepto ||
-                      categoria
-                    }
-                  </span>
-
-                  <span class="negativo">
-
-                    ${euroNegativo(
-                      Number(
-                        movimiento.cantidad || 0
-                      )
-                    )}
-
-                  </span>
-
-                </div>
-
-                <div class="categoria-movimiento-info">
-
-                  ${movimiento.fecha || ""}
-
-                  ·
-
-                  ${persona || ""}
-
-                </div>
-
-              `;
-
-
-              zona.appendChild(
-                div
-              );
-
-            }
-          );
-
-      }
-
-
-      details.appendChild(
-        zona
-      );
-
-
-      contenedor.appendChild(
-        details
-      );
-
-    }
-  );
-
-
-  const total =
-    document.getElementById(
-      "totalCategorias"
+    const gastosPersona = ordenarPorFecha(
+      datos.filter(m => m.persona === persona && m.tipo === "Gasto")
     );
 
-
-  total.className =
-    totalGastos > 0
-      ? "negativo"
-      : "neutro";
-
-
-  total.textContent =
-    totalGastos > 0
-      ?
-      euroNegativo(totalGastos)
-      :
-      euro(0);
-
-}
-
-
-/* MOVIMIENTOS */
-
-function mostrarMovimientos(
-  datos
-) {
-
-  const contenedor =
-    document.getElementById(
-      "listaMovimientos"
+    const ingresos = ingresosPersona.reduce(
+      (total, m) => total + Number(m.cantidad || 0),
+      0
     );
 
+    const gastos = gastosPersona.reduce(
+      (total, m) => total + Number(m.cantidad || 0),
+      0
+    );
 
-  contenedor.innerHTML = "";
+    const fila = document.createElement("tr");
+    fila.className = "fila-persona";
 
+    const nombre = persona === "Familia" ? "🏠 Familia" : persona;
 
-  if (
-    datos.length === 0
-  ) {
+    fila.innerHTML = `
+      <td>
+        <span class="persona-nombre">
+          <span class="persona-flecha">▶</span>
+          <strong>${esc(nombre)}</strong>
+        </span>
+      </td>
 
-    contenedor.innerHTML = `
+      <td class="${ingresos > 0 ? "positivo" : "neutro"}">
+        ${ingresos > 0 ? euroPositivo(ingresos) : euro(0)}
+      </td>
 
-      <div class="vacio">
-        No hay movimientos este mes.
-      </div>
-
+      <td class="${gastos > 0 ? "negativo" : "neutro"}">
+        ${gastos > 0 ? euroNegativo(gastos) : euro(0)}
+      </td>
     `;
 
-    return;
+    const filaDetalles = document.createElement("tr");
+    filaDetalles.className = "fila-detalle-persona oculto";
 
-  }
+    const celda = document.createElement("td");
+    celda.colSpan = 3;
 
+    const contenido = document.createElement("div");
+    contenido.className = "detalle-persona-contenido";
 
-  const ordenados =
-    [...datos].sort(
-      (a,b) =>
-        (b.fecha || "")
-          .localeCompare(
-            a.fecha || ""
-          )
-    );
+    /* INGRESOS DESGLOSADOS */
+    const tituloIngresos = document.createElement("div");
+    tituloIngresos.className = "persona-bloque-titulo";
+    tituloIngresos.innerHTML = `
+      <span>💵 Ingresos</span>
+      <span class="${ingresos > 0 ? "positivo" : "neutro"}">
+        ${ingresos > 0 ? euroPositivo(ingresos) : euro(0)}
+      </span>
+    `;
+    contenido.appendChild(tituloIngresos);
 
+    if (ingresosPersona.length === 0) {
+      const vacio = document.createElement("div");
+      vacio.className = "persona-sin-movimientos";
+      vacio.textContent = "No hay ingresos este mes.";
+      contenido.appendChild(vacio);
+    } else {
+      ingresosPersona.forEach(movimiento => {
+        const div = document.createElement("div");
+        div.className = "mov-persona";
 
-  ordenados.forEach(
-    movimiento => {
+        div.innerHTML = `
+          <div class="mov-persona-top">
+            <span>${esc(movimiento.concepto || movimiento.fuente || "Ingreso")}</span>
+            <span class="positivo">${euroPositivo(Number(movimiento.cantidad || 0))}</span>
+          </div>
+          <div class="mov-persona-info">
+            ${esc(movimiento.fecha || "")} · ${esc(movimiento.fuente || "Ingreso")}
+          </div>
+        `;
 
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "movimiento";
-
-
-      const ingreso =
-        movimiento.tipo ===
-        "Ingreso";
-
-
-      const detalle =
-        ingreso
-          ?
-          movimiento.fuente
-          :
-          movimiento.categoria;
-
-
-      const persona =
-        movimiento.persona ===
-          "Familia"
-          ?
-          "🏠 Familia"
-          :
-          movimiento.persona;
-
-
-      const importe =
-        ingreso
-          ?
-          euroPositivo(
-            Number(
-              movimiento.cantidad || 0
-            )
-          )
-          :
-          euroNegativo(
-            Number(
-              movimiento.cantidad || 0
-            )
-          );
-
-
-      div.innerHTML = `
-
-        <div class="mov-top">
-
-          <span>
-
-            ${
-              movimiento.concepto ||
-              detalle ||
-              "Movimiento"
-            }
-
-          </span>
-
-          <span class="${
-            ingreso
-              ? "positivo"
-              : "negativo"
-          }">
-
-            ${importe}
-
-          </span>
-
-        </div>
-
-
-        <div class="detalle">
-
-          ${movimiento.fecha}
-
-          ·
-
-          ${persona}
-
-          ·
-
-          ${detalle || ""}
-
-        </div>
-
-
-        <div class="acciones-movimiento">
-
-          <button
-            class="editar"
-            onclick="
-              editarMovimiento(
-                '${movimiento.firestoreId}'
-              )
-            "
-          >
-            ✏️ Editar
-          </button>
-
-
-          <button
-            class="borrar"
-            onclick="
-              borrarMovimiento(
-                '${movimiento.firestoreId}'
-              )
-            "
-          >
-            Eliminar
-          </button>
-
-        </div>
-
-      `;
-
-
-      contenedor.appendChild(
-        div
-      );
-
+        contenido.appendChild(div);
+      });
     }
-  );
 
+    /* GASTOS DESGLOSADOS */
+    const tituloGastos = document.createElement("div");
+    tituloGastos.className = "persona-bloque-titulo";
+    tituloGastos.innerHTML = `
+      <span>💳 Gastos</span>
+      <span class="${gastos > 0 ? "negativo" : "neutro"}">
+        ${gastos > 0 ? euroNegativo(gastos) : euro(0)}
+      </span>
+    `;
+    contenido.appendChild(tituloGastos);
+
+    if (gastosPersona.length === 0) {
+      const vacio = document.createElement("div");
+      vacio.className = "persona-sin-movimientos";
+      vacio.textContent = "No hay gastos este mes.";
+      contenido.appendChild(vacio);
+    } else {
+      gastosPersona.forEach(movimiento => {
+        const div = document.createElement("div");
+        div.className = "mov-persona";
+
+        div.innerHTML = `
+          <div class="mov-persona-top">
+            <span>${esc(movimiento.concepto || movimiento.categoria || "Gasto")}</span>
+            <span class="negativo">${euroNegativo(Number(movimiento.cantidad || 0))}</span>
+          </div>
+          <div class="mov-persona-info">
+            ${esc(movimiento.fecha || "")} · ${esc(movimiento.categoria || "")}
+          </div>
+        `;
+
+        contenido.appendChild(div);
+      });
+    }
+
+    celda.appendChild(contenido);
+    filaDetalles.appendChild(celda);
+
+    fila.addEventListener("click", () => {
+      const estaCerrada = filaDetalles.classList.contains("oculto");
+      filaDetalles.classList.toggle("oculto");
+
+      const flecha = fila.querySelector(".persona-flecha");
+      flecha.classList.toggle("abierta", estaCerrada);
+    });
+
+    tabla.appendChild(fila);
+    tabla.appendChild(filaDetalles);
+  });
+
+  document.getElementById("totalPersonasIngresos").textContent = euro(totalIngresos);
+  document.getElementById("totalPersonasGastos").textContent = euro(totalGastos);
 }
 
+/* CATEGORÍAS DESPLEGABLES */
+
+function mostrarCategorias(datos, totalGastos) {
+  const contenedor = document.getElementById("resumenCategorias");
+  contenedor.innerHTML = "";
+
+  categorias.forEach(categoria => {
+    const movimientosCategoria = ordenarPorFecha(
+      datos.filter(movimiento =>
+        movimiento.tipo === "Gasto" && movimiento.categoria === categoria
+      )
+    );
+
+    const total = movimientosCategoria.reduce(
+      (suma, movimiento) => suma + Number(movimiento.cantidad || 0),
+      0
+    );
+
+    const details = document.createElement("details");
+    details.className = "categoria-desplegable";
+
+    const summary = document.createElement("summary");
+    summary.innerHTML = `
+      <div class="categoria-cabecera">
+        <span class="categoria-nombre">
+          <span class="categoria-flecha">▶</span>
+          ${esc(categoria)}
+        </span>
+
+        <span class="${total > 0 ? "negativo" : "neutro"}">
+          ${total > 0 ? euroNegativo(total) : euro(0)}
+        </span>
+      </div>
+    `;
+
+    details.appendChild(summary);
+
+    const zona = document.createElement("div");
+    zona.className = "categoria-detalles";
+
+    if (movimientosCategoria.length === 0) {
+      zona.innerHTML = '<div class="categoria-sin-movimientos">No hay movimientos este mes.</div>';
+    } else {
+      movimientosCategoria.forEach(movimiento => {
+        const div = document.createElement("div");
+        div.className = "categoria-movimiento";
+
+        const persona = movimiento.persona === "Familia"
+          ? "🏠 Familia"
+          : movimiento.persona;
+
+        div.innerHTML = `
+          <div class="categoria-movimiento-top">
+            <span>${esc(movimiento.concepto || categoria)}</span>
+            <span class="negativo">${euroNegativo(Number(movimiento.cantidad || 0))}</span>
+          </div>
+
+          <div class="categoria-movimiento-info">
+            ${esc(movimiento.fecha || "")} · ${esc(persona || "")}
+          </div>
+        `;
+
+        zona.appendChild(div);
+      });
+    }
+
+    details.appendChild(zona);
+    contenedor.appendChild(details);
+  });
+
+  const total = document.getElementById("totalCategorias");
+  total.className = totalGastos > 0 ? "negativo" : "neutro";
+  total.textContent = totalGastos > 0 ? euroNegativo(totalGastos) : euro(0);
+}
+
+/* LISTA DE MOVIMIENTOS */
+
+function mostrarMovimientos(datos) {
+  const contenedor = document.getElementById("listaMovimientos");
+  contenedor.innerHTML = "";
+
+  if (datos.length === 0) {
+    contenedor.innerHTML = '<div class="vacio">No hay movimientos este mes.</div>';
+    return;
+  }
+
+  ordenarPorFecha(datos).forEach(movimiento => {
+    const div = document.createElement("div");
+    div.className = "movimiento";
+
+    const ingreso = movimiento.tipo === "Ingreso";
+    const detalle = ingreso ? movimiento.fuente : movimiento.categoria;
+    const persona = movimiento.persona === "Familia"
+      ? "🏠 Familia"
+      : movimiento.persona;
+
+    const importe = ingreso
+      ? euroPositivo(Number(movimiento.cantidad || 0))
+      : euroNegativo(Number(movimiento.cantidad || 0));
+
+    div.innerHTML = `
+      <div class="mov-top">
+        <span>${esc(movimiento.concepto || detalle || "Movimiento")}</span>
+        <span class="${ingreso ? "positivo" : "negativo"}">${importe}</span>
+      </div>
+
+      <div class="detalle">
+        ${esc(movimiento.fecha || "")} · ${esc(persona || "")} · ${esc(detalle || "")}
+      </div>
+
+      <div class="acciones-movimiento">
+        <button class="editar" data-id="${esc(movimiento.firestoreId)}">✏️ Editar</button>
+        <button class="borrar" data-id="${esc(movimiento.firestoreId)}">Eliminar</button>
+      </div>
+    `;
+
+    div.querySelector(".editar").addEventListener("click", () => {
+      window.editarMovimiento(movimiento.firestoreId);
+    });
+
+    div.querySelector(".borrar").addEventListener("click", () => {
+      window.borrarMovimiento(movimiento.firestoreId);
+    });
+
+    contenedor.appendChild(div);
+  });
+}
 
 actualizarFormulario();
-
 </script>
-
 </body>
-
 </html>
