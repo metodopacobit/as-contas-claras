@@ -50,6 +50,48 @@
 
     .panel h2 { margin-top: 0; }
 
+    /* PANELES PRINCIPALES DESPLEGABLES */
+    details.panel-desplegable {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    details.panel-desplegable > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    details.panel-desplegable > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.panel-desplegable[open] > summary {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .flecha-panel {
+      color: #6b7280;
+      font-size: 13px;
+      transition: transform .2s ease;
+      flex: 0 0 auto;
+    }
+
+    details.panel-desplegable[open] > summary .flecha-panel {
+      transform: rotate(90deg);
+    }
+
+    .contenido-panel {
+      padding: 18px;
+    }
+
     input,
     select,
     button {
@@ -596,102 +638,124 @@
     </section>
 
     <!-- RESUMEN PERSONAS -->
-    <section class="panel">
-      <h2>👨‍👩‍👧 Resumen por persona</h2>
+    <details class="panel panel-desplegable">
+      <summary>
+        <span>👨‍👩‍👧 Resumen por persona</span>
+        <span class="flecha-panel">▶</span>
+      </summary>
 
-      <table class="tabla-resumen">
-        <thead>
-          <tr>
-            <th>Persona</th>
-            <th>Ingresos</th>
-            <th>Gastos</th>
-          </tr>
-        </thead>
+      <div class="contenido-panel">
+        <table class="tabla-resumen">
+          <thead>
+            <tr>
+              <th>Persona</th>
+              <th>Ingresos</th>
+              <th>Gastos</th>
+            </tr>
+          </thead>
 
-        <tbody id="tablaPersonas"></tbody>
+          <tbody id="tablaPersonas"></tbody>
 
-        <tfoot>
-          <tr class="fila-total">
-            <td>TOTAL</td>
-            <td id="totalPersonasIngresos">0,00 €</td>
-            <td id="totalPersonasGastos">0,00 €</td>
-          </tr>
-        </tfoot>
-      </table>
-    </section>
+          <tfoot>
+            <tr class="fila-total">
+              <td>TOTAL</td>
+              <td id="totalPersonasIngresos">0,00 €</td>
+              <td id="totalPersonasGastos">0,00 €</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </details>
 
-    <!-- NUEVO MOVIMIENTO: AHORA DEBAJO DE RESUMEN POR PERSONA -->
-    <section class="panel">
-      <h2>➕ Nuevo movimiento</h2>
+    <!-- NUEVO MOVIMIENTO -->
+    <details class="panel panel-desplegable">
+      <summary>
+        <span>➕ Nuevo movimiento</span>
+        <span class="flecha-panel">▶</span>
+      </summary>
 
-      <label>Fecha</label>
-      <input type="date" id="fecha">
+      <div class="contenido-panel">
+        <label>Fecha</label>
+        <input type="date" id="fecha">
 
-      <label>Tipo</label>
-      <select id="tipo">
-        <option value="Gasto">Gasto</option>
-        <option value="Ingreso">Ingreso</option>
-      </select>
-
-      <label>Persona</label>
-      <select id="persona">
-        <option value="Familia">Familia</option>
-        <option value="Paco">Paco</option>
-        <option value="Mari">Mari</option>
-        <option value="Nere">Nere</option>
-      </select>
-
-      <div id="bloqueCategoria">
-        <label>Categoría</label>
-        <select id="categoria">
-          <option value="Supermercado">Supermercado</option>
-          <option value="Hipoteca">Hipoteca</option>
-          <option value="Luz">Luz</option>
-          <option value="Telefono">Teléfono</option>
-          <option value="App tv">App TV</option>
-          <option value="Ropa/calzado">Ropa/calzado</option>
-          <option value="Fiesta">Fiesta</option>
-          <option value="Coches/Moto">Coches/Moto</option>
-          <option value="Salud">Salud</option>
-          <option value="Viajes">Viajes</option>
-          <option value="Tabaco">Tabaco</option>
-          <option value="Seguros">Seguros</option>
-          <option value="Plan de inversión">Plan de inversión</option>
-          <option value="Obra">Obra</option>
-          <option value="Otros">Otros</option>
+        <label>Tipo</label>
+        <select id="tipo">
+          <option value="Gasto">Gasto</option>
+          <option value="Ingreso">Ingreso</option>
         </select>
+
+        <label>Persona</label>
+        <select id="persona">
+          <option value="Familia">Familia</option>
+          <option value="Paco">Paco</option>
+          <option value="Mari">Mari</option>
+          <option value="Nere">Nere</option>
+        </select>
+
+        <div id="bloqueCategoria">
+          <label>Categoría</label>
+          <select id="categoria">
+            <option value="Supermercado">Supermercado</option>
+            <option value="Hipoteca">Hipoteca</option>
+            <option value="Luz">Luz</option>
+            <option value="Telefono">Teléfono</option>
+            <option value="App tv">App TV</option>
+            <option value="Ropa/calzado">Ropa/calzado</option>
+            <option value="Fiesta">Fiesta</option>
+            <option value="Coches/Moto">Coches/Moto</option>
+            <option value="Salud">Salud</option>
+            <option value="Viajes">Viajes</option>
+            <option value="Tabaco">Tabaco</option>
+            <option value="Seguros">Seguros</option>
+            <option value="Plan de inversión">Plan de inversión</option>
+            <option value="Obra">Obra</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+
+        <div id="bloqueFuente" class="oculto">
+          <label>Fuente de ingreso</label>
+          <select id="fuente"></select>
+        </div>
+
+        <label>Concepto</label>
+        <input type="text" id="concepto" placeholder="Ej. Mercadona, obra cocina, nómina...">
+
+        <label>Cantidad (€)</label>
+        <input type="number" id="cantidad" min="0" step="0.01" inputmode="decimal" placeholder="0,00">
+
+        <button id="botonGuardar" class="btn">Guardar movimiento</button>
       </div>
-
-      <div id="bloqueFuente" class="oculto">
-        <label>Fuente de ingreso</label>
-        <select id="fuente"></select>
-      </div>
-
-      <label>Concepto</label>
-      <input type="text" id="concepto" placeholder="Ej. Mercadona, obra cocina, nómina...">
-
-      <label>Cantidad (€)</label>
-      <input type="number" id="cantidad" min="0" step="0.01" inputmode="decimal" placeholder="0,00">
-
-      <button id="botonGuardar" class="btn">Guardar movimiento</button>
-    </section>
+    </details>
 
     <!-- CATEGORÍAS -->
-    <section class="panel">
-      <h2>📊 Gastos por categoría</h2>
-      <div id="resumenCategorias"></div>
+    <details class="panel panel-desplegable">
+      <summary>
+        <span>📊 Gastos por categoría</span>
+        <span class="flecha-panel">▶</span>
+      </summary>
 
-      <div class="fila-categoria total-categorias">
-        <strong>Total gastos</strong>
-        <strong id="totalCategorias" class="neutro">0,00 €</strong>
+      <div class="contenido-panel">
+        <div id="resumenCategorias"></div>
+
+        <div class="fila-categoria total-categorias">
+          <strong>Total gastos</strong>
+          <strong id="totalCategorias" class="neutro">0,00 €</strong>
+        </div>
       </div>
-    </section>
+    </details>
 
     <!-- MOVIMIENTOS -->
-    <section class="panel">
-      <h2>📋 Movimientos</h2>
-      <div id="listaMovimientos"></div>
-    </section>
+    <details class="panel panel-desplegable">
+      <summary>
+        <span>📋 Movimientos</span>
+        <span class="flecha-panel">▶</span>
+      </summary>
+
+      <div class="contenido-panel">
+        <div id="listaMovimientos"></div>
+      </div>
+    </details>
 
   </div>
 </div>
